@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>StartAI • Founder Dashboard</title>
+  
+  <!-- Brand font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  
+  <!-- Bootstrap 5 -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet"/>
+  
+  <!-- Font Awesome 6 -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" referrerpolicy="no-referrer" rel="stylesheet"/>
+  
+  <!-- Global theme -->
+  <link href="style.css" rel="stylesheet"/>
+  
+  <!-- Page specific CSS -->
+  <link href="founder_dashboard.css" rel="stylesheet"/>
+
+  <style>
+    /* Clean Premium Design System */
+    :root {
+      /* Premium Color Palette */
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --dark-gradient: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
+      --warning-gradient: linear-gradient(135deg, #ffa726 0%, #ff8a65 100%);
+      --danger-gradient: linear-gradient(135deg, #f857a6 0%, #ff5858 100%);
+      
+      /* Glassmorphism Colors */
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --glass-bg-strong: rgba(255, 255, 255, 0.15);
+      --glass-border: rgba(255, 255, 255, 0.15);
+      --glass-shadow: 0 4px 16px rgba(31, 38, 135, 0.2);
+      
+      /* Typography */
+      --font-sans: "Poppins", ui-sans-serif, system-ui, "-apple-system", "Segoe UI", "Roboto", "Inter", Helvetica, Arial, sans-serif;
+      
+      /* Effects */
+      --blur-strength: 12px;
+      --border-radius: 12px;
+      --border-radius-lg: 16px;
+      --transition: all 0.2s ease;
+      --space-xs: 0.375rem;
+      --space-sm: 0.5rem;
+      --space-md: 0.75rem;
+      --space-lg: 1rem;
+      --space-xl: 1.5rem;
+      --space-2xl: 2rem;
+      --space-3xl: 2.5rem;
+    }
+
+    /* Base */
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Body Background */
+    body {
+      font-family: var(--font-sans);
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #2d3436;
+      position: relative;
+    }
+
+    /* Simplified background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.05) 0%, transparent 50%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Header */
+    .global-header {
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid var(--glass-border);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      z-index: 1000;
+      padding: var(--space-sm) 0;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    /* Logo */
+    .global-header .logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .global-header .logo span {
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-left: var(--space-sm);
+    }
+
+    .global-header .logo img {
+      height: 32px;
+      width: auto;
+    }
+
+    /* Navigation */
+    .nav--primary {
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    .nav--primary a {
+      font-weight: 500;
+      color: #2d3436;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--border-radius);
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .nav--primary a:hover {
+      background: var(--glass-bg);
+      color: #2d3436;
+    }
+
+    .nav--primary a[aria-current="page"] {
+      background: var(--primary-gradient);
+      color: white;
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    /* Buttons */
+    .btn {
+      font-weight: 600;
+      border-radius: var(--border-radius);
+      padding: var(--space-sm) var(--space-lg);
+      border: none;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .btn-sm {
+      padding: var(--space-xs) var(--space-md);
+      font-size: 0.8rem;
+    }
+
+    .btn--primary {
+      background: var(--primary-gradient);
+      color: white;
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn--primary:hover {
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+      transform: translateY(-1px);
+      color: white;
+    }
+
+    .btn--secondary {
+      background: var(--glass-bg);
+      color: #2d3436;
+      border: 1px solid var(--glass-border);
+    }
+
+    .btn--secondary:hover {
+      background: var(--glass-bg-strong);
+      color: #2d3436;
+    }
+
+    .btn--accent {
+      background: var(--accent-gradient);
+      color: white;
+      box-shadow: 0 2px 8px rgba(79, 172, 254, 0.3);
+    }
+
+    .btn--accent:hover {
+      box-shadow: 0 4px 12px rgba(79, 172, 254, 0.4);
+      transform: translateY(-1px);
+      color: white;
+    }
+
+    .btn--ghost {
+      background: transparent;
+      color: #2d3436;
+      border: 1px solid rgba(45, 52, 54, 0.2);
+    }
+
+    .btn--ghost:hover {
+      background: var(--glass-bg);
+      color: #2d3436;
+    }
+
+    .btn--light {
+      background: rgba(255, 255, 255, 0.9);
+      color: #2d3436;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .btn--light:hover {
+      background: white;
+      color: #2d3436;
+    }
+
+    /* Layout System */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      min-height: calc(100vh - 60px);
+    }
+
+    @media (min-width: 992px) {
+      .layout {
+        grid-template-columns: 280px 1fr;
+      }
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: var(--glass-bg);
+      border-right: 1px solid var(--glass-border);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      padding: var(--space-lg);
+      position: sticky;
+      top: 60px;
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 991.98px) {
+      .sidebar {
+        display: none;
+      }
+    }
+
+    .sidebar-link {
+      color: #636e72;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      margin-bottom: var(--space-xs);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .sidebar-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #2d3436;
+    }
+
+    .sidebar-link.active {
+      background: var(--primary-gradient);
+      color: white;
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    /* Card System */
+    .card {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    @media (max-width: 576px) {
+      .card {
+        padding: var(--space-md);
+        margin-bottom: var(--space-md);
+      }
+    }
+
+    /* Typography */
+    h1, h2, h3 {
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-md);
+      color: #2d3436;
+    }
+
+    h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+
+    h3 {
+      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    }
+
+    h4 {
+      font-size: clamp(1.125rem, 2vw, 1.5rem);
+      font-weight: 600;
+      color: #2d3436;
+    }
+
+    .lead {
+      color: #636e72;
+      line-height: 1.6;
+      font-weight: 400;
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      text-align: justify;
+      margin-bottom: var(--space-lg);
+    }
+
+    /* Main Content */
+    .main {
+      padding: var(--space-lg) var(--space-md);
+      background: transparent;
+      min-height: calc(100vh - 60px);
+    }
+
+    @media (min-width: 576px) {
+      .main {
+        padding: var(--space-xl) var(--space-lg);
+      }
+    }
+
+    @media (min-width: 992px) {
+      .main {
+        padding: var(--space-2xl) var(--space-xl);
+      }
+    }
+
+    /* Progress Bar */
+    .progress {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50px;
+      height: 8px;
+      overflow: hidden;
+      margin: var(--space-sm) 0;
+    }
+
+    .progress-bar {
+      background: var(--success-gradient);
+      transition: width 0.8s ease;
+      border-radius: 50px;
+    }
+
+    /* Status Badges */
+    .badge {
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      border: none;
+    }
+
+    .badge--success {
+      background: var(--success-gradient);
+      color: white;
+    }
+
+    .badge--info {
+      background: var(--accent-gradient);
+      color: white;
+    }
+
+    .badge--warning {
+      background: var(--warning-gradient);
+      color: white;
+    }
+
+    .badge--error {
+      background: var(--danger-gradient);
+      color: white;
+    }
+
+    /* MY IDEAS SECTION - CLEAN 2x2 GRID */
+    .ideas-section {
+      margin-bottom: 3rem;
+    }
+
+    .ideas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .ideas-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .ideas-grid {
+        gap: 1rem;
+      }
+    }
+
+    .idea-card {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      height: 280px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .idea-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--primary-gradient);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .idea-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 48px rgba(31, 38, 135, 0.25);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .idea-card:hover::before {
+      opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      .idea-card {
+        height: 240px;
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .idea-card {
+        height: 200px;
+        padding: 1.25rem;
+      }
+    }
+
+    .idea-card-header {
+      display: flex;
+      justify-content: between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .idea-card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #2d3436;
+      line-height: 1.3;
+      margin: 0;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    @media (max-width: 576px) {
+      .idea-card-title {
+        font-size: 1rem;
+      }
+    }
+
+    .idea-card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .idea-meta {
+      font-size: 0.85rem;
+      color: #636e72;
+      margin-bottom: 1rem;
+    }
+
+    .idea-score {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .score-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #2d3436;
+    }
+
+    .score-progress {
+      width: 80px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .score-progress-bar {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.8s ease;
+    }
+
+    .idea-card-footer {
+      margin-top: auto;
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .idea-card-footer .btn {
+      flex: 1;
+      font-size: 0.85rem;
+      padding: 0.6rem 1rem;
+    }
+
+    .idea-card-footer .btn--ghost {
+      flex: none;
+      padding: 0.6rem;
+      min-width: 40px;
+    }
+
+    /* Loading State */
+    .ideas-loading {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .ideas-loading {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .ideas-loading {
+        gap: 1rem;
+      }
+    }
+
+    .skeleton {
+      background: linear-gradient(90deg, 
+        rgba(200,200,200,0.2) 25%, 
+        rgba(200,200,200,0.4) 50%, 
+        rgba(200,200,200,0.2) 75%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.2s infinite;
+      border-radius: 20px;
+      height: 280px;
+    }
+
+    @media (max-width: 768px) {
+      .skeleton {
+        height: 240px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .skeleton {
+        height: 200px;
+      }
+    }
+
+    @keyframes skeleton-loading {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    /* Rest of the styles remain the same... */
+    
+    /* Table */
+    .table-responsive {
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      margin: var(--space-lg) 0;
+    }
+
+    .table {
+      background: rgba(255, 255, 255, 0.9);
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .table th {
+      background: rgba(102, 126, 234, 0.1);
+      border: none;
+      color: #2d3436;
+      font-weight: 600;
+      padding: var(--space-md);
+    }
+
+    .table td {
+      border: none;
+      padding: var(--space-md);
+      vertical-align: middle;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    @media (max-width: 768px) {
+      .table th,
+      .table td {
+        padding: var(--space-sm);
+        font-size: 0.8rem;
+      }
+    }
+
+    .table tbody tr:hover {
+      background: rgba(102, 126, 234, 0.05);
+    }
+
+    /* Form Elements */
+    .form-control, .input {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      color: #2d3436;
+      padding: var(--space-sm) var(--space-md);
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .form-control:focus, .input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      border-color: rgba(102, 126, 234, 0.3);
+      background: white;
+    }
+
+    /* Lists */
+    .list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      border-radius: var(--border-radius);
+      margin-bottom: var(--space-sm);
+      transition: var(--transition);
+    }
+
+    @media (max-width: 576px) {
+      .list-item {
+        gap: var(--space-sm);
+        padding: var(--space-sm);
+      }
+    }
+
+    .list-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid var(--glass-border);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 576px) {
+      .avatar {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    /* Search Bar */
+    .searchbar {
+      display: flex;
+      gap: var(--space-sm);
+      align-items: center;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    @media (max-width: 768px) {
+      .searchbar {
+        max-width: 100%;
+        margin-top: var(--space-sm);
+      }
+    }
+
+    /* Dropdown Menu */
+    .dropdown-menu {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      font-size: 0.9rem;
+    }
+
+    .dropdown-item {
+      color: #2d3436;
+      padding: var(--space-sm) var(--space-md);
+      transition: var(--transition);
+    }
+
+    .dropdown-item:hover {
+      background: rgba(102, 126, 234, 0.1);
+      color: #2d3436;
+    }
+
+    /* Mobile Offcanvas */
+    .offcanvas {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-right: 1px solid var(--glass-border);
+    }
+
+    .list-group-item {
+      background: transparent;
+      border: 1px solid var(--glass-border);
+      color: #2d3436;
+      margin-bottom: var(--space-xs);
+      font-size: 0.9rem;
+      padding: var(--space-sm) var(--space-md);
+      transition: var(--transition);
+    }
+
+    .list-group-item:hover {
+      background: rgba(102, 126, 234, 0.1);
+      color: #2d3436;
+    }
+
+    /* Mobile Navigation Fix */
+    @media (max-width: 991.98px) {
+      .nav--primary {
+        display: none !important;
+      }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-gradient);
+      border-radius: 3px;
+    }
+
+    /* Skip Link */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 6px;
+      background: var(--primary-gradient);
+      color: white;
+      padding: var(--space-sm);
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      z-index: 10000;
+      font-size: 0.9rem;
+    }
+
+    .skip-link:focus {
+      top: 6px;
+    }
+
+    /* Toast System */
+    .toast-container {
+      position: fixed;
+      top: var(--space-lg);
+      right: var(--space-lg);
+      z-index: 9999;
+      max-width: 400px;
+    }
+
+    @media (max-width: 576px) {
+      .toast-container {
+        top: var(--space-md);
+        right: var(--space-md);
+        left: var(--space-md);
+        max-width: none;
+      }
+    }
+
+    .toast-item {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      padding: var(--space-md);
+      margin-bottom: var(--space-sm);
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      font-size: 0.9rem;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  
+  <!-- Header -->
+  <header class="global-header" id="siteHeader">
+    <div class="container-fluid">
+      <div class="d-flex align-items-center justify-content-between px-2 px-md-3">
+        <a class="logo" href="./home_page.html">
+          <img alt="StartAI Logo" src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png"/>
+          <span>StartAI</span>
+        </a>
+        
+        <!-- Primary Nav -->
+        <nav aria-label="Primary" class="nav nav--primary d-none d-lg-flex">
+          <a aria-current="page" href="./founder_dashboard.html">
+            <i class="fa-solid fa-gauge-high me-2"></i>Dashboard
+          </a>
+          <a href="./my_ideas_page.html">
+            <i class="fa-solid fa-lightbulb me-2"></i>My Ideas
+          </a>
+          <a href="./ai_advisory_page.html">
+            <i class="fa-solid fa-robot me-2"></i>AI Advisory
+          </a>
+          <a href="./mentor_discovery_page.html">
+            <i class="fa-solid fa-user-tie me-2"></i>Mentors
+          </a>
+          <a href="./learning_hub_page.html">
+            <i class="fa-solid fa-book-open me-2"></i>Learning
+          </a>
+        </nav>
+        
+        <!-- Right side -->
+        <div class="d-flex align-items-center gap-2 gap-md-3">
+          <button aria-label="Notifications" class="btn btn--ghost btn-sm position-relative" id="notifyBtn">
+            <i class="fa-solid fa-bell"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge--error" id="notifCount">3</span>
+          </button>
+          
+          <div class="dropdown">
+            <button aria-expanded="false" class="btn btn--light btn-sm dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" id="userMenu">
+              <img alt="Profile" class="rounded-circle me-1 me-md-2" src="https://picsum.photos/seed/founder-avatar/32/32" style="width:28px;height:28px"/>
+              <span class="d-none d-sm-inline">Alex</span>
+            </button>
+            <ul aria-labelledby="userMenu" class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="./account_settings_page.html"><i class="fa-solid fa-gear me-2"></i>Settings</a></li>
+              <li><a class="dropdown-item" href="./subscription_page.html"><i class="fa-solid fa-crown me-2"></i>Subscription</a></li>
+              <li><hr class="dropdown-divider"/></li>
+              <li><a class="dropdown-item" href="./login_page.html"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a></li>
+            </ul>
+          </div>
+          
+          <!-- Mobile Toggle -->
+          <button aria-controls="mobileSidebar" class="btn btn--primary btn-sm d-lg-none" data-bs-target="#mobileSidebar" data-bs-toggle="offcanvas" type="button">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Offcanvas -->
+  <div aria-labelledby="mobileSidebarLabel" class="offcanvas offcanvas-start" id="mobileSidebar" tabindex="-1">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="mobileSidebarLabel">Menu</h5>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button"></button>
+    </div>
+    <div class="offcanvas-body">
+      <nav class="list-group list-group-flush">
+        <a class="list-group-item" href="./founder_dashboard.html"><i class="fa-solid fa-gauge-high me-2"></i>Dashboard</a>
+        <a class="list-group-item" href="./idea_submission_page.html"><i class="fa-solid fa-plus me-2"></i>Submit Idea</a>
+        <a class="list-group-item" href="./my_ideas_page.html"><i class="fa-solid fa-lightbulb me-2"></i>My Ideas</a>
+        <a class="list-group-item" href="./ai_advisory_page.html"><i class="fa-solid fa-robot me-2"></i>AI Advisory</a>
+        <a class="list-group-item" href="./mentor_discovery_page.html"><i class="fa-solid fa-user-tie me-2"></i>Mentors</a>
+        <a class="list-group-item" href="./learning_hub_page.html"><i class="fa-solid fa-book-open me-2"></i>Learning</a>
+        <a class="list-group-item" href="./account_settings_page.html"><i class="fa-solid fa-gear me-2"></i>Settings</a>
+        <a class="list-group-item" href="./subscription_page.html"><i class="fa-solid fa-crown me-2"></i>Subscription</a>
+        <a class="list-group-item text-danger" href="./login_page.html"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="layout">
+    <!-- Desktop Sidebar -->
+    <aside class="sidebar d-none d-lg-flex flex-column">
+      <nav aria-label="Sidebar">
+        <div class="text-uppercase small text-muted mb-3" style="color: #636e72; font-size: 0.7rem; letter-spacing: 0.1em;">Main</div>
+        <a class="sidebar-link active" href="./founder_dashboard.html">
+          <i class="fa-solid fa-gauge-high"></i>Dashboard
+        </a>
+        <a class="sidebar-link" href="./idea_submission_page.html">
+          <i class="fa-solid fa-plus"></i>Submit Idea
+        </a>
+        <a class="sidebar-link" href="./my_ideas_page.html">
+          <i class="fa-solid fa-lightbulb"></i>My Ideas
+        </a>
+        <a class="sidebar-link" href="./ai_advisory_page.html">
+          <i class="fa-solid fa-robot"></i>AI Advisory
+        </a>
+        <a class="sidebar-link" href="./mentor_discovery_page.html">
+          <i class="fa-solid fa-user-tie"></i>Mentors
+        </a>
+        <a class="sidebar-link" href="./learning_hub_page.html">
+          <i class="fa-solid fa-book-open"></i>Learning
+        </a>
+        
+        <div class="text-uppercase small text-muted mt-4 mb-3" style="color: #636e72; font-size: 0.7rem; letter-spacing: 0.1em;">Account</div>
+        <a class="sidebar-link" href="./account_settings_page.html">
+          <i class="fa-solid fa-gear"></i>Settings
+        </a>
+        <a class="sidebar-link" href="./subscription_page.html">
+          <i class="fa-solid fa-crown"></i>Subscription
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main" id="main">
+      <!-- Welcome Banner -->
+      <section class="card position-relative overflow-hidden mb-4">
+        <div class="row g-0 align-items-stretch">
+          <div class="col-12 col-lg-8 d-flex flex-column justify-content-center">
+            <h1>Welcome back, Alex</h1>
+            <p class="lead">Your startup journey continues with enhanced capabilities and premium insights. Validate ideas through sophisticated AI-powered analysis, receive personalized mentorship recommendations tailored to your industry focus, and connect with industry experts who understand your vision.</p>
+            
+            <div class="d-flex align-items-center gap-3 flex-wrap flex-sm-column flex-md-row">
+              <div class="d-flex align-items-center gap-3">
+                <div>
+                  <small class="text-muted d-block">Profile Completion</small>
+                  <div aria-label="Profile completion" class="progress" style="width:200px; min-width:150px;">
+                    <div class="progress-bar" id="profileProgress" style="width: 72%"></div>
+                  </div>
+                  <small class="text-muted">72% complete</small>
+                </div>
+              </div>
+              <div class="d-flex gap-2 flex-wrap">
+                <a class="btn btn--primary" href="./profile_setup_page.html">
+                  <i class="fa-solid fa-user-pen me-1 me-md-2"></i>Complete Profile
+                </a>
+                <button class="btn btn--ghost" id="dismissBanner">
+                  <i class="fa-solid fa-xmark me-1"></i><span class="d-none d-sm-inline">Dismiss</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 d-none d-lg-block">
+            <img alt="Welcome Banner" class="w-100 h-100 object-fit-cover" style="min-height: 200px;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/welcome/600/400'" src="assets/welcome_banner_background_imag2aa733463.jpg"/>
+          </div>
+        </div>
+      </section>
+
+      <div class="row g-3 g-md-4">
+        <!-- Main column -->
+        <div class="col-12 col-xl-8">
+          <!-- My Ideas Section - Clean 2x2 Grid -->
+          <section class="ideas-section">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+              <div>
+                <h2 class="mb-2">My Ideas</h2>
+                <p class="text-muted mb-0" style="color: #636e72; font-size: 0.9rem;">Quickly continue drafts, track comprehensive reviews, and access detailed AI feedback reports.</p>
+              </div>
+              <a class="btn btn--accent btn-sm" href="./idea_submission_page.html">
+                <i class="fa-solid fa-plus me-2"></i>Submit New
+              </a>
+            </div>
+            
+            <!-- Loading state -->
+            <div class="ideas-loading" id="ideasLoading">
+              <div class="skeleton"></div>
+              <div class="skeleton"></div>
+              <div class="skeleton"></div>
+              <div class="skeleton"></div>
+            </div>
+            
+            <!-- Ideas Grid - Clean 2x2 -->
+            <div class="ideas-grid d-none" id="ideasGrid"></div>
+            
+            <!-- Pagination -->
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <small class="text-muted" style="color: #636e72;">Showing 1–4 of 12</small>
+              <nav aria-label="Ideas pagination">
+                <div class="btn-group btn-group-sm">
+                  <button aria-label="Previous" class="btn btn--ghost btn-sm"><i class="fa-solid fa-angle-left"></i></button>
+                  <button aria-current="page" class="btn btn--primary btn-sm">1</button>
+                  <button class="btn btn--ghost btn-sm">2</button>
+                  <button class="btn btn--ghost btn-sm">3</button>
+                  <button aria-label="Next" class="btn btn--ghost btn-sm"><i class="fa-solid fa-angle-right"></i></button>
+                </div>
+              </nav>
+            </div>
+          </section>
+
+          <!-- Recent Activity Table -->
+          <section class="mb-4">
+            <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-3">
+              <div class="flex-grow-1">
+                <h3 class="mb-2">Recent Activity</h3>
+                <p class="text-muted mb-0" style="color: #636e72; font-size: 0.9rem;">A comprehensive log of your latest actions and updates across the platform.</p>
+              </div>
+              <div class="searchbar">
+                <input aria-label="Search activity" id="activitySearch" placeholder="Search..." type="search" class="form-control form-control-sm"/>
+                <button class="btn btn--ghost btn-sm" id="clearSearch"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+            </div>
+            
+            <div class="table-responsive">
+              <table class="table table-sm" id="activityTable">
+                <thead>
+                  <tr>
+                    <th data-sort="date" role="button">Date <i class="fa-solid fa-sort ms-1"></i></th>
+                    <th data-sort="item" role="button">Item <i class="fa-solid fa-sort ms-1"></i></th>
+                    <th data-sort="type" role="button" class="d-none d-md-table-cell">Type <i class="fa-solid fa-sort ms-1"></i></th>
+                    <th data-sort="status" role="button">Status <i class="fa-solid fa-sort ms-1"></th>
+                    <th class="d-none d-sm-table-cell">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="activityBody">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+            
+            <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2">
+              <small class="text-muted" id="activityInfo" style="color: #636e72;">Page 1 of 1</small>
+              <div class="d-flex align-items-center gap-2">
+                <label class="mb-0 small d-none d-sm-inline" for="statusFilter" style="color: #636e72;">Filter</label>
+                <select class="form-control form-control-sm" id="statusFilter" style="max-width:150px">
+                  <option value="">All</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Queued">Queued</option>
+                  <option value="Error">Error</option>
+                </select>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Sidebar Content -->
+        <aside class="col-12 col-xl-4">
+          <!-- AI Advisory CTA -->
+          <div class="card mb-4">
+            <h4 class="mb-3"><i class="fa-solid fa-robot me-2"></i>AI Advisory</h4>
+            <p class="mb-3" style="color: #636e72; text-align: justify; font-size: 0.9rem;">Pressure-test your strategic approach with sophisticated AI personas inspired by top-tier operators and successful investors.</p>
+            <img alt="AI Advisory" class="rounded mb-3 w-100" style="height: 120px; object-fit: cover;" onerror="this.onerror=null;this.src='https://picsum.photos/seed/ai-cta/400/120'" src="assets/welcome_banner_background_imag45abc55cc.jpg"/>
+            <button class="btn btn--secondary w-100" id="startAdvisory">
+              <i class="fa-solid fa-comments me-2"></i>Start Simulation
+            </button>
+          </div>
+
+          <!-- Mentor Recommendations -->
+          <div class="card mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="mb-0"><i class="fa-solid fa-user-tie me-2"></i>Mentors</h4>
+              <a class="btn btn--ghost btn-sm" href="./mentor_discovery_page.html">View all</a>
+            </div>
+            <ul class="list" id="mentorList">
+              <!-- Populated via JS -->
+            </ul>
+          </div>
+
+          <!-- Learning Hub -->
+          <div class="card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="mb-0"><i class="fa-solid fa-book-open me-2"></i>Learning</h4>
+              <a class="btn btn--ghost btn-sm" href="./learning_hub_page.html">Explore</a>
+            </div>
+            <div id="articlesList">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Header scroll effect
+    function initHeaderEffect() {
+      const header = document.getElementById('siteHeader');
+      let ticking = false;
+
+      function updateHeader() {
+        const scrolled = window.scrollY > 20;
+        if (scrolled) {
+          header.style.background = 'rgba(255, 255, 255, 0.95)';
+          header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+        } else {
+          header.style.background = 'rgba(255, 255, 255, 0.9)';
+          header.style.boxShadow = '0 2px 12px rgba(0, 0, 0, 0.08)';
+        }
+        ticking = false;
+      }
+
+      function onScroll() {
+        if (!ticking) {
+          requestAnimationFrame(updateHeader);
+          ticking = true;
+        }
+      }
+
+      updateHeader();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+
+    // Mock data - 4 ideas only
+    const ideas = [
+      {id: 1, name: "NovaPay Cross-border B2B Payments", status: "Feedback Ready", updated: "2025-08-09T10:15:00Z", score: 82},
+      {id: 2, name: "AgroSense IoT for Smart Irrigation", status: "Under Review", updated: "2025-08-06T15:30:00Z"},
+      {id: 3, name: "ClinicX AI Triage Assistant", status: "Draft", updated: "2025-08-04T09:00:00Z"},
+      {id: 4, name: "FleetIQ EV Fleet Optimization", status: "Feedback Ready", updated: "2025-08-02T12:45:00Z", score: 68}
+    ];
+
+    const mentors = [
+      {name: "Priya Sharma", expertise: "Go-to-Market, SaaS", avatar: "https://picsum.photos/seed/mentor1/50/50"},
+      {name: "Daniel Kim", expertise: "Fundraising, Fintech", avatar: "https://picsum.photos/seed/mentor2/50/50"},
+      {name: "Mara García", expertise: "Product, EdTech", avatar: "https://picsum.photos/seed/mentor3/50/50"},
+      {name: "Olu Adebayo", expertise: "Ops, ClimateTech", avatar: "https://picsum.photos/seed/mentor4/50/50"}
+    ];
+
+    const articles = [
+      {title: "Crafting a compelling problem statement", category: "Product", href: "./content_detail_page.html"},
+      {title: "Validating your MVP with AI cohorts", category: "AI/ML", href: "./content_detail_page.html"},
+      {title: "Setting up mentor sessions that deliver", category: "Mentorship", href: "./content_detail_page.html"},
+      {title: "Metrics that matter for Seed funding", category: "Fundraising", href: "./content_detail_page.html"}
+    ];
+
+    const activity = [
+      {date: "2025-08-09T10:25:00Z", item: "NovaPay AI evaluation", type: "Idea", status: "Completed", action: {label: "View", href: "./evaluation_report_page.html"}},
+      {date: "2025-08-08T16:40:00Z", item: "Mentor match: Priya Sharma", type: "Mentor", status: "Queued", action: {label: "View", href: "./mentor_profile_page.html"}},
+      {date: "2025-08-07T13:10:00Z", item: "AgroSense submission updated", type: "Idea", status: "Pending", action: {label: "Continue", href: "./idea_submission_page.html"}},
+      {date: "2025-08-06T09:00:00Z", item: "Learning: MVP validation guide", type: "Article", status: "Completed", action: {label: "Open", href: "./content_detail_page.html"}},
+      {date: "2025-08-05T18:05:00Z", item: "Subscription renewed: Premium", type: "Subscription", status: "Completed", action: {label: "Receipt", href: "./payment_success_page.html"}},
+      {date: "2025-08-04T11:20:00Z", item: "ClinicX draft autosave", type: "Idea", status: "Completed", action: {label: "Edit", href: "./idea_submission_page.html"}}
+    ];
+
+    // Utility functions
+    const fmtDate = (iso) => new Date(iso).toLocaleString(undefined, {month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'});
+    const statusBadgeClass = (s) => ({
+      "Draft": "badge badge--info",
+      "Under Review": "badge badge--warning", 
+      "Feedback Ready": "badge badge--success"
+    }[s] || "badge");
+
+    const scoreColor = (v) => v >= 80 ? "#43e97b" : v >= 60 ? "#ffa726" : "#f857a6";
+
+    // Render Ideas in Clean 2x2 Grid
+    function renderIdeas() {
+      const grid = document.getElementById('ideasGrid');
+      grid.innerHTML = '';
+      
+      ideas.forEach((idea) => {
+        const card = document.createElement('div');
+        card.className = 'idea-card';
+        
+        const lastUpdated = fmtDate(idea.updated);
+        const hasScore = typeof idea.score === 'number';
+        
+        const action = idea.status === "Draft" 
+          ? {label: "Edit", href: "./idea_submission_page.html"}
+          : idea.status === "Feedback Ready" 
+            ? {label: "View Report", href: "./evaluation_report_page.html"}
+            : {label: "View Details", href: "./my_ideas_page.html"};
+
+        card.innerHTML = `
+          <div class="idea-card-header">
+            <h5 class="idea-card-title">${idea.name}</h5>
+            <span class="${statusBadgeClass(idea.status)}">${idea.status}</span>
+          </div>
+          
+          <div class="idea-card-body">
+            <div class="idea-meta">Updated: ${lastUpdated}</div>
+            
+            ${hasScore ? `
+              <div class="idea-score">
+                <span class="score-label">AI Score: ${idea.score}</span>
+                <div class="score-progress">
+                  <div class="score-progress-bar" style="width: ${idea.score}%; background: ${scoreColor(idea.score)};"></div>
+                </div>
+              </div>
+            ` : `<div class="idea-score"><span class="score-label">No score yet</span></div>`}
+          </div>
+          
+          <div class="idea-card-footer">
+            <a href="${action.href}" class="btn btn--light">${action.label}</a>
+            <a href="./my_ideas_page.html" class="btn btn--ghost" title="More options">
+              <i class="fa-solid fa-ellipsis"></i>
+            </a>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+    }
+
+    function renderMentors() {
+      const ul = document.getElementById('mentorList');
+      const fragment = document.createDocumentFragment();
+      
+      mentors.slice(0, 4).forEach((m) => {
+        const li = document.createElement('li');
+        li.className = 'list-item';
+        
+        li.innerHTML = `
+          <img src="${m.avatar}" alt="${m.name}" class="avatar" loading="lazy" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mentor-fallback/50/50'"/>
+          <div class="flex-grow-1">
+            <div class="fw-bold small">${m.name}</div>
+            <div class="small text-muted">${m.expertise}</div>
+          </div>
+          <a href="./mentor_profile_page.html" class="btn btn--light btn-sm">View</a>
+        `;
+        
+        fragment.appendChild(li);
+      });
+      
+      ul.appendChild(fragment);
+    }
+
+    function renderArticles() {
+      const list = document.getElementById('articlesList');
+      const fragment = document.createDocumentFragment();
+      
+      articles.forEach((a) => {
+        const div = document.createElement('div');
+        div.className = 'd-flex justify-content-between align-items-start p-2 rounded mb-2';
+        
+        div.innerHTML = `
+          <div class="flex-grow-1 me-2">
+            <a href="${a.href}" class="text-decoration-none fw-bold small d-block text-truncate">${a.title}</a>
+            <div class="small text-muted">${a.category}</div>
+          </div>
+          <a class="btn btn--ghost btn-sm" href="${a.href}">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        `;
+        
+        div.addEventListener('mouseenter', () => {
+          div.style.background = 'rgba(255,255,255,0.05)';
+        });
+        div.addEventListener('mouseleave', () => {
+          div.style.background = 'transparent';
+        });
+        
+        fragment.appendChild(div);
+      });
+      
+      list.appendChild(fragment);
+    }
+
+    // Activity table
+    let currentSort = {key: "date", dir: "desc"};
+
+    function renderActivity() {
+      let rows = [...activity];
+      
+      const search = document.getElementById('activitySearch')?.value.toLowerCase() || '';
+      const statusFilter = document.getElementById('statusFilter')?.value || '';
+      
+      if (search) {
+        rows = rows.filter(r => Object.values(r).some(v => String(v).toLowerCase().includes(search)));
+      }
+      
+      if (statusFilter) {
+        rows = rows.filter(r => r.status === statusFilter);
+      }
+      
+      rows.sort((a, b) => {
+        const key = currentSort.key;
+        let av = a[key], bv = b[key];
+        
+        if (key === "date") {
+          av = new Date(av).getTime();
+          bv = new Date(bv).getTime();
+        } else {
+          av = String(av).toLowerCase();
+          bv = String(bv).toLowerCase();
+        }
+        
+        return currentSort.dir === "asc" 
+          ? (av < bv ? -1 : av > bv ? 1 : 0)
+          : (av > bv ? -1 : av < bv ? 1 : 0);
+      });
+      
+      const tbody = document.getElementById('activityBody');
+      tbody.innerHTML = '';
+      
+      const fragment = document.createDocumentFragment();
+      
+      rows.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="small">${fmtDate(r.date)}</td>
+          <td><strong class="small text-truncate d-block" style="max-width: 150px;" title="${r.item}">${r.item}</strong></td>
+          <td class="d-none d-md-table-cell small">${r.type}</td>
+          <td><span class="badge ${r.status === 'Completed' ? 'badge--success' : r.status === 'Pending' ? 'badge--warning' : r.status === 'Queued' ? 'badge--info' : 'badge--error'}">${r.status}</span></td>
+          <td class="d-none d-sm-table-cell"><a href="${r.action.href}" class="btn btn--light btn-sm">${r.action.label}</a></td>
+        `;
+        fragment.appendChild(tr);
+      });
+      
+      tbody.appendChild(fragment);
+      document.getElementById('activityInfo').textContent = `${rows.length} of ${activity.length}`;
+    }
+
+    // Toast system
+    function showToast(text, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      
+      const item = document.createElement('div');
+      item.className = `toast-item`;
+      
+      item.innerHTML = `
+        <i class="fa-solid fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+        <span class="flex-grow-1">${text}</span>
+        <button class="btn btn--ghost btn-sm" onclick="this.parentElement.remove()">
+          <i class="fa-solid fa-times"></i>
+        </button>
+      `;
+      
+      container.appendChild(item);
+      setTimeout(() => {
+        if (item.parentNode) item.remove();
+      }, 4000);
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      initHeaderEffect();
+      
+      // Load content immediately
+      document.getElementById('ideasLoading').classList.add('d-none');
+      document.getElementById('ideasGrid').classList.remove('d-none');
+      
+      renderIdeas();
+      renderMentors();
+      renderArticles();
+      renderActivity();
+      
+      // Event bindings
+      let searchTimeout;
+      document.getElementById('activitySearch')?.addEventListener('input', () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(renderActivity, 200);
+      });
+      
+      document.getElementById('statusFilter')?.addEventListener('change', renderActivity);
+      
+      document.getElementById('clearSearch')?.addEventListener('click', () => {
+        document.getElementById('activitySearch').value = '';
+        renderActivity();
+      });
+      
+      document.getElementById('dismissBanner')?.addEventListener('click', () => {
+        const banner = document.querySelector('.card');
+        banner.style.transform = 'translateY(-10px)';
+        banner.style.opacity = '0';
+        setTimeout(() => banner.style.display = 'none', 200);
+      });
+      
+      document.getElementById('startAdvisory')?.addEventListener('click', () => {
+        Swal.fire({
+          title: 'Start AI Advisory?',
+          text: 'Launch chat with selected persona.',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Start',
+          cancelButtonText: 'Cancel'
+        }).then(res => {
+          if (res.isConfirmed) {
+            window.location.href = './ai_advisory_page.html';
+          }
+        });
+      });
+      
+      document.getElementById('notifyBtn')?.addEventListener('click', () => {
+        showToast('2 new mentor recommendations available', 'success');
+        setTimeout(() => showToast('AI feedback updated for NovaPay', 'info'), 500);
+      });
+      
+      // Table sorting
+      document.querySelectorAll('#activityTable thead th[role="button"]').forEach(th => {
+        th.addEventListener('click', () => {
+          const key = th.getAttribute('data-sort');
+          if (currentSort.key === key) {
+            currentSort.dir = currentSort.dir === "asc" ? "desc" : "asc";
+          } else {
+            currentSort = {key, dir: "asc"};
+          }
+          renderActivity();
+          
+          // Update sort indicators
+          document.querySelectorAll('#activityTable thead th i').forEach(i => {
+            i.className = 'fa-solid fa-sort ms-1';
+            i.style.opacity = '0.5';
+          });
+          const icon = th.querySelector('i');
+          icon.className = currentSort.dir === "asc" ? 'fa-solid fa-sort-up ms-1' : 'fa-solid fa-sort-down ms-1';
+          icon.style.opacity = '1';
+        });
+      });
+    });
+
+    // Smooth scrolling
+    document.documentElement.style.scrollBehavior = 'smooth';
+  </script>
+</body>
+</html>

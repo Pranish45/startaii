@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>Sign In • StartAI</title>
+  
+  <!-- Enhanced Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet"/>
+  
+  <!-- AOS Animation Library -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  
+  <!-- Enhanced Premium Design System -->
+  <style>
+    /* Premium Design System */
+    :root {
+      /* Premium Color Palette */
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --warning-gradient: linear-gradient(135deg, #ffa726 0%, #ff8a65 100%);
+      --danger-gradient: linear-gradient(135deg, #f857a6 0%, #ff5858 100%);
+      
+      /* Glassmorphism */
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-bg-strong: rgba(255, 255, 255, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      --blur-strength: 16px;
+      
+      /* Typography */
+      --font-sans: "Poppins", system-ui, sans-serif;
+      
+      /* Effects */
+      --border-radius: 16px;
+      --border-radius-lg: 24px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --space-6: 2rem;
+    }
+
+    /* Base Styles */
+    * { box-sizing: border-box; }
+
+    body.auth-page {
+      font-family: var(--font-sans) !important;
+      position: relative;
+      min-height: 100vh;
+      background: #0b0b0b;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Premium Animated Background */
+    .auth-page::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: 
+        linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.3)),
+        url('https://picsum.photos/seed/startup-office/1920/1080') center/cover no-repeat;
+      z-index: -1;
+      animation: backgroundShift 20s ease-in-out infinite;
+    }
+
+    @keyframes backgroundShift {
+      0%, 100% { transform: scale(1) rotate(0deg); filter: hue-rotate(0deg); }
+      50% { transform: scale(1.1) rotate(0.5deg); filter: hue-rotate(10deg); }
+    }
+
+    /* Enhanced Header */
+    .global-header {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength)) saturate(140%);
+      -webkit-backdrop-filter: blur(var(--blur-strength)) saturate(140%);
+      border-bottom: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: var(--transition);
+    }
+
+    .global-header:hover {
+      background: var(--glass-bg-strong);
+    }
+
+    /* Premium Logo */
+    .global-header .logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .global-header .logo:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
+    }
+
+    .global-header .logo img {
+      height: 2rem;
+      width: auto;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+
+    /* Enhanced Navigation */
+    .global-header nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .global-header nav a::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: -1;
+    }
+
+    .global-header nav a:hover {
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .global-header nav a:hover::before {
+      opacity: 1;
+    }
+
+    /* Premium Login Container */
+    .auth-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    /* Enhanced Login Card */
+    .auth-page .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength)) saturate(120%);
+      -webkit-backdrop-filter: blur(var(--blur-strength)) saturate(120%);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-shadow);
+      padding: 3rem;
+      max-width: 420px;
+      width: 100%;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-page .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--primary-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .auth-page .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 48px rgba(31, 38, 135, 0.5);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .auth-page .card:hover::before {
+      opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      .auth-page .card {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+      }
+    }
+
+    /* Premium Typography */
+    .card h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+      text-align: center;
+    }
+
+    .card .lead {
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      text-align: center;
+      font-weight: 400;
+    }
+
+    /* Enhanced Form Elements */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .auth-page .form-control.input {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border: 2px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 0.875rem 1.125rem;
+      font-size: 1rem;
+      color: #2d3436;
+      transition: var(--transition);
+      width: 100%;
+      font-family: var(--font-sans);
+    }
+
+    .auth-page .form-control.input:focus {
+      outline: none;
+      border-color: rgba(102, 126, 234, 0.6);
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+      background: white;
+      transform: translateY(-2px);
+    }
+
+    .auth-page .form-control.input::placeholder {
+      color: rgba(45, 52, 54, 0.5);
+      font-weight: 400;
+    }
+
+    /* Enhanced Input Group */
+    .input-group {
+      position: relative;
+      display: flex;
+    }
+
+    .input-group .form-control {
+      border-radius: var(--border-radius) 0 0 var(--border-radius);
+      border-right: none;
+    }
+
+    #togglePassword.btn {
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid var(--glass-border);
+      border-left: none;
+      color: #636e72;
+      transition: var(--transition);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1rem;
+    }
+
+    #togglePassword.btn:hover {
+      background: white;
+      color: #2d3436;
+    }
+
+    /* Premium Button Styles */
+    .btn {
+      font-weight: 600;
+      border-radius: var(--border-radius);
+      padding: 0.875rem 2rem;
+      border: none;
+      font-size: 1rem;
+      transition: var(--transition);
+      cursor: pointer;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      font-family: var(--font-sans);
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    #signInBtn.btn {
+      background: var(--primary-gradient);
+      color: white;
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+      width: 100%;
+      margin-bottom: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    #signInBtn.btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(102, 126, 234, 0.6);
+    }
+
+    #signInBtn.btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+    }
+
+    /* Enhanced Alert */
+    #formAlert {
+      background: rgba(248, 87, 166, 0.1);
+      border: 1px solid rgba(248, 87, 166, 0.3);
+      border-radius: var(--border-radius);
+      padding: 1rem;
+      margin-bottom: var(--space-6);
+      color: #ff6b9d;
+      font-weight: 500;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      display: none;
+    }
+
+    #formAlert.show {
+      display: block;
+      animation: slideInDown 0.3s ease-out;
+    }
+
+    @keyframes slideInDown {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Premium Links */
+    .auth-links {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .auth-links a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      padding: 0.5rem;
+      border-radius: var(--border-radius);
+    }
+
+    .auth-links a:hover {
+      color: white;
+      background: var(--glass-bg);
+      transform: translateY(-2px);
+    }
+
+    /* Enhanced Footer */
+    .footer {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border-top: 1px solid var(--glass-border);
+      margin-top: 4rem;
+    }
+
+    .footer .inner {
+      padding: var(--space-6);
+      text-align: center;
+    }
+
+    .footer a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      padding: 0.5rem;
+      border-radius: var(--border-radius);
+    }
+
+    .footer a:hover {
+      color: white;
+      background: var(--glass-bg);
+      transform: translateY(-2px);
+    }
+
+    /* Demo Table Enhancement */
+    .table {
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+
+    .table th,
+    .table td {
+      color: white;
+      border: none;
+      padding: 0.75rem;
+    }
+
+    .table th {
+      background: rgba(102, 126, 234, 0.2);
+      font-weight: 600;
+    }
+
+    .table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .table code {
+      background: rgba(255, 255, 255, 0.1);
+      color: #4facfe;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 480px) {
+      .table code {
+        font-size: 12px;
+      }
+    }
+
+    /* Utilities */
+    .text-center { text-align: center; }
+    .d-flex { display: flex; }
+    .align-items-center { align-items: center; }
+    .justify-content-between { justify-content: space-between; }
+    .justify-content-center { justify-content: center; }
+    .w-100 { width: 100%; }
+    .mb-3 { margin-bottom: 1rem; }
+    .py-3 { padding: 1rem 0; }
+    .px-4 { padding: 0 1.5rem; }
+    .d-none { display: none; }
+    .d-md-flex { display: flex; }
+    @media (max-width: 767.98px) {
+      .d-md-flex { display: none; }
+      .d-md-none { display: block; }
+    }
+
+    /* Loading Animation */
+    .loading {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out 0.5s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Toast System */
+    .toast-container {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 9999;
+      max-width: 400px;
+    }
+
+    .toast {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 1rem 1.5rem;
+      margin-bottom: 0.75rem;
+      color: white;
+      box-shadow: var(--glass-shadow);
+      transform: translateX(100%);
+      transition: var(--transition);
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast.success {
+      border-left: 4px solid var(--color-success);
+    }
+
+    .toast.error {
+      border-left: 4px solid var(--color-error);
+    }
+  </style>
+</head>
+
+<body class="auth-page" data-aos-easing="ease-out-cubic" data-aos-duration="800">
+  <!-- Enhanced Header -->
+  <header class="global-header py-3" data-aos="fade-down">
+    <div class="container-fluid px-4">
+      <div class="d-flex align-items-center justify-content-between">
+        <a class="logo" href="./home_page.html">
+          <img src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" alt="StartAI Logo">
+          StartAI
+        </a>
+        <nav class="d-none d-md-flex align-items-center gap-4">
+          <a href="./home_page.html">Home</a>
+          <a href="./registration_page.html">Sign Up</a>
+        </nav>
+        <div class="d-md-none">
+          <a href="./registration_page.html" class="btn btn-secondary btn-sm">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Premium Login Container -->
+  <div class="auth-container">
+    <div class="card loading" data-aos="zoom-in" data-aos-delay="400">
+      <!-- Form Alert -->
+      <div id="formAlert" class="alert alert-danger"></div>
+
+      <!-- Premium Form Header -->
+      <div class="text-center mb-4" data-aos="fade-up" data-aos-delay="600">
+        <h1>Welcome Back</h1>
+        <p class="lead">Sign in to your StartAI account to continue your journey.</p>
+      </div>
+
+      <!-- Enhanced Login Form -->
+      <form id="loginForm" novalidate data-aos="fade-up" data-aos-delay="800">
+        <!-- Email Field -->
+        <div class="form-group mb-3">
+          <label class="form-label" for="email">
+            <i class="fa-solid fa-envelope me-2"></i>Email Address
+          </label>
+          <input 
+            type="email" 
+            class="form-control input" 
+            id="email" 
+            name="email"
+            placeholder="your@email.com"
+            required
+          >
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group mb-4">
+          <label class="form-label" for="password">
+            <i class="fa-solid fa-lock me-2"></i>Password
+          </label>
+          <div class="input-group">
+            <input 
+              type="password" 
+              class="form-control input" 
+              id="password" 
+              name="password"
+              placeholder="Enter your password"
+              required
+            >
+            <button type="button" id="togglePassword" class="btn">
+              <i class="fa-solid fa-eye" id="passwordIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Premium Submit Button -->
+        <button type="submit" id="signInBtn" class="btn">
+          <i class="fa-solid fa-sign-in-alt me-2"></i>
+          Sign In
+        </button>
+
+        <!-- Auth Links -->
+        <div class="auth-links">
+          <a href="./forgot_password.html">Forgot your password?</a>
+          <span class="mx-2">•</span>
+          <a href="./registration_page.html">Create account</a>
+        </div>
+      </form>
+
+      <!-- Demo Credentials Table -->
+      <div data-aos="fade-up" data-aos-delay="1000">
+        <div class="text-center mt-4 mb-3">
+          <small style="color: rgba(255,255,255,0.7); font-weight: 500;">
+            <i class="fa-solid fa-info-circle me-2"></i>Demo Credentials
+          </small>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>Role</th>
+                <th>Email</th>
+                <th>Password</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="cursor: pointer;" onclick="fillCredentials('founder@demo.com', 'founder123')">
+                <td><strong>Founder</strong></td>
+                <td><code>founder@demo.com</code></td>
+                <td><code>founder123</code></td>
+              </tr>
+              <tr style="cursor: pointer;" onclick="fillCredentials('investor@demo.com', 'investor123')">
+                <td><strong>Investor</strong></td>
+                <td><code>investor@demo.com</code></td>
+                <td><code>investor123</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="text-center">
+          <small style="color: rgba(255,255,255,0.6);">Click any row to auto-fill credentials</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enhanced Footer -->
+  <footer class="footer" data-aos="fade-up">
+    <div class="inner">
+      <div class="d-flex justify-content-center gap-4 flex-wrap mb-3">
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/contact">Contact</a>
+        <a href="/help">Help</a>
+      </div>
+      <small style="color: rgba(255,255,255,0.6);">© 2025 StartAI. All rights reserved.</small>
+    </div>
+  </footer>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Enhanced Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 100
+    });
+
+    // Toast System
+    function showToast(message, type = 'success') {
+      const toastContainer = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <div class="d-flex align-items-center gap-3">
+          <i class="fa-solid fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+          <span>${message}</span>
+        </div>
+      `;
+      
+      toastContainer.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 100);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Password Toggle
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordField = document.getElementById('password');
+    const passwordIcon = document.getElementById('passwordIcon');
+
+    togglePassword.addEventListener('click', function() {
+      const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordField.setAttribute('type', type);
+      
+      passwordIcon.style.transform = 'scale(0.8)';
+      setTimeout(() => {
+        passwordIcon.className = type === 'password' ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash';
+        passwordIcon.style.transform = 'scale(1)';
+      }, 150);
+    });
+
+    // Demo Credentials Auto-fill
+    function fillCredentials(email, password) {
+      document.getElementById('email').value = email;
+      document.getElementById('password').value = password;
+      
+      // Add visual feedback
+      document.getElementById('email').style.transform = 'translateY(-2px)';
+      document.getElementById('password').style.transform = 'translateY(-2px)';
+      
+      setTimeout(() => {
+        document.getElementById('email').style.transform = '';
+        document.getElementById('password').style.transform = '';
+      }, 300);
+
+      showToast('Demo credentials filled! Ready to sign in.', 'success');
+    }
+
+    // Form Submission
+    const loginForm = document.getElementById('loginForm');
+    const signInBtn = document.getElementById('signInBtn');
+    const formAlert = document.getElementById('formAlert');
+
+    loginForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      // Basic validation
+      if (!email || !password) {
+        showAlert('Please fill in all fields', 'error');
+        return;
+      }
+
+      // Show loading state
+      const originalText = signInBtn.innerHTML;
+      signInBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i>Signing In...';
+      signInBtn.disabled = true;
+
+      try {
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // Demo login logic
+        if (email === 'founder@demo.com' && password === 'founder123') {
+          showToast('Welcome back! Redirecting to dashboard...', 'success');
+          setTimeout(() => {
+            window.location.href = './founder_dashboard.html';
+          }, 1500);
+        } else if (email === 'investor@demo.com' && password === 'investor123') {
+          showToast('Welcome back! Redirecting to investor portal...', 'success');
+          setTimeout(() => {
+            window.location.href = './investor_dashboard.html';
+          }, 1500);
+        } else {
+          throw new Error('Invalid credentials');
+        }
+
+      } catch (error) {
+        console.error('Login error:', error);
+        showAlert('Invalid email or password. Please try again.', 'error');
+        
+        // Restore button
+        signInBtn.innerHTML = originalText;
+        signInBtn.disabled = false;
+      }
+    });
+
+    function showAlert(message, type) {
+      formAlert.textContent = message;
+      formAlert.className = `alert alert-${type === 'error' ? 'danger' : 'success'} show`;
+      
+      // Auto hide after 5 seconds
+      setTimeout(() => {
+        formAlert.classList.remove('show');
+      }, 5000);
+    }
+
+    // Loading Animation
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        document.querySelectorAll('.loading').forEach(el => {
+          el.classList.remove('loading');
+        });
+      }, 500);
+    });
+
+    // Smooth Scrolling
+    document.documentElement.style.scrollBehavior = 'smooth';
+  </script>
+</body>
+</html>

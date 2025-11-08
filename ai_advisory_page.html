@@ -1,0 +1,2257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>StartAI • Premium AI Advisory</title>
+  
+  <!-- Enhanced Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
+  
+  <!-- AOS Animation Library -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  
+  <style>
+    /* === PREMIUM AI ADVISORY DESIGN SYSTEM === */
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --warning-gradient: linear-gradient(135deg, #ffa726 0%, #ff8a65 100%);
+      --danger-gradient: linear-gradient(135deg, #f857a6 0%, #ff5858 100%);
+      --info-gradient: linear-gradient(135deg, #667eea 0%, #4facfe 100%);
+      --ai-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --elon-gradient: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+      --ratan-gradient: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+      --steve-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-bg-strong: rgba(255, 255, 255, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      --blur-strength: 16px;
+      
+      --font-sans: "Poppins", system-ui, sans-serif;
+      --border-radius: 16px;
+      --border-radius-lg: 24px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: auto;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      color: #2d3436;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      scroll-behavior: auto;
+    }
+
+    /* Animated Background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 75% 25%, rgba(118, 75, 162, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 50% 75%, rgba(79, 172, 254, 0.06) 0%, transparent 50%);
+      z-index: -1;
+      animation: float 25s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(20px, -20px) scale(1.02); }
+      66% { transform: translate(-15px, 15px) scale(0.98); }
+    }
+
+    /* Enhanced Loading States */
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid var(--primary-gradient);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Connection Status */
+    .connection-status {
+      position: fixed;
+      top: 90px;
+      right: 20px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      z-index: 1001;
+      transition: var(--transition);
+      opacity: 0;
+      transform: translateX(100%);
+    }
+
+    .connection-status.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .connection-status.online {
+      border-left: 4px solid #43e97b;
+      color: #2d3436;
+    }
+
+    .connection-status.offline {
+      border-left: 4px solid #f857a6;
+      color: #2d3436;
+    }
+
+    .connection-status.connecting {
+      border-left: 4px solid #ffa726;
+      color: #2d3436;
+    }
+
+    /* Header */
+    .header {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength)) saturate(140%);
+      -webkit-backdrop-filter: blur(var(--blur-strength)) saturate(140%);
+      border-bottom: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: var(--transition);
+    }
+
+    .header:hover {
+      background: var(--glass-bg-strong);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      background: var(--ai-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
+    }
+
+    .nav {
+      display: none;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .nav {
+        display: flex;
+      }
+    }
+
+    .nav-link {
+      color: #2d3436;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-link::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--ai-gradient);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: -1;
+    }
+
+    .nav-link:hover {
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .nav-link:hover::before {
+      opacity: 1;
+    }
+
+    .nav-link.active {
+      background: var(--ai-gradient);
+      color: white;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Main Content */
+    .main {
+      padding: 2rem;
+      background: transparent;
+      min-height: calc(100vh - 80px);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-shadow);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--ai-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(31, 38, 135, 0.5);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+      position: relative;
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .welcome-bg {
+      position: relative;
+      min-height: 300px;
+      overflow: hidden;
+      background: var(--ai-gradient);
+    }
+
+    .welcome-overlay {
+      position: absolute;
+      inset: 0;
+      background: 
+        linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.4)),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+      backdrop-filter: blur(2px);
+    }
+
+    .welcome-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      color: white;
+      z-index: 2;
+    }
+
+    .welcome-content h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.9) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .welcome-content p {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      line-height: 1.6;
+      opacity: 0.95;
+      max-width: 600px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Advisory Notice */
+    .advisory-notice {
+      background: linear-gradient(135deg, rgba(255, 167, 38, 0.1), rgba(255, 107, 107, 0.05));
+      border: 2px solid rgba(255, 167, 38, 0.3);
+      border-radius: var(--border-radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .advisory-notice::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--warning-gradient);
+    }
+
+    .advisory-notice h4 {
+      color: #2d3436;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* PREMIUM PERSONA CARDS GRID */
+    .personas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .persona-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-shadow);
+      overflow: hidden;
+      transition: var(--transition);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .persona-card.unavailable {
+      opacity: 0.6;
+      cursor: not-allowed;
+      filter: grayscale(30%);
+    }
+
+    .persona-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .persona-card.elon::before {
+      background: var(--elon-gradient);
+    }
+
+    .persona-card.ratan::before {
+      background: var(--ratan-gradient);
+    }
+
+    .persona-card.steve::before {
+      background: var(--steve-gradient);
+    }
+
+    .persona-card:hover:not(.unavailable) {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 48px rgba(31, 38, 135, 0.5);
+    }
+
+    .persona-card:hover:not(.unavailable)::before {
+      opacity: 1;
+    }
+
+    .persona-header {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .persona-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .persona-card:hover:not(.unavailable) .persona-image {
+      transform: scale(1.05);
+    }
+
+    .persona-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+      display: flex;
+      align-items: flex-end;
+      padding: 1.5rem;
+    }
+
+    .persona-title {
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 800;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .persona-subtitle {
+      color: rgba(255,255,255,0.9);
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+
+    .persona-content {
+      padding: 2rem;
+    }
+
+    .persona-description {
+      color: #636e72;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .persona-specialties {
+      margin-bottom: 1.5rem;
+    }
+
+    .persona-specialties h5 {
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #2d3436;
+    }
+
+    .specialties-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .specialty-tag {
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .persona-card.elon .specialty-tag {
+      background: var(--elon-gradient);
+      color: white;
+    }
+
+    .persona-card.ratan .specialty-tag {
+      background: var(--ratan-gradient);
+      color: white;
+    }
+
+    .persona-card.steve .specialty-tag {
+      background: var(--steve-gradient);
+      color: white;
+    }
+
+    .persona-stats {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--glass-border);
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: #2d3436;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: #636e72;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .persona-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      font-weight: 600;
+      border-radius: var(--border-radius);
+      padding: 0.75rem 1.5rem;
+      border: none;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+      font-family: var(--font-sans);
+      justify-content: center;
+      flex: 1;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover:not(:disabled)::before {
+      left: 100%;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+    }
+
+    .btn-elon {
+      background: var(--elon-gradient);
+      color: white;
+      box-shadow: 0 4px 16px rgba(255, 65, 108, 0.4);
+    }
+
+    .btn-elon:hover:not(:disabled) {
+      box-shadow: 0 8px 24px rgba(255, 65, 108, 0.6);
+      color: white;
+    }
+
+    .btn-ratan {
+      background: var(--ratan-gradient);
+      color: white;
+      box-shadow: 0 4px 16px rgba(255, 234, 167, 0.4);
+    }
+
+    .btn-ratan:hover:not(:disabled) {
+      box-shadow: 0 8px 24px rgba(255, 234, 167, 0.6);
+      color: white;
+    }
+
+    .btn-steve {
+      background: var(--steve-gradient);
+      color: white;
+      box-shadow: 0 4px 16px rgba(168, 237, 234, 0.4);
+    }
+
+    .btn-steve:hover:not(:disabled) {
+      box-shadow: 0 8px 24px rgba(168, 237, 234, 0.6);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: var(--glass-bg);
+      color: #2d3436;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--glass-bg-strong);
+      color: #2d3436;
+    }
+
+    /* FULL WIDTH SESSION HISTORY TABLE */
+    .session-history-section {
+      width: 100%;
+    }
+
+    .table-container {
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      margin: 1.5rem 0;
+      position: relative;
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .table-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--ai-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .table-container:hover::before {
+      opacity: 1;
+    }
+
+    .table {
+      width: 100%;
+      background: transparent;
+      margin: 0;
+      font-size: 0.9rem;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+      min-width: 800px;
+    }
+
+    .table th:nth-child(1) { width: 15%; }  /* Date */
+    .table th:nth-child(2) { width: 20%; }  /* Persona */
+    .table th:nth-child(3) { width: 25%; }  /* Topic */
+    .table th:nth-child(4) { width: 15%; }  /* Messages */
+    .table th:nth-child(5) { width: 15%; }  /* Sentiment */
+    .table th:nth-child(6) { width: 10%; }  /* Actions */
+
+    .table th {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.12), rgba(118, 75, 162, 0.08));
+      border: none;
+      color: #2d3436;
+      font-weight: 700;
+      padding: 1.2rem 1rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .table th:nth-child(2), 
+    .table th:nth-child(4), 
+    .table th:nth-child(5),
+    .table th:nth-child(6) {
+      text-align: center;
+    }
+
+    .table th::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+    }
+
+    .table td {
+      border: none;
+      padding: 1.2rem 1rem;
+      vertical-align: middle;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+      transition: var(--transition);
+      position: relative;
+      text-align: left;
+    }
+
+    .table td:nth-child(2), 
+    .table td:nth-child(4), 
+    .table td:nth-child(5),
+    .table td:nth-child(6) {
+      text-align: center;
+    }
+
+    .table tbody tr:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(102, 126, 234, 0.03));
+    }
+
+    /* Persona Badge in Table */
+    .persona-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .persona-badge.elon {
+      background: var(--elon-gradient);
+    }
+
+    .persona-badge.ratan {
+      background: var(--ratan-gradient);
+    }
+
+    .persona-badge.steve {
+      background: var(--steve-gradient);
+    }
+
+    .persona-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* Sentiment Indicators */
+    .sentiment-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    .sentiment-badge.positive {
+      background: var(--success-gradient);
+      color: white;
+    }
+
+    .sentiment-badge.neutral {
+      background: var(--warning-gradient);
+      color: white;
+    }
+
+    .sentiment-badge.negative {
+      background: var(--danger-gradient);
+      color: white;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 0.25rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-action {
+      padding: 0.25rem;
+      border-radius: 6px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      color: #636e72;
+      transition: var(--transition);
+      cursor: pointer;
+      font-size: 0.8rem;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .btn-action:hover {
+      background: var(--glass-bg-strong);
+      color: #2d3436;
+      transform: translateY(-1px);
+    }
+
+    .btn-action.view:hover {
+      color: #4facfe;
+    }
+
+    .btn-action.delete:hover {
+      color: #f857a6;
+    }
+
+    /* Chat Modal Styles */
+    .chat-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .chat-container {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      width: 100%;
+      max-width: 800px;
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chat-persona-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .chat-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 0.75rem 1rem;
+      border-radius: var(--border-radius);
+      position: relative;
+    }
+
+    .message.user {
+      align-self: flex-end;
+      background: var(--ai-gradient);
+      color: white;
+    }
+
+    .message.ai {
+      align-self: flex-start;
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-border);
+    }
+
+    .message-time {
+      font-size: 0.7rem;
+      opacity: 0.7;
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    .chat-input {
+      padding: 1rem;
+      border-top: 1px solid var(--glass-border);
+      display: flex;
+      gap: 1rem;
+    }
+
+    .chat-input input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.95);
+      border: 2px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 0.75rem 1rem;
+      font-family: var(--font-sans);
+    }
+
+    .chat-input input:focus {
+      outline: none;
+      border-color: rgba(102, 126, 234, 0.6);
+    }
+
+    .chat-input input:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Enhanced Loading States */
+    .typing-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px;
+    }
+
+    .typing-indicator span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #667eea;
+      animation: typing 1.4s infinite;
+    }
+
+    .typing-indicator span:nth-child(1) { animation-delay: 0s; }
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
+      30% { transform: translateY(-10px); opacity: 1; }
+    }
+
+    /* Empty States */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #636e72;
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.3;
+    }
+
+    .empty-state h3 {
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+
+    /* Utilities */
+    .d-flex { display: flex; }
+    .align-items-center { align-items: center; }
+    .justify-content-between { justify-content: space-between; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-3 { gap: 0.75rem; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .mb-0 { margin-bottom: 0; }
+    .mb-3 { margin-bottom: 0.75rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .text-muted { color: #636e72; }
+
+    /* Typography */
+    h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      background: var(--ai-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+
+    h3 {
+      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+
+    h4 {
+      font-size: clamp(1.125rem, 2vw, 1.5rem);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #2d3436;
+    }
+
+    h5 {
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #2d3436;
+    }
+
+    /* Loading Animation */
+    .loading {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out 0.3s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 9999;
+      max-width: 400px;
+    }
+
+    .toast {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 1rem 1.5rem;
+      margin-bottom: 0.75rem;
+      color: #2d3436;
+      box-shadow: var(--glass-shadow);
+      transform: translateX(100%);
+      transition: var(--transition);
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast.success {
+      border-left: 4px solid #43e97b;
+    }
+
+    .toast.info {
+      border-left: 4px solid #4facfe;
+    }
+
+    .toast.warning {
+      border-left: 4px solid #ffa726;
+    }
+
+    .toast.error {
+      border-left: 4px solid #f857a6;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .main {
+        padding: 1rem;
+      }
+      
+      .card {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      
+      .personas-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .persona-content {
+        padding: 1.5rem;
+      }
+      
+      .welcome-content {
+        padding: 1rem;
+      }
+      
+      .table th,
+      .table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8rem;
+      }
+
+      .chat-modal {
+        padding: 1rem;
+      }
+
+      .chat-container {
+        height: 90vh;
+      }
+
+      .persona-actions {
+        flex-direction: column;
+      }
+
+      .connection-status {
+        top: 70px;
+        right: 10px;
+        font-size: 0.7rem;
+        padding: 0.25rem 0.75rem;
+      }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--ai-gradient);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-gradient);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Connection Status -->
+  <div class="connection-status" id="connectionStatus">
+    <i class="fa-solid fa-wifi"></i>
+    <span id="statusText">Connecting...</span>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a class="logo" href="/">
+          <i class="fa-solid fa-brain"></i>
+          StartAI Advisory
+        </a>
+        
+        <nav class="nav">
+          <a class="nav-link" href="/founder-dashboard">
+            <i class="fa-solid fa-chart-line"></i> Dashboard
+          </a>
+          <a class="nav-link active" href="/ai-advisory">
+            <i class="fa-solid fa-brain"></i> AI Advisory
+          </a>
+          <a class="nav-link" href="/mentorship">
+            <i class="fa-solid fa-users"></i> Mentorship
+          </a>
+          <a class="nav-link" href="/learning-hub">
+            <i class="fa-solid fa-graduation-cap"></i> Learning
+          </a>
+          <a class="nav-link" href="/my-ideas">
+            <i class="fa-solid fa-lightbulb"></i> My Ideas
+          </a>
+        </nav>
+        
+        <div class="user-menu">
+          <button class="btn btn-secondary" style="padding: 0.5rem;" onclick="showStats()" title="System Stats">
+            <i class="fa-solid fa-chart-bar"></i>
+          </button>
+          <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" title="User Menu">
+            <i class="fa-solid fa-user"></i>
+            John <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <!-- Welcome Section -->
+    <section class="welcome-section loading">
+      <div class="welcome-bg">
+        <div class="welcome-overlay"></div>
+        <div class="welcome-content">
+          <h1>AI Advisory</h1>
+          <p>Choose an AI advisor to begin your session. Get strategic insights from legendary business personas powered by advanced AI and comprehensive knowledge bases.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Advisory Notice -->
+    <section class="advisory-notice loading">
+      <h4><i class="fa-solid fa-info-circle"></i>Advisory Notice</h4>
+      <p>AI responses are for guidance only and should be validated with human experts. Our advanced system uses real knowledge bases and Perplexity AI to provide contextual, persona-specific advice tailored to your startup needs.</p>
+    </section>
+
+    <!-- AI Personas Grid -->
+    <section class="loading">
+      <div class="card">
+        <h2 style="margin-bottom: 2rem;"><i class="fa-solid fa-users" style="margin-right: 0.75rem;"></i>Select an AI Persona</h2>
+        <p class="text-muted mb-4">Choose an AI advisor to begin your session. Each persona is powered by comprehensive knowledge bases and advanced AI to provide authentic, valuable guidance.</p>
+        
+        <div class="personas-grid" id="personasGrid">
+          <!-- Loading placeholder -->
+          <div class="persona-card" style="min-height: 400px; display: flex; align-items: center; justify-content: center;">
+            <div class="loading-spinner"></div>
+          </div>
+          <div class="persona-card" style="min-height: 400px; display: flex; align-items: center; justify-content: center;">
+            <div class="loading-spinner"></div>
+          </div>
+          <div class="persona-card" style="min-height: 400px; display: flex; align-items: center; justify-content: center;">
+            <div class="loading-spinner"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FULL WIDTH SESSION HISTORY TABLE -->
+    <section class="session-history-section loading">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h3><i class="fa-solid fa-history" style="margin-right: 0.75rem;"></i>Session History</h3>
+          <p class="text-muted mb-0">Your previous AI advisory sessions and conversations with detailed analytics.</p>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.8rem;" onclick="refreshSessions()" title="Refresh Sessions">
+            <i class="fa-solid fa-refresh"></i> Refresh
+          </button>
+          <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.8rem;" onclick="exportSessions()" title="Export to CSV">
+            <i class="fa-solid fa-download"></i> Export
+          </button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="table" id="sessionTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Persona</th>
+              <th>Topic</th>
+              <th>Messages</th>
+              <th>Sentiment</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="sessionTableBody">
+            <tr>
+              <td colspan="6" class="text-center" style="padding: 2rem;">
+                <div class="loading-spinner" style="margin: 0 auto;"></div>
+                <p style="margin-top: 1rem;">Loading session history...</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Table Footer -->
+      <div class="d-flex justify-content-between align-items-center" style="margin-top: 1.5rem;">
+        <small class="text-muted" id="tableInfo">Loading sessions...</small>
+        <div class="d-flex gap-2" id="pagination">
+          <!-- Pagination will be populated via JavaScript -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Chat Modal -->
+  <div class="chat-modal" id="chatModal">
+    <div class="chat-container">
+      <div class="chat-header">
+        <div class="chat-persona-info">
+          <img id="chatAvatar" src="" alt="" class="chat-avatar">
+          <div>
+            <h4 id="chatPersonaName">Loading...</h4>
+            <small id="chatPersonaRole" class="text-muted">Initializing...</small>
+          </div>
+        </div>
+        <button class="btn btn-secondary" style="padding: 0.5rem;" onclick="closeChat()" title="Close Chat">
+          <i class="fa-solid fa-times"></i>
+        </button>
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <!-- Chat messages will be populated here -->
+      </div>
+      <div class="chat-input">
+        <input type="text" id="messageInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+        <button class="btn" style="padding: 0.75rem;" id="sendButton" onclick="sendMessage()" title="Send Message">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+  <script>
+    // === ENHANCED BACKEND INTEGRATION WITH PERPLEXITY API ===
+    const API_BASE_URL = window.location.origin + '/api';
+    let currentSession = null;
+    let currentPersona = null;
+    let isOnline = false;
+    let personas = {};
+    let sessionHistory = [];
+    let connectionRetryCount = 0;
+    let maxRetries = 3;
+
+    // PREVENT AUTO SCROLL TO BOTTOM ON REFRESH
+    document.addEventListener('DOMContentLoaded', function() {
+      window.scrollTo(0, 0);
+      document.body.style.scrollBehavior = 'auto';
+      document.documentElement.style.scrollBehavior = 'auto';
+      
+      setTimeout(() => {
+        document.body.style.scrollBehavior = 'smooth';
+        document.documentElement.style.scrollBehavior = 'smooth';
+      }, 1000);
+
+      // Initialize the app
+      initializeApp();
+    });
+
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 100
+    });
+
+    // Enhanced App Initialization with Retry Logic
+    async function initializeApp() {
+      updateConnectionStatus('connecting');
+      
+      try {
+        // Check backend health with timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+        
+        const healthResponse = await fetch(`${API_BASE_URL.replace('/api', '')}/health`, { 
+          signal: controller.signal 
+        });
+        clearTimeout(timeoutId);
+        
+        const healthData = await healthResponse.json();
+        
+        if (healthData.status === 'healthy' || healthData.status === 'degraded') {
+          isOnline = true;
+          updateConnectionStatus('online');
+          connectionRetryCount = 0;
+          
+          // Load personas and sessions in parallel
+          await Promise.all([
+            loadPersonas(),
+            loadSessionHistory()
+          ]);
+          
+          showToast(`Connected to AI Advisory system! ${healthData.personas_loaded} personas available.`, 'success');
+        } else {
+          throw new Error('Backend unhealthy');
+        }
+      } catch (error) {
+        console.error('Backend connection failed:', error);
+        connectionRetryCount++;
+        
+        if (connectionRetryCount <= maxRetries) {
+          showToast(`Connection failed. Retrying... (${connectionRetryCount}/${maxRetries})`, 'warning');
+          setTimeout(() => initializeApp(), 3000);
+          return;
+        }
+        
+        isOnline = false;
+        updateConnectionStatus('offline');
+        
+        // Load fallback data
+        loadFallbackData();
+        showToast('Using offline mode - limited functionality available', 'warning');
+      }
+
+      // Initialize UI
+      setTimeout(() => {
+        document.querySelectorAll('.loading').forEach(el => el.classList.remove('loading'));
+      }, 1000);
+    }
+
+    // Connection Status Management
+    function updateConnectionStatus(status) {
+      const statusElement = document.getElementById('connectionStatus');
+      const statusText = document.getElementById('statusText');
+      
+      statusElement.className = `connection-status ${status}`;
+      
+      switch (status) {
+        case 'online':
+          statusText.innerHTML = '<i class="fa-solid fa-check"></i> Connected';
+          statusElement.classList.add('show');
+          setTimeout(() => statusElement.classList.remove('show'), 4000);
+          break;
+        case 'offline':
+          statusText.innerHTML = '<i class="fa-solid fa-exclamation-triangle"></i> Offline Mode';
+          statusElement.classList.add('show');
+          break;
+        case 'connecting':
+          statusText.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Connecting...';
+          statusElement.classList.add('show');
+          break;
+      }
+    }
+
+    // Enhanced Error Handling with Exponential Backoff
+    async function makeAPIRequest(url, options = {}) {
+      let lastError;
+      let delay = 1000;
+      
+      for (let attempt = 1; attempt <= 3; attempt++) {
+        try {
+          const response = await fetch(url, {
+            ...options,
+            timeout: 30000 // 30 second timeout
+          });
+          
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+          
+          return response;
+        } catch (error) {
+          lastError = error;
+          console.warn(`API request attempt ${attempt} failed:`, error.message);
+          
+          if (attempt < 3) {
+            await new Promise(resolve => setTimeout(resolve, delay));
+            delay *= 2; // Exponential backoff
+          }
+        }
+      }
+      
+      throw lastError;
+    }
+
+    // Load personas from backend with enhanced error handling
+    async function loadPersonas() {
+      try {
+        const response = await makeAPIRequest(`${API_BASE_URL}/personas`);
+        const personasData = await response.json();
+        
+        // Store personas data
+        personas = {};
+        personasData.forEach(persona => {
+          personas[persona.persona_id] = persona;
+        });
+        
+        renderPersonas(personasData);
+        
+      } catch (error) {
+        console.error('Failed to load personas:', error);
+        showToast('Failed to load personas. Using fallback data.', 'warning');
+        loadFallbackData();
+      }
+    }
+
+    // Load session history from backend with pagination
+    async function loadSessionHistory(limit = 20) {
+      try {
+        const response = await makeAPIRequest(`${API_BASE_URL}/sessions?limit=${limit}`);
+        sessionHistory = await response.json();
+        renderSessionHistory();
+        
+      } catch (error) {
+        console.error('Failed to load session history:', error);
+        renderFallbackSessions();
+      }
+    }
+
+    // Enhanced Persona Rendering with Error Handling
+    function renderPersonas(personasData) {
+      const container = document.getElementById('personasGrid');
+      
+      if (!personasData || personasData.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fa-solid fa-robot"></i>
+            <h3>No Personas Available</h3>
+            <p>Please check your connection and try again.</p>
+            <button class="btn btn-secondary" onclick="initializeApp()">
+              <i class="fa-solid fa-refresh"></i> Retry
+            </button>
+          </div>
+        `;
+        return;
+      }
+      
+      container.innerHTML = personasData.map(persona => {
+        const isAvailable = persona.available !== false;
+        const unavailableClass = !isAvailable ? 'unavailable' : '';
+        
+        return `
+          <div class="persona-card ${persona.persona_id} ${unavailableClass}" onclick="${isAvailable ? `startChat('${persona.persona_id}')` : 'void(0)'}">
+            <div class="persona-header">
+              <img src="${persona.avatar}" alt="${persona.name}" class="persona-image" 
+                   onerror="this.src='https://via.placeholder.com/400x200/${persona.persona_id === 'elon' ? 'ff416c' : persona.persona_id === 'ratan' ? 'ffeaa7' : 'a8edea'}/white?text=${encodeURIComponent(persona.name)}'">
+              <div class="persona-overlay">
+                <div>
+                  <div class="persona-title">${persona.name}</div>
+                  <div class="persona-subtitle">${persona.role}</div>
+                  ${!isAvailable ? '<div style="margin-top: 0.5rem;"><span style="background: rgba(248, 87, 166, 0.9); padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.7rem;">OFFLINE</span></div>' : ''}
+                </div>
+              </div>
+            </div>
+            <div class="persona-content">
+              <p class="persona-description">
+                Get strategic insights from the AI persona of ${persona.name.split(' AI')[0]}. 
+                Specialized in ${persona.specialties.slice(0, 2).join(' and ').toLowerCase()} with deep expertise 
+                in ${persona.specialties.length > 2 ? persona.specialties.slice(2).join(', ').toLowerCase() + '.' : 'business strategy.'}
+              </p>
+              
+              <div class="persona-specialties">
+                <h5>Core Specialties</h5>
+                <div class="specialties-tags">
+                  ${persona.specialties.map(specialty => `<span class="specialty-tag">${specialty}</span>`).join('')}
+                </div>
+              </div>
+
+              <div class="persona-stats">
+                <div class="stat">
+                  <div class="stat-value">${formatNumber(persona.stats.sessions) || '0'}</div>
+                  <div class="stat-label">Sessions</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-value">${persona.stats.rating || '0'}</div>
+                  <div class="stat-label">Rating</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-value">${persona.stats.accuracy || '0'}%</div>
+                  <div class="stat-label">Accuracy</div>
+                </div>
+              </div>
+
+              <div class="persona-actions">
+                <button class="btn btn-${persona.persona_id}" onclick="event.stopPropagation(); startChat('${persona.persona_id}')" ${!isAvailable ? 'disabled' : ''}>
+                  <i class="fa-solid fa-${isAvailable ? 'comments' : 'times'}"></i> ${isAvailable ? 'Start Chat' : 'Unavailable'}
+                </button>
+                <button class="btn btn-secondary" onclick="event.stopPropagation(); viewPersonaDetails('${persona.persona_id}')">
+                  <i class="fa-solid fa-info"></i> Details
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Enhanced Chat Functions with Real-time Features
+    async function startChat(personaId) {
+      if (!personas[personaId] || personas[personaId].available === false) {
+        showToast('This persona is currently unavailable. Please try again later.', 'error');
+        return;
+      }
+
+      currentPersona = personaId;
+      currentSession = null; // Start new session
+      
+      const persona = personas[personaId];
+      
+      // Set up chat UI with persona-specific styling
+      document.getElementById('chatAvatar').src = persona.avatar;
+      document.getElementById('chatPersonaName').textContent = persona.name;
+      document.getElementById('chatPersonaRole').textContent = persona.role;
+      
+      // Apply persona-specific colors
+      const sendButton = document.getElementById('sendButton');
+      if (persona.color_scheme && persona.color_scheme.gradient) {
+        sendButton.style.background = persona.color_scheme.gradient;
+      }
+      
+      // Clear previous messages and add welcome message
+      const messagesContainer = document.getElementById('chatMessages');
+      messagesContainer.innerHTML = '';
+      
+      const welcomeMessages = {
+        'elon': "Think big, move fast, and don't be afraid to fail. I believe in first principles thinking and 10x improvements. What's the biggest challenge your startup is facing right now?",
+        'ratan': "Success is built on ethics, values, and serving all stakeholders. I believe in sustainable growth and creating businesses with purpose. How can I help you build something meaningful?",
+        'steve': "Design is not just how it looks, but how it works. Great products are at the intersection of technology and liberal arts. What product are you building, and how can we make it magical for users?"
+      };
+      
+      addMessage('ai', welcomeMessages[personaId] || "Hello! I'm here to help you with strategic guidance for your startup. What would you like to discuss?");
+      
+      // Show modal
+      document.getElementById('chatModal').style.display = 'flex';
+      document.getElementById('messageInput').focus();
+      
+      showToast(`Started new session with ${persona.name}`, 'info');
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const message = input.value.trim();
+      
+      if (!message || !currentPersona) return;
+      
+      // Disable input while processing
+      input.disabled = true;
+      document.getElementById('sendButton').disabled = true;
+      
+      addMessage('user', message);
+      input.value = '';
+      
+      // Show typing indicator
+      addTypingIndicator();
+      
+      try {
+        if (isOnline) {
+          // Send to backend with enhanced error handling
+          const response = await makeAPIRequest(`${API_BASE_URL}/chat`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              message: message,
+              persona_id: currentPersona,
+              session_id: currentSession
+            })
+          });
+          
+          const data = await response.json();
+          
+          // Remove typing indicator
+          removeTypingIndicator();
+          
+          // Update session ID
+          currentSession = data.session_id;
+          
+          // Add AI response with processing time info
+          addMessage('ai', data.response, {
+            processingTime: data.processing_time,
+            tokenCount: data.token_count
+          });
+          
+          // Update session history in background
+          setTimeout(() => loadSessionHistory(), 2000);
+          
+        } else {
+          // Fallback to enhanced mock response
+          setTimeout(() => {
+            removeTypingIndicator();
+            const mockResponse = getEnhancedMockResponse(currentPersona, message);
+            addMessage('ai', mockResponse);
+          }, 1500 + Math.random() * 2000);
+        }
+        
+      } catch (error) {
+        console.error('Chat error:', error);
+        removeTypingIndicator();
+        
+        // Fallback to mock response with error indication
+        const mockResponse = getEnhancedMockResponse(currentPersona, message);
+        addMessage('ai', `${mockResponse}\n\n⚠️ *Note: This response was generated offline due to connection issues.*`);
+        
+        showToast('Connection issue - using offline response mode', 'warning');
+      } finally {
+        // Re-enable input
+        input.disabled = false;
+        document.getElementById('sendButton').disabled = false;
+        input.focus();
+      }
+    }
+
+    function addMessage(sender, text, metadata = {}) {
+      const messagesContainer = document.getElementById('chatMessages');
+      const message = document.createElement('div');
+      message.className = `message ${sender}`;
+      
+      const timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      
+      if (sender === 'user') {
+        message.innerHTML = `
+          <div>${text}</div>
+          <small class="message-time">${timestamp}</small>
+        `;
+      } else {
+        let metadataInfo = '';
+        if (metadata.processingTime) {
+          metadataInfo = ` • ${(metadata.processingTime * 1000).toFixed(0)}ms`;
+        }
+        if (metadata.tokenCount) {
+          metadataInfo += ` • ${metadata.tokenCount} tokens`;
+        }
+        
+        message.innerHTML = `
+          <div>${text}</div>
+          <small class="message-time">${timestamp}${metadataInfo}</small>
+        `;
+      }
+      
+      messagesContainer.appendChild(message);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function addTypingIndicator() {
+      const messagesContainer = document.getElementById('chatMessages');
+      const typingDiv = document.createElement('div');
+      typingDiv.id = 'typing-indicator';
+      typingDiv.className = 'message ai';
+      typingDiv.innerHTML = `
+        <div class="typing-indicator">
+          <span></span><span></span><span></span>
+        </div>
+        <small class="message-time">typing...</small>
+      `;
+      messagesContainer.appendChild(typingDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+      const typingIndicator = document.getElementById('typing-indicator');
+      if (typingIndicator) {
+        typingIndicator.remove();
+      }
+    }
+
+    function closeChat() {
+      document.getElementById('chatModal').style.display = 'none';
+      currentPersona = null;
+      // Keep currentSession for potential continuation
+    }
+
+    function handleKeyPress(event) {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+      }
+    }
+
+    // Enhanced Session Management
+    function renderSessionHistory() {
+      const tbody = document.getElementById('sessionTableBody');
+      const tableInfo = document.getElementById('tableInfo');
+      
+      if (!sessionHistory || sessionHistory.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="empty-state" style="padding: 3rem;">
+              <i class="fa-solid fa-comments"></i>
+              <h3>No Conversations Yet</h3>
+              <p>Start a chat with any persona above to begin building your session history!</p>
+              <button class="btn btn-secondary" onclick="document.querySelector('.personas-grid').scrollIntoView()">
+                <i class="fa-solid fa-arrow-up"></i> Choose a Persona
+              </button>
+            </td>
+          </tr>
+        `;
+        tableInfo.textContent = 'No sessions found';
+        return;
+      }
+      
+      const displaySessions = sessionHistory.slice(0, 15);
+      
+      tbody.innerHTML = displaySessions.map((session, index) => {
+        const persona = personas[session.persona_id];
+        const date = new Date(session.created_at).toLocaleDateString();
+        const time = new Date(session.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        
+        return `
+          <tr>
+            <td>
+              <div style="font-weight: 600;">${date}</div>
+              <small class="text-muted">${time}</small>
+            </td>
+            <td>${getPersonaBadge(session.persona_id, persona)}</td>
+            <td>
+              <div style="font-weight: 600; margin-bottom: 0.25rem; max-width: 200px; overflow: hidden; text-overflow: ellipsis;">${session.topic || 'General Discussion'}</div>
+              <small class="text-muted">${session.message_count} messages • ${calculateDuration(session)}</small>
+            </td>
+            <td>
+              <div style="font-weight: 600; text-align: center;">${session.message_count}</div>
+            </td>
+            <td>${getSentimentBadge(session.sentiment || 'neutral')}</td>
+            <td>
+              <div class="action-buttons">
+                <button class="btn-action view" onclick="viewSession('${session.session_id}')" title="Continue Conversation">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+                <button class="btn-action delete" onclick="deleteSession('${session.session_id}')" title="Delete Session">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+      
+      tableInfo.textContent = `Showing ${displaySessions.length} of ${sessionHistory.length} sessions`;
+      
+      // Update pagination
+      updatePagination(sessionHistory.length, displaySessions.length);
+    }
+
+    function getPersonaBadge(personaId, persona) {
+      if (!persona) {
+        return `<span class="text-muted">${personaId}</span>`;
+      }
+      
+      return `
+        <div class="persona-badge ${personaId}">
+          <img src="${persona.avatar}" alt="${persona.name}" class="persona-avatar" 
+               onerror="this.style.display='none'">
+          ${persona.name}
+        </div>
+      `;
+    }
+
+    function getSentimentBadge(sentiment) {
+      const sentimentConfig = {
+        positive: { icon: 'fa-smile', color: 'positive' },
+        neutral: { icon: 'fa-meh', color: 'neutral' },
+        negative: { icon: 'fa-frown', color: 'negative' }
+      };
+      
+      const config = sentimentConfig[sentiment] || sentimentConfig.neutral;
+      
+      return `<span class="sentiment-badge ${config.color}">
+        <i class="fa-solid ${config.icon}"></i> ${sentiment}
+      </span>`;
+    }
+
+    function calculateDuration(session) {
+      if (!session.updated_at || !session.created_at) return 'Unknown';
+      
+      const start = new Date(session.created_at);
+      const end = new Date(session.updated_at);
+      const diffMinutes = Math.round((end - start) / (1000 * 60));
+      
+      if (diffMinutes < 1) return '<1 min';
+      if (diffMinutes < 60) return `${diffMinutes} min`;
+      const hours = Math.floor(diffMinutes / 60);
+      const mins = diffMinutes % 60;
+      return `${hours}h ${mins}m`;
+    }
+
+    function updatePagination(total, showing) {
+      const pagination = document.getElementById('pagination');
+      
+      if (total <= showing) {
+        pagination.innerHTML = '';
+        return;
+      }
+      
+      const totalPages = Math.ceil(total / showing);
+      const currentPage = 1; // For now, always showing page 1
+      
+      pagination.innerHTML = `
+        <button class="btn btn-secondary" style="padding: 0.5rem; font-size: 0.8rem;" disabled>
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button class="btn" style="padding: 0.5rem 0.75rem; font-size: 0.8rem; background: var(--ai-gradient); color: white;">1</button>
+        ${totalPages > 1 ? '<button class="btn btn-secondary" style="padding: 0.5rem 0.75rem; font-size: 0.8rem;">2</button>' : ''}
+        ${totalPages > 2 ? '<button class="btn btn-secondary" style="padding: 0.5rem 0.75rem; font-size: 0.8rem;">3</button>' : ''}
+        ${totalPages > 3 ? '<span style="padding: 0.5rem;">...</span>' : ''}
+        <button class="btn btn-secondary" style="padding: 0.5rem; font-size: 0.8rem;">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      `;
+    }
+
+    async function viewSession(sessionId) {
+      try {
+        if (isOnline) {
+          const response = await makeAPIRequest(`${API_BASE_URL}/sessions/${sessionId}`);
+          const session = await response.json();
+          
+          // Open the session in the chat modal
+          const persona = personas[session.persona_id];
+          if (!persona) {
+            showToast('Persona data not available for this session', 'error');
+            return;
+          }
+          
+          currentPersona = session.persona_id;
+          currentSession = sessionId;
+          
+          // Set up chat UI
+          document.getElementById('chatAvatar').src = persona.avatar;
+          document.getElementById('chatPersonaName').textContent = persona.name;
+          document.getElementById('chatPersonaRole').textContent = persona.role;
+          
+          // Load messages with enhanced display
+          const messagesContainer = document.getElementById('chatMessages');
+          messagesContainer.innerHTML = '';
+          
+          session.messages.forEach(msg => {
+            addMessage(msg.role === 'user' ? 'user' : 'ai', msg.content, {
+              processingTime: msg.processing_time,
+              tokenCount: msg.token_count
+            });
+          });
+          
+          // Show modal
+          document.getElementById('chatModal').style.display = 'flex';
+          document.getElementById('messageInput').focus();
+          
+          showToast(`Loaded session: ${session.topic} (${session.message_count} messages)`, 'info');
+        } else {
+          showToast('Session viewing requires online connection', 'warning');
+        }
+      } catch (error) {
+        console.error('View session error:', error);
+        showToast('Failed to load session. Please try again.', 'error');
+      }
+    }
+
+    async function deleteSession(sessionId) {
+      if (!confirm('Are you sure you want to delete this conversation? This action cannot be undone.')) return;
+      
+      try {
+        if (isOnline) {
+          await makeAPIRequest(`${API_BASE_URL}/sessions/${sessionId}`, {
+            method: 'DELETE'
+          });
+          
+          showToast('Session deleted successfully', 'success');
+          loadSessionHistory(); // Refresh the table
+        } else {
+          showToast('Session deletion requires online connection', 'warning');
+        }
+      } catch (error) {
+        console.error('Delete session error:', error);
+        showToast('Failed to delete session. Please try again.', 'error');
+      }
+    }
+
+    // Utility Functions
+    function refreshSessions() {
+      if (isOnline) {
+        loadSessionHistory();
+        showToast('Session history refreshed', 'info');
+      } else {
+        showToast('Refresh requires online connection', 'warning');
+      }
+    }
+
+    function exportSessions() {
+      if (!sessionHistory || sessionHistory.length === 0) {
+        showToast('No sessions to export', 'warning');
+        return;
+      }
+      
+      const csvContent = "data:text/csv;charset=utf-8," 
+        + "Date,Persona,Topic,Messages,Duration,Sentiment\n"
+        + sessionHistory.map(session => {
+            const persona = personas[session.persona_id];
+            const date = new Date(session.created_at).toLocaleDateString();
+            const duration = calculateDuration(session);
+            return `"${date}","${persona?.name || session.persona_id}","${session.topic || 'N/A'}","${session.message_count}","${duration}","${session.sentiment || 'N/A'}"`;
+          }).join("\n");
+      
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `startai_sessions_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      showToast('Sessions exported successfully', 'success');
+    }
+
+    function viewPersonaDetails(personaId) {
+      const persona = personas[personaId];
+      if (!persona) return;
+      
+      const details = `
+        ${persona.name}
+        
+        Role: ${persona.role}
+        Specialties: ${persona.specialties.join(', ')}
+        
+        Stats:
+        • ${formatNumber(persona.stats.sessions)} total sessions
+        • ${persona.stats.rating}/5.0 average rating  
+        • ${persona.stats.accuracy}% response accuracy
+        
+        ${persona.available ? '✅ Currently available' : '❌ Currently offline'}
+      `;
+      
+      showToast(details, 'info');
+    }
+
+    async function showStats() {
+      try {
+        if (isOnline) {
+          const response = await makeAPIRequest(`${API_BASE_URL}/stats`);
+          const stats = await response.json();
+          
+          const personaUsage = Object.entries(stats.persona_usage || {})
+            .sort(([,a], [,b]) => b - a)
+            .map(([persona, count]) => `${personas[persona]?.name || persona}: ${count}`)
+            .join('\n');
+          
+          const message = `📊 System Statistics
+          
+🔢 Total Sessions: ${stats.total_sessions || 0}
+💬 Total Messages: ${stats.total_messages || 0}  
+⏱️ System Uptime: ${stats.uptime || 'Unknown'}
+📈 Requests Handled: ${stats.request_count || 0}
+
+👥 Most Popular Personas:
+${personaUsage || 'No usage data available'}`;
+          
+          showToast(message, 'info');
+        } else {
+          const offlineStats = `📊 Offline Statistics
+          
+🔄 Connection Status: Offline Mode
+💾 Cached Sessions: ${sessionHistory.length}
+🤖 Available Personas: ${Object.keys(personas).length}
+📱 Local Storage: Active`;
+          
+          showToast(offlineStats, 'info');
+        }
+      } catch (error) {
+        showToast('Failed to load system statistics', 'error');
+      }
+    }
+
+    // Enhanced Fallback Functions
+    function loadFallbackData() {
+      const fallbackPersonas = [
+        {
+          persona_id: 'elon',
+          name: 'Elon Musk AI',
+          role: 'Visionary Entrepreneur & Innovator',
+          specialties: ['Innovation', 'Scaling', 'Technology', 'Disruption', 'Engineering', 'Space Tech'],
+          avatar: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=400&fit=crop&crop=face',
+          stats: { sessions: 3247, rating: 4.9, accuracy: 98 },
+          color_scheme: { gradient: 'var(--elon-gradient)' },
+          available: false
+        },
+        {
+          persona_id: 'ratan',
+          name: 'Ratan Tata AI',
+          role: 'Business Ethics & Leadership',
+          specialties: ['Ethics', 'Sustainability', 'Leadership', 'Social Impact', 'Strategic Planning', 'Governance'],
+          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
+          stats: { sessions: 1856, rating: 4.8, accuracy: 96 },
+          color_scheme: { gradient: 'var(--ratan-gradient)' },
+          available: false
+        },
+        {
+          persona_id: 'steve',
+          name: 'Steve Jobs AI',
+          role: 'Product Excellence & Design Innovation',
+          specialties: ['Product Design', 'User Experience', 'Brand Building', 'Innovation', 'Marketing', 'Simplicity'],
+          avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
+          stats: { sessions: 2934, rating: 4.9, accuracy: 97 },
+          color_scheme: { gradient: 'var(--steve-gradient)' },
+          available: false
+        }
+      ];
+      
+      personas = {};
+      fallbackPersonas.forEach(persona => {
+        personas[persona.persona_id] = persona;
+      });
+      
+      renderPersonas(fallbackPersonas);
+    }
+
+    function renderFallbackSessions() {
+      const tbody = document.getElementById('sessionTableBody');
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6" class="empty-state" style="padding: 3rem;">
+            <i class="fa-solid fa-wifi-slash"></i>
+            <h3>Connection Required</h3>
+            <p>Session history requires an online connection. Please check your internet connection and try again.</p>
+            <button class="btn btn-secondary" onclick="initializeApp()">
+              <i class="fa-solid fa-refresh"></i> Retry Connection
+            </button>
+          </td>
+        </tr>
+      `;
+      document.getElementById('tableInfo').textContent = 'Connection required';
+    }
+
+    function getEnhancedMockResponse(personaId, userMessage) {
+      const responses = {
+        elon: [
+          "That's a fascinating challenge. Let's break it down to first principles. What are the fundamental physics and constraints we're dealing with here?",
+          "Scale fast, but make sure your foundation can handle 10x growth. What's your biggest bottleneck right now?",
+          "Innovation comes from questioning everything we think we know. What assumptions about your industry are you challenging?",
+          "Think bigger. Don't just improve the existing solution by 10% - how could you make it 10x better?",
+          "The key is rapid iteration. How quickly can you test this hypothesis and get real user feedback?"
+        ],
+        ratan: [
+          "Building a sustainable business means creating value for all stakeholders - customers, employees, society. How does your approach serve each of these groups?",
+          "Long-term success requires ethical foundations. What values will guide your decisions when facing difficult choices?",
+          "Focus on solving real problems that matter to people. What positive impact will your solution create in the world?",
+          "Great leaders build great teams. How are you investing in developing your people and creating a strong culture?",
+          "Sustainable growth is better than rapid expansion without solid foundations. What systems are you building for the long term?"
+        ],
+        steve: [
+          "Simplicity is the ultimate sophistication. How can you remove complexity while adding value for your users?",
+          "Great products create an emotional connection. What feeling do you want users to have when they interact with your solution?",
+          "Design is not just how it looks - it's how it works. What's the core user experience you're trying to create?",
+          "Focus on what matters most. What are you saying 'no' to so you can say 'yes' to what's truly important?",
+          "The best products anticipate needs users don't even know they have. What problems are you solving that people haven't articulated yet?"
+        ]
+      };
+      
+      const personaResponses = responses[personaId] || [
+        "That's an interesting perspective. Let me help you think through this strategically.",
+        "Great question. This is exactly the kind of challenge successful entrepreneurs need to solve.",
+        "I appreciate you sharing this with me. Let's explore the best path forward."
+      ];
+      
+      return personaResponses[Math.floor(Math.random() * personaResponses.length)];
+    }
+
+    // Helper Functions
+    function formatNumber(num) {
+      if (!num) return '0';
+      if (num >= 1000) {
+        return (num / 1000).toFixed(1) + 'K';
+      }
+      return num.toString();
+    }
+
+    // Enhanced Toast System
+    function showToast(message, type = 'success') {
+      const toastContainer = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      
+      // Enhanced toast with better formatting
+      const isLongMessage = message.length > 100;
+      const formattedMessage = isLongMessage ? 
+        message.replace(/\n/g, '<br>') : 
+        message;
+      
+      toast.innerHTML = `
+        <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+          <i class="fa-solid fa-${getToastIcon(type)}" style="margin-top: 0.1rem;"></i>
+          <div style="flex-grow: 1;">
+            <div style="white-space: ${isLongMessage ? 'pre-line' : 'nowrap'}; ${isLongMessage ? 'max-width: 300px;' : ''}">${formattedMessage}</div>
+          </div>
+          <button onclick="this.parentElement.parentElement.remove()" 
+                  style="background: none; border: none; color: inherit; cursor: pointer; opacity: 0.7; hover: opacity: 1;">
+            <i class="fa-solid fa-times"></i>
+          </button>
+        </div>
+      `;
+      
+      toastContainer.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 100);
+      
+      const autoRemoveTime = isLongMessage ? 8000 : 4000;
+      setTimeout(() => {
+        if (toast.parentNode) {
+          toast.classList.remove('show');
+          setTimeout(() => { if (toast.parentNode) toast.remove(); }, 300);
+        }
+      }, autoRemoveTime);
+    }
+
+    function getToastIcon(type) {
+      const icons = {
+        success: 'check-circle',
+        error: 'exclamation-circle',
+        warning: 'exclamation-triangle',
+        info: 'info-circle'
+      };
+      return icons[type] || 'info-circle';
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('chatModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeChat();
+      }
+    });
+
+    // Auto-retry connection every 30 seconds when offline
+    setInterval(() => {
+      if (!isOnline && connectionRetryCount <= maxRetries) {
+        initializeApp();
+      }
+    }, 30000);
+
+    // Handle online/offline events
+    window.addEventListener('online', () => {
+      showToast('Internet connection restored', 'success');
+      initializeApp();
+    });
+
+    window.addEventListener('offline', () => {
+      isOnline = false;
+      updateConnectionStatus('offline');
+      showToast('Internet connection lost. Using offline mode.', 'warning');
+    });
+  </script>
+</body>
+</html>

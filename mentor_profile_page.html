@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Mentor Profile | StartAI
+  </title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <!-- AOS Animation Library -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+
+  <style>
+    /* Premium Design System - Enhanced Readability with Navigation Buttons */
+    :root {
+      /* Premium Color Palette */
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+
+      /* Enhanced Glassmorphism with Better Opacity */
+      --glass-bg: rgba(255, 255, 255, 0.25);
+      --glass-bg-strong: rgba(255, 255, 255, 0.35);
+      --glass-border: rgba(255, 255, 255, 0.3);
+      --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.4);
+      --blur-strength: 12px;
+
+      /* Text Colors for Better Contrast */
+      --text-primary: #1a202c;
+      --text-secondary: #2d3748;
+      --text-muted: #4a5568;
+      --text-light: #ffffff;
+
+      /* Typography */
+      --font-sans: "Poppins", system-ui, sans-serif;
+
+      /* Effects */
+      --border-radius: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* Original variables preserved */
+      --primary-500: #6366f1;
+      --primary-600: #4f46e5;
+      --text-1: #374151;
+      --text-2: #6b7280;
+      --text-3: #9ca3af;
+      --bg-1: #ffffff;
+      --bg-2: #f9fafb;
+      --bg-3: #f3f4f6;
+      --border-soft: #e5e7eb;
+      --border-strong: #d1d5db;
+      --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.1);
+      --shadow-hard: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --radius-pill: 9999px;
+    }
+
+    /* Body with subtle gradient background */
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 30%, #f093fb 70%, #764ba2 100%);
+      min-height: 100vh;
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+    }
+
+    /* Enhanced Header with Better Readability */
+    .global-header {
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border-bottom: 2px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      transition: var(--transition);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    /* Enhanced header layout for better button display */
+    .global-header .inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .global-header .logo {
+      display: flex;
+      align-items: center;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+      font-size: 1.5rem;
+      text-decoration: none;
+    }
+
+    /* Enhanced Navigation Buttons - Glassmorphism Style */
+    .nav--primary {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav--primary a {
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border: 2px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 0.5rem 1rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 2px 8px rgba(31, 38, 135, 0.2);
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .nav--primary a:hover {
+      background: var(--primary-gradient);
+      color: var(--text-light);
+      -webkit-text-fill-color: var(--text-light);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Special styling for Login button */
+    .nav--primary a[href*="login"] {
+      background: var(--primary-gradient);
+      color: var(--text-light);
+      font-weight: 600;
+      margin-left: 0.5rem;
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav--primary a[href*="login"]:hover {
+      background: var(--secondary-gradient);
+      box-shadow: 0 8px 24px rgba(240, 147, 251, 0.4);
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    /* Icon styling within navigation */
+    .nav--primary a i {
+      margin-left: 0.5rem;
+      transition: transform 0.2s ease;
+    }
+
+    .nav--primary a:hover i {
+      transform: translateX(2px);
+    }
+
+    /* Role selector and header controls */
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .form-select {
+      background: var(--glass-bg-strong);
+      border: 2px solid var(--glass-border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+      backdrop-filter: blur(8px);
+      transition: var(--transition);
+    }
+
+    .form-select:focus {
+      background: rgba(255, 255, 255, 0.45);
+      border-color: #667eea;
+      box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+
+    /* Enhanced Glassmorphism Cards with Better Backgrounds */
+    .card, .profile-header, .tab-content {
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border: 2px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 16px 48px rgba(31, 38, 135, 0.5);
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Profile Header Enhancement with Better Text Contrast */
+    .profile-header {
+      position: relative;
+      overflow: hidden;
+      background: var(--glass-bg-strong);
+    }
+
+    .profile-header__bg {
+      min-height: 140px;
+      background: var(--primary-gradient);
+      border-bottom: 2px solid var(--glass-border);
+    }
+
+    .profile-header__content {
+      background: linear-gradient(180deg, var(--glass-bg-strong), rgba(255, 255, 255, 0.4));
+      backdrop-filter: blur(10px);
+      color: var(--text-primary);
+    }
+
+    /* Enhanced Avatar */
+    .avatar--xl {
+      inline-size: 140px;
+      block-size: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #ffffff;
+      background: var(--primary-gradient);
+      padding: 4px;
+      box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+      transition: var(--transition);
+    }
+
+    .avatar--xl:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 40px rgba(240, 147, 251, 0.5);
+    }
+
+    /* Enhanced Text Readability */
+    .profile-name, h1, h2, h3 {
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+      text-shadow: none;
+    }
+
+    /* Regular text with better contrast */
+    p, .card-text, .list-group-item, td, th {
+      color: var(--text-primary);
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Navigation links in cards */
+    .nav-link {
+      color: var(--text-secondary) !important;
+      font-weight: 500;
+    }
+
+    .nav-link.active {
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    /* Premium Buttons with Better Contrast */
+    .btn {
+      border-radius: 12px;
+      font-weight: 500;
+      transition: var(--transition);
+      border: none;
+      backdrop-filter: blur(8px);
+      text-shadow: none;
+    }
+
+    .btn-primary {
+      background: var(--primary-gradient);
+      color: var(--text-light) !important;
+      -webkit-text-fill-color: var(--text-light) !important;
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-primary:hover {
+      background: var(--secondary-gradient);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 8px 24px rgba(240, 147, 251, 0.4);
+      color: var(--text-light) !important;
+    }
+
+    .btn-outline-primary {
+      background: var(--glass-bg-strong);
+      color: var(--text-primary);
+      border: 2px solid rgba(102, 126, 234, 0.6);
+      backdrop-filter: blur(8px);
+      font-weight: 600;
+    }
+
+    .btn-outline-primary:hover {
+      background: var(--primary-gradient);
+      color: var(--text-light);
+      border-color: transparent;
+      transform: translateY(-1px);
+    }
+
+    /* Enhanced Form Elements */
+    .form-control {
+      background: var(--glass-bg-strong);
+      border: 2px solid var(--glass-border);
+      border-radius: 8px;
+      backdrop-filter: blur(8px);
+      transition: var(--transition);
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+    }
+
+    .form-control::placeholder {
+      color: var(--text-muted);
+    }
+
+    .form-control:focus {
+      background: rgba(255, 255, 255, 0.45);
+      border-color: #667eea;
+      box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+      color: var(--text-primary);
+    }
+
+    /* Skip Link Enhancement */
+    .skip-link {
+      background: var(--glass-bg-strong);
+      color: var(--text-primary);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      position: absolute;
+      top: -100px;
+      left: 20px;
+      z-index: 9999;
+      transition: top 0.2s ease;
+    }
+
+    .skip-link:focus {
+      top: 20px;
+    }
+
+    /* Breadcrumb Enhancement */
+    .breadcrumb {
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(8px);
+      border-radius: var(--border-radius);
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--glass-border);
+    }
+
+    .breadcrumb-item a {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .breadcrumb-item a:hover {
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .breadcrumb-item.active {
+      color: var(--text-muted);
+    }
+
+    /* Responsive navigation buttons */
+    @media (max-width: 1024px) {
+      .nav--primary {
+        gap: 0.5rem;
+      }
+
+      .nav--primary a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+      }
+
+      .global-header .inner {
+        padding: 0.75rem 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .global-header .inner {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      .nav--primary {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .nav--primary a {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85rem;
+      }
+
+      .header-controls {
+        order: -1;
+      }
+    }
+
+    /* Tab Enhancement with Better Readability */
+    .nav-tabs {
+      border-bottom: 2px solid var(--glass-border);
+    }
+
+    .nav-tabs .nav-link {
+      background: var(--glass-bg);
+      border: 2px solid var(--glass-border);
+      border-radius: 8px 8px 0 0;
+      margin-right: 4px;
+      transition: var(--transition);
+      backdrop-filter: blur(8px);
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .nav-tabs .nav-link:hover {
+      transform: translateY(-2px);
+      background: var(--glass-bg-strong);
+      color: var(--text-primary);
+    }
+
+    .nav-tabs .nav-link.active {
+      background: var(--glass-bg-strong);
+      border-color: var(--glass-border);
+      border-bottom-color: transparent;
+      color: var(--text-primary) !important;
+      font-weight: 600;
+    }
+
+    /* Badge Enhancement with Better Contrast */
+    .badge {
+      background: var(--success-gradient) !important;
+      color: var(--text-light);
+      border-radius: 8px;
+      padding: 0.35em 0.8em;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(67, 233, 123, 0.3);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Rating Stars */
+    .text-warning {
+      color: #fbbf24 !important;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+    }
+
+    /* Social Links with Better Visibility */
+    .social-links .btn {
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(8px);
+      border: 2px solid var(--glass-border);
+      transition: var(--transition);
+      color: var(--text-primary);
+    }
+
+    .social-links .btn:hover {
+      background: var(--accent-gradient);
+      color: var(--text-light);
+      transform: scale(1.1);
+      box-shadow: 0 4px 16px rgba(79, 172, 254, 0.3);
+    }
+
+    /* Table Enhancement with Better Readability */
+    .table {
+      background: transparent;
+    }
+
+    .table th {
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      border-color: var(--glass-border);
+      font-weight: 700;
+      text-shadow: none;
+    }
+
+    .table td {
+      border-color: var(--glass-border);
+      transition: background-color 0.2s;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* List Group Enhancement */
+    .list-group-item {
+      background: var(--glass-bg-strong);
+      border: 2px solid var(--glass-border);
+      backdrop-filter: blur(8px);
+      margin-bottom: 4px;
+      border-radius: 8px;
+      transition: var(--transition);
+      color: var(--text-primary);
+    }
+
+    .list-group-item:hover {
+      background: rgba(255, 255, 255, 0.35);
+      transform: translateX(4px);
+    }
+
+    /* Alert Enhancement */
+    .alert {
+      background: var(--glass-bg-strong);
+      border: 2px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+      border-radius: var(--border-radius);
+      color: var(--text-primary);
+    }
+
+    /* Container Enhancement for Better Content Separation */
+    .container, .inner {
+      background: transparent;
+    }
+
+    /* Smooth Scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Animation Classes for AOS */
+    [data-aos] {
+      transition-property: transform, opacity;
+    }
+
+    /* Loading State */
+    .loading-skeleton {
+      background: linear-gradient(90deg, rgba(255,255,255,0.2) 25%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.2) 75%);
+      background-size: 200% 100%;
+      animation: loading 2s infinite;
+      border-radius: 4px;
+    }
+
+    @keyframes loading {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    /* Print Styles */
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; }
+      .card, .profile-header { background: white !important; }
+    }
+  </style>
+ </head><body data-aos-easing="ease-in-out-cubic" data-aos-duration="800">
+  <a class="skip-link" href="#main">
+   Skip to main content
+  </a>
+  <!-- Header (common component) -->
+  <header class="global-header no-print" data-aos="fade-down">
+   <div class="inner">
+    <a aria-label="StartAI Home" class="logo" href="./home_page.html">
+     <span aria-hidden="true" class="logo-bg">
+     </span>
+     <span class="d-none d-md-inline ms-2">
+      StartAI
+     </span>
+    </a>
+    <nav aria-label="Primary" class="nav nav--primary">
+     <a href="./mentor_discovery_page.html">
+      Mentor Discovery
+     </a>
+     <a href="./startup_discovery_page.html">
+      Startup Discovery
+     </a>
+     <a href="./learning_hub_page.html">
+      Learning Hub
+     </a>
+     <a href="./subscription_page.html">
+      Subscription
+     </a>
+     <a class="ms-2" href="./login_page.html">
+      <i class="fa-solid fa-right-to-bracket me-1">
+      </i>
+      Login
+     </a>
+    </nav>
+    <!-- Demo role switcher for viewing states -->
+    <div class="header-controls">
+     <label class="visually-hidden" for="viewerRoleSelect">
+      Viewing as
+     </label>
+     <select class="form-select form-select-sm" id="viewerRoleSelect" style="width: auto">
+      <option selected="" value="Founder">
+       Viewing as: Founder
+      </option>
+      <option value="MentorOwner">
+       Viewing as: Mentor (Owner)
+      </option>
+      <option value="Investor">
+       Viewing as: Investor
+      </option>
+      <option value="Guest">
+       Viewing as: Guest
+      </option>
+     </select>
+    </div>
+   </div>
+  </header>
+  <main id="main" data-aos="fade-up" data-aos-delay="200">
+   <div class="container my-4">
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="breadcrumb mb-3">
+     <a href="./home_page.html">
+      Home
+     </a>
+     <span aria-hidden="true">
+      /
+     </span>
+     <a href="./mentor_discovery_page.html">
+      Mentor Discovery
+     </a>
+     <span aria-hidden="true">
+      /
+     </span>
+     <span aria-current="page">
+      Mentor Profile
+     </span>
+    </nav>
+    <!-- Profile Header -->
+    <section class="profile-header card p-0 overflow-hidden">
+     <div aria-label="Mentor header background" class="profile-header__bg" role="img">
+     </div>
+     <div class="profile-header__content p-3 p-md-4">
+      <div class="row g-3 align-items-center">
+       <div class="col-12 col-md-3 d-flex align-items-center justify-content-center justify-content-md-start">
+        <img alt="Mentor profile picture" class="avatar avatar--xl" id="mentorAvatar" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mentoravatar/240/240'" src="https://i.pravatar.cc/240?img=12"/>
+       </div>
+       <div class="col-12 col-md-6 text-center text-md-start">
+        <h1 class="mb-2" id="mentorName">
+         Alexandra Chen
+        </h1>
+        <p class="lead mb-3" id="mentorHeadline">
+         Product &amp; Growth Advisor • Ex-Stripe, YC Alum
+        </p>
+        <div class="cluster text-muted small mb-2">
+         <span class="badge">
+          <i class="fa-solid fa-location-dot me-1 text-secondary">
+          </i>
+          <span id="mentorLocation">
+           Remote • San Francisco, CA
+          </span>
+         </span>
+         <span class="badge badge--info">
+          <i class="fa-solid fa-star me-1">
+          </i>
+          Top Mentor
+         </span>
+         <span class="badge">
+          <i class="fa-regular fa-clock me-1">
+          </i>
+          Avg response:
+          <strong>
+           24h
+          </strong>
+         </span>
+        </div>
+        <div class="social-links cluster mt-2">
+         <button class="btn btn--ghost btn--sm" data-social="linkedin">
+          <i class="fa-brands fa-linkedin">
+          </i>
+          <span class="ms-2 d-none d-sm-inline">
+           LinkedIn
+          </span>
+         </button>
+         <button class="btn btn--ghost btn--sm" data-social="twitter">
+          <i class="fa-brands fa-x-twitter">
+          </i>
+          <span class="ms-2 d-none d-sm-inline">
+           Twitter
+          </span>
+         </button>
+         <button class="btn btn--ghost btn--sm" data-social="website">
+          <i class="fa-solid fa-globe">
+          </i>
+          <span class="ms-2 d-none d-sm-inline">
+           Website
+          </span>
+         </button>
+        </div>
+       </div>
+       <div class="col-12 col-md-3 text-center text-md-end">
+        <div class="d-grid gap-2">
+         <button class="btn btn--primary btn--lg" id="requestBtn">
+          <i class="fa-solid fa-handshake-angle">
+          </i>
+          <span class="ms-1">
+           Request Session
+          </span>
+         </button>
+         <a class="btn btn--light btn--lg d-none" href="./account_settings_page.html" id="editBtn">
+          <i class="fa-solid fa-pen-to-square">
+          </i>
+          <span class="ms-1">
+           Edit Profile
+          </span>
+         </a>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+    <!-- Alert/Feedback area -->
+    <div aria-live="polite" class="mt-3" id="feedbackArea">
+    </div>
+    <!-- Mentor Details: Tabs -->
+    <section class="mt-4">
+     <ul class="nav nav-tabs" id="mentorTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+       <button aria-controls="about" aria-selected="true" class="nav-link active" data-bs-target="#about" data-bs-toggle="tab" id="about-tab" role="tab" type="button">
+        <i class="fa-regular fa-id-badge me-1">
+        </i>
+        About
+       </button>
+      </li>
+      <li class="nav-item" role="presentation">
+       <button aria-controls="experience" aria-selected="false" class="nav-link" data-bs-target="#experience" data-bs-toggle="tab" id="experience-tab" role="tab" type="button">
+        <i class="fa-solid fa-briefcase me-1">
+        </i>
+        Experience
+       </button>
+      </li>
+      <li class="nav-item" role="presentation">
+       <button aria-controls="expertise" aria-selected="false" class="nav-link" data-bs-target="#expertise" data-bs-toggle="tab" id="expertise-tab" role="tab" type="button">
+        <i class="fa-solid fa-chart-simple me-1">
+        </i>
+        Expertise
+       </button>
+      </li>
+     </ul>
+     <div class="tab-content card p-3 p-md-4" id="mentorTabContent">
+      <!-- About -->
+      <div aria-labelledby="about-tab" class="tab-pane fade show active" id="about" role="tabpanel" tabindex="0">
+       <article class="mb-0">
+        <p class="mb-3" id="mentorBio">
+         I help early-stage founders build products users love and scale efficient growth engines. Previously led Growth at Stripe for 5 years, and co-founded a YC-backed SaaS startup acquired in 2022. My mentorship focus areas include product-market fit discovery, monetization strategy, onboarding optimization, and analytics. I’m passionate about inclusive teams, data-informed decision-making, and sustainable growth.
+        </p>
+        <div class="row g-3 mt-2">
+         <div class="col-6 col-md-3">
+          <div class="kpi">
+           <div class="kpi-title">
+            Years Mentoring
+           </div>
+           <div class="kpi-value h3 mb-0">
+            7+
+           </div>
+          </div>
+         </div>
+         <div class="col-6 col-md-3">
+          <div class="kpi">
+           <div class="kpi-title">
+            Startups Advised
+           </div>
+           <div class="kpi-value h3 mb-0">
+            120
+           </div>
+          </div>
+         </div>
+         <div class="col-6 col-md-3">
+          <div class="kpi">
+           <div class="kpi-title">
+            Avg Rating
+           </div>
+           <div class="kpi-value h3 mb-0">
+            <i class="fa-solid fa-star text-warning">
+            </i>
+            4.9
+           </div>
+          </div>
+         </div>
+         <div class="col-6 col-md-3">
+          <div class="kpi">
+           <div class="kpi-title">
+            Primary Topics
+           </div>
+           <div class="kpi-value h6 mb-0">
+            Product, Growth, Analytics
+           </div>
+          </div>
+         </div>
+        </div>
+       </article>
+      </div>
+      <!-- Experience -->
+      <div aria-labelledby="experience-tab" class="tab-pane fade" id="experience" role="tabpanel" tabindex="0">
+       <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+        <div class="searchbar" style="max-width: 460px;">
+         <input id="expSearch" placeholder="Search experience (role, company, keywords)" type="search"/>
+         <button class="btn btn--secondary" id="expSearchBtn">
+          <i class="fa-solid fa-magnifying-glass">
+          </i>
+          <span class="ms-1 d-none d-sm-inline">
+           Search
+          </span>
+         </button>
+        </div>
+        <div class="d-flex gap-2 align-items-center">
+         <label class="small mb-0 text-muted" for="sortSelect">
+          Sort by
+         </label>
+         <select class="form-select form-select-sm" id="sortSelect">
+          <option selected="" value="desc">
+           Most recent
+          </option>
+          <option value="asc">
+           Oldest first
+          </option>
+         </select>
+        </div>
+       </div>
+       <div class="table-responsive">
+        <table class="table align-middle" id="experienceTable">
+         <thead>
+          <tr>
+           <th scope="col">
+            Role
+           </th>
+           <th scope="col">
+            Company
+           </th>
+           <th scope="col">
+            Period
+           </th>
+           <th scope="col">
+            Highlights
+           </th>
+           <th class="text-end" scope="col">
+            Actions
+           </th>
+          </tr>
+         </thead>
+         <tbody id="experienceBody">
+          <!-- Rows injected by JS -->
+         </tbody>
+        </table>
+       </div>
+       <div class="d-flex flex-wrap justify-content-between align-items-center mt-2">
+        <small class="text-muted" id="expPaginationInfo">
+         Showing 1-6 of 6
+        </small>
+        <div class="pagination">
+         <button aria-label="Previous page" class="page-btn" id="prevPage">
+          <i class="fa-solid fa-angle-left">
+          </i>
+         </button>
+         <button aria-current="page" class="page-btn is-active" id="pageIndicator">
+          1
+         </button>
+         <button aria-label="Next page" class="page-btn" id="nextPage">
+          <i class="fa-solid fa-angle-right">
+          </i>
+         </button>
+        </div>
+       </div>
+       <div class="panel text-center mt-3 d-none" id="emptyExperience">
+        <img alt="Empty experience placeholder" class="mx-auto" onerror="this.onerror=null;this.src='https://picsum.photos/seed/emptyexp/600/400'" src="assets/mentor_profile_header_backgrou_5_4fc60dca.jpg" style="max-width: 420px;"/>
+        <p class="mt-3 mb-0">
+         This mentor hasn't added experience yet. Check back later!
+        </p>
+       </div>
+      </div>
+      <!-- Expertise -->
+      <div aria-labelledby="expertise-tab" class="tab-pane fade" id="expertise" role="tabpanel" tabindex="0">
+       <div class="row g-4">
+        <div class="col-12 col-lg-7">
+         <div class="d-flex flex-wrap gap-2" id="skillsChips">
+          <!-- Skill chips injected by JS -->
+         </div>
+        </div>
+        <div class="col-12 col-lg-5">
+         <canvas aria-label="Skills proficiency chart" height="240" id="skillsChart">
+         </canvas>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div>
+  </main>
+  <!-- Footer (common component) -->
+  <footer class="footer mt-5">
+   <div class="inner">
+    <div class="row g-4">
+     <div class="col-12 col-md-6">
+      <div class="d-flex align-items-center mb-2">
+       <span aria-hidden="true" class="logo-bg me-2">
+       </span>
+       <strong>
+        StartAI
+       </strong>
+      </div>
+      <small class="text-muted">
+       AI-powered guidance for early-stage founders. Blending AI intelligence with human expertise.
+      </small>
+     </div>
+     <div class="col-6 col-md-3">
+      <h6 class="mb-2">
+       Explore
+      </h6>
+      <ul class="list-unstyled mb-0">
+       <li>
+        <a href="./mentor_discovery_page.html">
+         Mentor Discovery
+        </a>
+       </li>
+       <li>
+        <a href="./startup_discovery_page.html">
+         Startup Discovery
+        </a>
+       </li>
+       <li>
+        <a href="./learning_hub_page.html">
+         Learning Hub
+        </a>
+       </li>
+       <li>
+        <a href="./subscription_page.html">
+         Subscription
+        </a>
+       </li>
+      </ul>
+     </div>
+     <div class="col-6 col-md-3">
+      <h6 class="mb-2">
+       Account
+      </h6>
+      <ul class="list-unstyled mb-0">
+       <li>
+        <a href="./registration_page.html">
+         Register
+        </a>
+       </li>
+       <li>
+        <a href="./login_page.html">
+         Login
+        </a>
+       </li>
+       <li>
+        <a href="./account_settings_page.html">
+         Account Settings
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mt-3">
+     <small class="text-muted">
+      © 2026 StartAI. All rights reserved.
+     </small>
+     <div class="cluster small">
+      <a href="./home_page.html">
+       Home
+      </a>
+      <a href="./admin_dashboard.html">
+       Admin
+      </a>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <!-- Toast container (system notifications) -->
+  <div aria-atomic="true" aria-live="polite" class="toast" id="toastContainer">
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.1/dist/sweetalert2.all.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+  </script>
+  <script>
+   // Mock mentor data
+const mentorId = 'mentor_alexandra_chen_001';
+const mentorData = {
+    fullName: 'Alexandra Chen',
+    headline: 'Product & Growth Advisor • Ex-Stripe, YC Alum',
+    location: 'Remote • San Francisco, CA',
+    bio: `I help early-stage founders build products users love and scale efficient growth engines. Previously led Growth at Stripe for 5 years, and co-founded a YC-backed SaaS startup acquired in 2022. My mentorship focus areas include product-market fit discovery, monetization strategy, onboarding optimization, and analytics. I’m passionate about inclusive teams, data-informed decision-making, and sustainable growth.`,
+    socials: {
+        linkedin: 'https://www.linkedin.com/in/example',
+        twitter: 'https://twitter.com/example',
+        website: 'https://example.com'
+    },
+    expertise: [{
+        label: 'Product Strategy',
+        level: 92
+    }, {
+        label: 'Growth Marketing',
+        level: 88
+    }, {
+        label: 'Onboarding UX',
+        level: 85
+    }, {
+        label: 'Monetization',
+        level: 80
+    }, {
+        label: 'Analytics',
+        level: 84
+    }, {
+        label: 'A/B Testing',
+        level: 78
+    }, {
+        label: 'B2B SaaS',
+        level: 90
+    }],
+    experience: [{
+        role: 'Head of Growth',
+        company: 'Stripe',
+        start: '2017-04-01',
+        end: '2022-08-31',
+        highlights: 'Scaled self-serve revenue 5x; built activation funnels; led 20+ person team.'
+    }, {
+        role: 'Co-founder & CPO',
+        company: 'SaaSly (YC W20)',
+        start: '2019-01-01',
+        end: '2021-02-01',
+        highlights: 'Drove PMF; 0→$2M ARR; led product roadmap; acquired by FinOpsCo.'
+    }, {
+        role: 'Product Manager',
+        company: 'Atlassian',
+        start: '2014-06-01',
+        end: '2017-03-01',
+        highlights: 'Launched features used by 1M+ users; improved retention by 8%.'
+    }, {
+        role: 'Growth Advisor',
+        company: 'Freelance',
+        start: '2022-10-01',
+        end: null,
+        highlights: 'Mentored 50+ startups; built growth playbooks; experimentation frameworks.'
+    }, {
+        role: 'Analyst (Intern)',
+        company: 'Accel Partners',
+        start: '2013-06-01',
+        end: '2013-08-31',
+        highlights: 'Sourced early-stage deals; market research on developer tools.'
+    }, {
+        role: 'Resident Mentor',
+        company: 'TechStars',
+        start: '2023-01-01',
+        end: null,
+        highlights: 'Cohort mentor; weekly office hours; founder workshops on analytics.'
+    }]
+};
+
+// State
+const viewerRoleSelect = document.getElementById('viewerRoleSelect');
+const requestBtn = document.getElementById('requestBtn');
+const editBtn = document.getElementById('editBtn');
+const feedbackArea = document.getElementById('feedbackArea');
+
+function loadMentorProfile() {
+    document.getElementById('mentorName').textContent = mentorData.fullName;
+    document.getElementById('mentorHeadline').textContent = mentorData.headline;
+    document.getElementById('mentorLocation').textContent = mentorData.location;
+    document.getElementById('mentorBio').textContent = mentorData.bio;
+}
+
+function showToast(type = 'info', message = '') {
+    const iconMap = {
+        info: 'fa-circle-info',
+        success: 'fa-circle-check',
+        warning: 'fa-triangle-exclamation',
+        error: 'fa-circle-xmark'
+    };
+    const item = document.createElement('div');
+    item.className = 'toast-item';
+    item.innerHTML = `
+        <i class="fa-solid ${iconMap[type] || iconMap.info} text-${type === 'error' ? 'danger' : type}"></i>
+        <div>${message}</div>
+        <button class="btn btn--ghost btn--sm">Dismiss</button>
+      `;
+    item.querySelector('button').addEventListener('click', () => item.remove());
+    document.getElementById('toastContainer').appendChild(item);
+    setTimeout(() => item.remove(), 5000);
+}
+
+function updateCTAByRole() {
+    const role = viewerRoleSelect.value;
+    // Founder: show request; MentorOwner: show edit; Others: show request (enabled) but maybe de-prioritized
+    if (role === 'MentorOwner') {
+        requestBtn.classList.add('d-none');
+        editBtn.classList.remove('d-none');
+        feedbackArea.innerHTML = '';
+    } else {
+        editBtn.classList.add('d-none');
+        requestBtn.classList.remove('d-none');
+        const sent = localStorage.getItem(`reqsent_${mentorId}`) === 'true';
+        setRequestBtnState(sent);
+        feedbackArea.innerHTML = '';
+    }
+}
+
+function setRequestBtnState(sent) {
+    if (sent) {
+        requestBtn.disabled = true;
+        requestBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i><span class="ms-1">Request Sent</span>';
+        const alert = document.createElement('div');
+        alert.className = 'alert alert--info mt-3';
+        alert.innerHTML = '<i class="fa-solid fa-info-circle"></i><div class="ms-2">Your mentorship request is pending. We\'ll notify you when Alexandra responds.</div>';
+        feedbackArea.innerHTML = '';
+        feedbackArea.appendChild(alert);
+    } else {
+        requestBtn.disabled = false;
+        requestBtn.innerHTML = '<i class="fa-solid fa-handshake-angle"></i><span class="ms-1">Request Session</span>';
+    }
+}
+
+// Social link clicks
+document.querySelectorAll('.social-links button').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const key = btn.getAttribute('data-social');
+        const url = mentorData.socials[key];
+        if (url) {
+            showToast('info', `Opening ${key} profile...`);
+            window.open(url, '_blank', 'noopener');
+        } else {
+            showToast('warning', 'Link not available');
+        }
+    });
+});
+
+// Request session handler (SweetAlert2)
+requestBtn.addEventListener('click', async () => {
+    const role = viewerRoleSelect.value;
+    if (role === 'Guest') {
+        const r = await Swal.fire({
+            icon: 'info',
+            title: 'Please login',
+            text: 'You need to login as a Founder to request a session.',
+            showCancelButton: true,
+            confirmButtonText: 'Go to Login',
+            cancelButtonText: 'Cancel'
+        });
+        if (r.isConfirmed) window.location.href = './login_page.html';
+        return;
+    }
+
+    const {
+        value: formValues
+    } = await Swal.fire({
+        title: 'Request Mentorship Session',
+        html: `
+          <div class="text-start">
+            <label class="form-label required">Subject</label>
+            <input id="swal-subject" class="form-control" placeholder="e.g., Help with onboarding funnel">
+            <label class="form-label required mt-2">Message</label>
+            <textarea id="swal-message" class="form-control" rows="5" placeholder="Describe your challenge, context, and goals..."></textarea>
+          </div>
+        `,
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: 'Send Request',
+        preConfirm: () => {
+            const subject = document.getElementById('swal-subject').value.trim();
+            const message = document.getElementById('swal-message').value.trim();
+            if (!subject || !message) {
+                Swal.showValidationMessage('Please provide both subject and message.');
+                return false;
+            }
+            return {
+                subject,
+                message
+            };
+        }
+    });
+
+    if (!formValues) return;
+
+    Swal.showLoading();
+    // Simulate API
+    setTimeout(() => {
+        Swal.close();
+        localStorage.setItem(`reqsent_${mentorId}`, 'true');
+        setRequestBtnState(true);
+        Swal.fire({
+            icon: 'success',
+            title: 'Request sent',
+            text: 'Your mentorship request was sent successfully. We\'ll notify you on updates.'
+        });
+    }, 1100);
+});
+
+viewerRoleSelect.addEventListener('change', updateCTAByRole);
+
+// Experience rendering, filtering, sorting, pagination (simple client-side)
+const expBody = document.getElementById('experienceBody');
+const expSearch = document.getElementById('expSearch');
+const expSearchBtn = document.getElementById('expSearchBtn');
+const sortSelect = document.getElementById('sortSelect');
+const emptyExp = document.getElementById('emptyExperience');
+const expPaginationInfo = document.getElementById('expPaginationInfo');
+const prevPageBtn = document.getElementById('prevPage');
+const nextPageBtn = document.getElementById('nextPage');
+const pageIndicator = document.getElementById('pageIndicator');
+
+let expState = {
+    page: 1,
+    perPage: 6,
+    query: '',
+    sort: 'desc'
+};
+
+function formatPeriod(start, end) {
+    const d = (x) => x ? new Date(x) : null;
+    const fmt = (dt) => dt.toLocaleString('en-US', {
+        month: 'short',
+        year: 'numeric'
+    });
+    const s = fmt(d(start));
+    const e = end ? fmt(d(end)) : 'Present';
+    return `${s} – ${e}`;
+}
+
+function filteredSortedExp() {
+    let arr = mentorData.experience.slice();
+    if (expState.query) {
+        const q = expState.query.toLowerCase();
+        arr = arr.filter(e => [e.role, e.company, e.highlights].join(' ').toLowerCase().includes(q));
+    }
+    arr.sort((a, b) => {
+        const ad = new Date(a.start).getTime();
+        const bd = new Date(b.start).getTime();
+        return expState.sort === 'desc' ? (bd - ad) : (ad - bd);
+    });
+    return arr;
+}
+
+function renderExperience() {
+    const data = filteredSortedExp();
+    const total = data.length;
+    emptyExp.classList.toggle('d-none', total !== 0);
+    const startIdx = (expState.page - 1) * expState.perPage;
+    const rows = data.slice(startIdx, startIdx + expState.perPage);
+    expBody.innerHTML = '';
+    rows.forEach(e => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${e.role}</strong></td>
+          <td>${e.company}</td>
+          <td><span class="text-nowrap">${formatPeriod(e.start, e.end)}</span></td>
+          <td>${e.highlights}</td>
+          <td class="text-end">
+            <button class="btn btn--ghost btn--sm" data-action="view"><i class="fa-regular fa-eye"></i></button>
+          </td>
+        `;
+        tr.querySelector('[data-action="view"]').addEventListener('click', () => {
+            Swal.fire({
+                title: e.role + ' @ ' + e.company,
+                html: `<p class="text-start">${e.highlights}</p><p class="text-muted text-start mb-0"><small>${formatPeriod(e.start, e.end)}</small></p>`,
+                confirmButtonText: 'Close'
+            });
+        });
+        expBody.appendChild(tr);
+    });
+    const shown = rows.length ? `${startIdx + 1}-${startIdx + rows.length}` : '0-0';
+    expPaginationInfo.textContent = `Showing ${shown} of ${total}`;
+    pageIndicator.textContent = expState.page;
+    prevPageBtn.disabled = expState.page <= 1;
+    nextPageBtn.disabled = startIdx + rows.length >= total;
+}
+
+expSearchBtn.addEventListener('click', () => {
+    expState.page = 1;
+    expState.query = expSearch.value.trim();
+    renderExperience();
+});
+expSearch.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        expState.page = 1;
+        expState.query = expSearch.value.trim();
+        renderExperience();
+    }
+});
+sortSelect.addEventListener('change', () => {
+    expState.sort = sortSelect.value;
+    expState.page = 1;
+    renderExperience();
+});
+prevPageBtn.addEventListener('click', () => {
+    if (expState.page > 1) {
+        expState.page--;
+        renderExperience();
+    }
+});
+nextPageBtn.addEventListener('click', () => {
+    expState.page++;
+    renderExperience();
+});
+
+// Expertise chips and chart
+let skillsChart;
+
+function renderSkills() {
+    const wrap = document.getElementById('skillsChips');
+    wrap.innerHTML = '';
+    mentorData.expertise.forEach(s => {
+        const chip = document.createElement('span');
+        chip.className = 'chip';
+        chip.innerHTML = `<i class="fa-solid fa-hashtag"></i><span>${s.label}</span>`;
+        chip.addEventListener('click', () => {
+            expState.query = s.label;
+            expSearch.value = s.label;
+            expState.page = 1;
+            renderExperience();
+            const tabTrigger = document.querySelector('[data-bs-target="#experience"]');
+            if (tabTrigger) new bootstrap.Tab(tabTrigger).show();
+        });
+        wrap.appendChild(chip);
+    });
+
+    const labels = mentorData.expertise.map(s => s.label);
+    const data = mentorData.expertise.map(s => s.level);
+    const ctx = document.getElementById('skillsChart');
+    skillsChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels,
+            datasets: [{
+                label: 'Proficiency',
+                data,
+                borderColor: 'rgba(0, 0, 128, 0.8)',
+                backgroundColor: 'rgba(0, 153, 210, 0.2)',
+                pointBackgroundColor: 'rgba(0,0,128,1)'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    enabled: true
+                }
+            },
+            scales: {
+                r: {
+                    suggestedMin: 60,
+                    suggestedMax: 100,
+                    ticks: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Init
+loadMentorProfile();
+updateCTAByRole();
+renderExperience();
+renderSkills();
+  </script>
+ 
+  <!-- AOS Animation Library -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    // Initialize AOS animations
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out-cubic',
+      once: true,
+      offset: 50,
+      delay: 100
+    });
+
+    // Enhanced interactive effects
+    document.addEventListener('DOMContentLoaded', function() {
+      // Navigation button interactions
+      const navButtons = document.querySelectorAll('.nav--primary a');
+      navButtons.forEach(btn => {
+        btn.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-2px) scale(1.02)';
+
+          // Add subtle glow effect
+          const icon = this.querySelector('i');
+          if (icon) {
+            icon.style.transform = 'translateX(2px)';
+          }
+        });
+
+        btn.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0) scale(1)';
+
+          const icon = this.querySelector('i');
+          if (icon) {
+            icon.style.transform = 'translateX(0)';
+          }
+        });
+
+        // Click animation
+        btn.addEventListener('click', function() {
+          this.style.transform = 'translateY(0) scale(0.98)';
+          setTimeout(() => {
+            this.style.transform = 'translateY(-2px) scale(1.02)';
+          }, 150);
+        });
+      });
+
+      // Header scroll effects
+      window.addEventListener('scroll', function() {
+        const scrolled = window.scrollY;
+        const header = document.querySelector('.global-header');
+        if (scrolled > 50) {
+          header.style.background = 'rgba(255, 255, 255, 0.4)';
+          header.style.borderBottomColor = 'rgba(255, 255, 255, 0.4)';
+          header.style.boxShadow = '0 12px 48px rgba(31, 38, 135, 0.5)';
+        } else {
+          header.style.background = 'rgba(255, 255, 255, 0.35)';
+          header.style.borderBottomColor = 'rgba(255, 255, 255, 0.3)';
+          header.style.boxShadow = '0 8px 32px rgba(31, 38, 135, 0.4)';
+        }
+      });
+
+      // Enhanced button interactions for all buttons
+      const buttons = document.querySelectorAll('.btn');
+      buttons.forEach(btn => {
+        btn.addEventListener('mouseenter', function() {
+          if (!this.classList.contains('btn-primary')) {
+            this.style.transform = 'translateY(-2px) scale(1.02)';
+          }
+        });
+        btn.addEventListener('mouseleave', function() {
+          if (!this.classList.contains('btn-primary')) {
+            this.style.transform = 'translateY(0) scale(1)';
+          }
+        });
+      });
+
+      // Tab switching with smooth transitions
+      const tabLinks = document.querySelectorAll('.nav-link');
+      tabLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          const content = document.querySelector('.tab-content');
+          if (content) {
+            content.style.opacity = '0.7';
+            setTimeout(() => {
+              content.style.opacity = '1';
+            }, 150);
+          }
+        });
+      });
+
+      // Form enhancement with focus states
+      const formInputs = document.querySelectorAll('.form-control, .form-select');
+      formInputs.forEach(input => {
+        input.addEventListener('focus', function() {
+          const parent = this.parentElement;
+          if (parent) {
+            parent.style.transform = 'scale(1.01)';
+            parent.style.transition = 'transform 0.2s ease';
+          }
+        });
+        input.addEventListener('blur', function() {
+          const parent = this.parentElement;
+          if (parent) {
+            parent.style.transform = 'scale(1)';
+          }
+        });
+      });
+
+      // Card hover effects with better shadows
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.style.background = 'rgba(255, 255, 255, 0.4)';
+        });
+        card.addEventListener('mouseleave', function() {
+          this.style.background = 'rgba(255, 255, 255, 0.35)';
+        });
+      });
+
+      // Mobile menu toggle functionality (if needed)
+      const createMobileMenuToggle = () => {
+        if (window.innerWidth <= 768) {
+          const nav = document.querySelector('.nav--primary');
+          if (nav && !document.querySelector('.mobile-menu-toggle')) {
+            const toggle = document.createElement('button');
+            toggle.className = 'mobile-menu-toggle btn btn-outline-primary d-md-none';
+            toggle.innerHTML = '<i class="fas fa-bars"></i>';
+            toggle.addEventListener('click', () => {
+              nav.style.display = nav.style.display === 'none' ? 'flex' : 'none';
+            });
+            nav.parentNode.insertBefore(toggle, nav);
+          }
+        }
+      };
+
+      // Initialize mobile menu
+      createMobileMenuToggle();
+      window.addEventListener('resize', createMobileMenuToggle);
+    });
+
+    // Accessibility improvements
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Tab') {
+        document.body.classList.add('user-is-tabbing');
+      }
+    });
+
+    document.addEventListener('mousedown', function() {
+      document.body.classList.remove('user-is-tabbing');
+    });
+
+    // Enhanced keyboard navigation for buttons
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        const focused = document.activeElement;
+        if (focused.classList.contains('nav--primary')) {
+          e.preventDefault();
+          focused.click();
+        }
+      }
+    });
+  </script>
+
+  <style>
+    /* Focus styles for accessibility */
+    .user-is-tabbing *:focus {
+      outline: 3px solid #667eea !important;
+      outline-offset: 2px;
+    }
+
+    /* Mobile menu toggle */
+    .mobile-menu-toggle {
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav--primary {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+      }
+
+      .nav--primary.show {
+        display: flex;
+      }
+    }
+  </style>
+</body></html>

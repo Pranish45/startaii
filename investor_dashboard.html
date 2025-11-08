@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>StartAI • Premium Investor Dashboard</title>
+  
+  <!-- Enhanced Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
+  
+  <!-- AOS Animation Library -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <style>
+    /* === COMPLETE PREMIUM DESIGN SYSTEM WITH FULL WIDTH TABLE === */
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --warning-gradient: linear-gradient(135deg, #ffa726 0%, #ff8a65 100%);
+      --danger-gradient: linear-gradient(135deg, #f857a6 0%, #ff5858 100%);
+      
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-bg-strong: rgba(255, 255, 255, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      --blur-strength: 16px;
+      
+      --font-sans: "Poppins", system-ui, sans-serif;
+      --border-radius: 16px;
+      --border-radius-lg: 24px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: auto; /* Changed from smooth to prevent auto-scroll */
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      color: #2d3436;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      scroll-behavior: auto; /* Prevent smooth scrolling on refresh */
+    }
+
+    /* Animated Background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 75% 25%, rgba(240, 147, 251, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 50% 75%, rgba(79, 172, 254, 0.06) 0%, transparent 50%);
+      z-index: -1;
+      animation: float 25s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(20px, -20px) scale(1.02); }
+      66% { transform: translate(-15px, 15px) scale(0.98); }
+    }
+
+    /* Header */
+    .header {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength)) saturate(140%);
+      -webkit-backdrop-filter: blur(var(--blur-strength)) saturate(140%);
+      border-bottom: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: var(--transition);
+    }
+
+    .header:hover {
+      background: var(--glass-bg-strong);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
+    }
+
+    .logo img {
+      height: 2rem;
+      width: auto;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+
+    .nav {
+      display: none;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .nav {
+        display: flex;
+      }
+    }
+
+    .nav-link {
+      color: #2d3436;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-link::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: -1;
+    }
+
+    .nav-link:hover {
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .nav-link:hover::before {
+      opacity: 1;
+    }
+
+    .nav-link.active {
+      background: var(--primary-gradient);
+      color: white;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Layout */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      min-height: calc(100vh - 80px);
+    }
+
+    @media (min-width: 992px) {
+      .layout {
+        grid-template-columns: 280px 1fr;
+      }
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border-right: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      padding: 2rem;
+      position: sticky;
+      top: 80px;
+      height: calc(100vh - 80px);
+      overflow-y: auto;
+      transition: var(--transition);
+    }
+
+    .sidebar:hover {
+      background: var(--glass-bg-strong);
+    }
+
+    @media (max-width: 991.98px) {
+      .sidebar {
+        display: none;
+      }
+    }
+
+    .sidebar-link {
+      color: #636e72;
+      padding: 0.75rem 1rem;
+      border: 1px solid transparent;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar-link::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.6s;
+    }
+
+    .sidebar-link:hover::before {
+      left: 100%;
+    }
+
+    .sidebar-link:hover {
+      background: var(--glass-bg);
+      color: #2d3436;
+      border-color: var(--glass-border);
+      transform: translateX(4px);
+    }
+
+    .sidebar-link.active {
+      border-color: rgba(102, 126, 234, 0.5);
+      background: var(--primary-gradient);
+      color: white;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+      transform: translateX(4px);
+    }
+
+    .sidebar-link i {
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Main Content */
+    .main {
+      padding: 2rem;
+      background: transparent;
+      min-height: calc(100vh - 80px);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-shadow);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(31, 38, 135, 0.5);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+      position: relative;
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .welcome-bg {
+      position: relative;
+      min-height: 340px;
+      overflow: hidden;
+    }
+
+    .welcome-bg img {
+      width: 100%;
+      height: 100%;
+      max-height: 340px;
+      object-fit: cover;
+      filter: saturate(110%) contrast(105%);
+      transition: var(--transition);
+    }
+
+    .welcome-section:hover .welcome-bg img {
+      transform: scale(1.05);
+      filter: saturate(120%) contrast(110%);
+    }
+
+    .welcome-overlay {
+      position: absolute;
+      inset: 0;
+      background: 
+        linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.4)),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3));
+      backdrop-filter: blur(2px);
+      transition: var(--transition);
+    }
+
+    .welcome-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      color: white;
+      z-index: 2;
+    }
+
+    .welcome-content h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.9) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .welcome-content p {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      line-height: 1.6;
+      opacity: 0.95;
+      max-width: 600px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .kpi-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-shadow);
+      padding: 1.5rem;
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 48px rgba(31, 38, 135, 0.5);
+      border-color: rgba(79, 172, 254, 0.4);
+    }
+
+    .kpi-card:hover::before {
+      opacity: 1;
+    }
+
+    .kpi-value {
+      font-family: var(--font-sans);
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .kpi-label {
+      font-size: 0.9rem;
+      color: #636e72;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .kpi-trend {
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+
+    .kpi-trend.positive {
+      color: #43e97b;
+    }
+
+    /* Startup Grid */
+    .startup-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .startup-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-shadow);
+      padding: 1.5rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .startup-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--success-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .startup-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(31, 38, 135, 0.5);
+      border-color: rgba(67, 233, 123, 0.3);
+    }
+
+    .startup-card:hover::before {
+      opacity: 1;
+    }
+
+    .startup-card h4 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: #2d3436;
+    }
+
+    .startup-card .progress {
+      height: 12px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid var(--glass-border);
+      overflow: hidden;
+      margin: 0.75rem 0;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .startup-card .progress-bar {
+      height: 100%;
+      background: var(--accent-gradient);
+      border-radius: 50px;
+      transition: width 1s ease;
+      box-shadow: 0 2px 8px rgba(79, 172, 254, 0.4);
+    }
+
+    /* FULL WIDTH SHORTLIST SECTION */
+    .shortlist-section {
+      margin-top: 0;
+      padding-top: 0;
+      width: 100%; /* Ensure full width */
+    }
+
+    .table-container {
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      margin: 1.5rem 0;
+      position: relative;
+      width: 100%; /* Full width */
+      overflow-x: auto; /* Allow horizontal scroll on small screens */
+    }
+
+    .table-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .table-container:hover::before {
+      opacity: 1;
+    }
+
+    .table {
+      width: 100%;
+      background: transparent;
+      margin: 0;
+      font-size: 0.9rem;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+      min-width: 800px; /* Minimum width to prevent cramping */
+    }
+
+    /* OPTIMIZED COLUMN WIDTHS FOR FULL SCREEN */
+    .table th:nth-child(1) { width: 25%; }  /* Startup */
+    .table th:nth-child(2) { width: 12%; }  /* Stage */
+    .table th:nth-child(3) { width: 15%; }  /* AI Score */
+    .table th:nth-child(4) { width: 15%; }  /* Match */
+    .table th:nth-child(5) { width: 18%; }  /* Last Updated */
+    .table th:nth-child(6) { width: 15%; }  /* Actions */
+
+    .table th {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.12), rgba(79, 172, 254, 0.08));
+      border: none;
+      color: #2d3436;
+      font-weight: 700;
+      padding: 1.2rem 1rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .table th:nth-child(2), 
+    .table th:nth-child(3), 
+    .table th:nth-child(4), 
+    .table th:nth-child(5),
+    .table th:nth-child(6) {
+      text-align: center;
+    }
+
+    .table th::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+    }
+
+    .table td {
+      border: none;
+      padding: 1.2rem 1rem;
+      vertical-align: middle;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+      transition: var(--transition);
+      position: relative;
+      text-align: left;
+    }
+
+    .table td:nth-child(2), 
+    .table td:nth-child(3), 
+    .table td:nth-child(4), 
+    .table td:nth-child(5),
+    .table td:nth-child(6) {
+      text-align: center;
+    }
+
+    .table tbody tr {
+      transition: var(--transition);
+    }
+
+    .table tbody tr:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(102, 126, 234, 0.03));
+    }
+
+    .table tbody tr:hover td {
+      background: transparent;
+      border-bottom-color: rgba(102, 126, 234, 0.2);
+    }
+
+    /* ENHANCED BADGES WITH CONSISTENT SIZING */
+    .table .badge {
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid transparent;
+      display: inline-block;
+      min-width: 90px;
+      text-align: center;
+    }
+
+    .table .badge::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.6s;
+    }
+
+    .table .badge:hover::before {
+      left: 100%;
+    }
+
+    .badge-series-a {
+      background: var(--accent-gradient);
+      color: white;
+      box-shadow: 0 2px 8px rgba(79, 172, 254, 0.3);
+    }
+
+    .badge-seed {
+      background: var(--success-gradient);
+      color: white;
+      box-shadow: 0 2px 8px rgba(67, 233, 123, 0.3);
+    }
+
+    .badge-pre-series-a {
+      background: var(--primary-gradient);
+      color: white;
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    /* ENHANCED PROGRESS BARS */
+    .table .progress-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-direction: column;
+    }
+
+    .table .progress-container-inline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-direction: row;
+    }
+
+    .table .progress {
+      height: 8px;
+      width: 80px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .table .progress-bar {
+      height: 100%;
+      border-radius: 20px;
+      background: var(--accent-gradient);
+      box-shadow: 0 0 8px rgba(79, 172, 254, 0.4);
+      transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+
+    .table .progress-bar.match-score {
+      background: var(--success-gradient);
+      box-shadow: 0 0 8px rgba(67, 233, 123, 0.4);
+    }
+
+    /* ENHANCED SCORE DISPLAYS */
+    .score-display {
+      font-weight: 700;
+      font-size: 1rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .match-display {
+      font-weight: 700;
+      font-size: 1rem;
+      background: var(--success-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ENHANCED INFO DISPLAYS */
+    .startup-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .startup-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: #2d3436;
+    }
+
+    .startup-updated {
+      font-size: 0.8rem;
+      color: #636e72;
+    }
+
+    .status-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .status-date {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: #2d3436;
+    }
+
+    .status-active {
+      color: #43e97b;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-review {
+      color: #ffa726;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-paused {
+      color: #636e72;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-diligence {
+      color: #4facfe;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ENHANCED ACTION BUTTONS */
+    .table .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+
+    .table .btn-action {
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      color: #636e72;
+      transition: var(--transition);
+      cursor: pointer;
+      font-size: 0.8rem;
+      min-width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .table .btn-action:hover {
+      background: var(--glass-bg-strong);
+      color: #2d3436;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .table .btn-action.btn-view:hover {
+      border-color: rgba(102, 126, 234, 0.5);
+      color: #667eea;
+    }
+
+    .table .btn-action.btn-call:hover {
+      border-color: rgba(67, 233, 123, 0.5);
+      color: #43e97b;
+    }
+
+    .table .btn-action.btn-remove:hover {
+      border-color: rgba(255, 167, 38, 0.5);
+      color: #ffa726;
+    }
+
+    /* Buttons */
+    .btn {
+      font-weight: 600;
+      border-radius: var(--border-radius);
+      padding: 0.75rem 1.5rem;
+      border: none;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+      font-family: var(--font-sans);
+      justify-content: center;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+    }
+
+    .btn-primary {
+      background: var(--primary-gradient);
+      color: white;
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 8px 24px rgba(102, 126, 234, 0.6);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: var(--glass-bg);
+      color: #2d3436;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-secondary:hover {
+      background: var(--glass-bg-strong);
+      color: #2d3436;
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-success {
+      background: var(--success-gradient);
+      color: white;
+      box-shadow: 0 4px 16px rgba(67, 233, 123, 0.4);
+    }
+
+    .btn-success:hover {
+      box-shadow: 0 8px 24px rgba(67, 233, 123, 0.6);
+      color: white;
+    }
+
+    .btn-warning {
+      background: var(--warning-gradient);
+      color: white;
+      box-shadow: 0 4px 16px rgba(255, 167, 38, 0.4);
+    }
+
+    .btn-warning:hover {
+      box-shadow: 0 8px 24px rgba(255, 167, 38, 0.6);
+      color: white;
+    }
+
+    /* Badges */
+    .badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-success {
+      background: var(--success-gradient);
+      color: white;
+    }
+
+    .badge-primary {
+      background: var(--primary-gradient);
+      color: white;
+    }
+
+    .badge-info {
+      background: var(--accent-gradient);
+      color: white;
+    }
+
+    .badge-warning {
+      background: var(--warning-gradient);
+      color: white;
+    }
+
+    /* Utilities */
+    .d-flex { display: flex; }
+    .align-items-center { align-items: center; }
+    .justify-content-between { justify-content: space-between; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-3 { gap: 0.75rem; }
+    .gap-4 { gap: 1rem; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .mb-0 { margin-bottom: 0; }
+    .mb-2 { margin-bottom: 0.5rem; }
+    .mb-3 { margin-bottom: 0.75rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .text-muted { color: #636e72; }
+    .small { font-size: 0.875rem; }
+    .fw-semibold { font-weight: 600; }
+
+    /* FULL WIDTH GRID SYSTEM */
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -0.75rem;
+      width: 100%;
+    }
+
+    .col {
+      flex: 1;
+      padding: 0 0.75rem;
+    }
+
+    .col-12 { width: 100%; }
+    .col-full { width: 100%; } /* New full width class */
+
+    /* Typography */
+    h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+
+    h3 {
+      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+
+    h4 {
+      font-size: clamp(1.125rem, 2vw, 1.5rem);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #2d3436;
+    }
+
+    /* Loading Animation */
+    .loading {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out 0.3s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .skeleton {
+      background: linear-gradient(90deg, 
+        rgba(200,200,200,0.2) 25%, 
+        rgba(200,200,200,0.4) 50%, 
+        rgba(200,200,200,0.2) 75%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.2s infinite;
+      border-radius: var(--border-radius-lg);
+      height: 200px;
+    }
+
+    @keyframes skeleton-loading {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 9999;
+      max-width: 400px;
+    }
+
+    .toast {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 1rem 1.5rem;
+      margin-bottom: 0.75rem;
+      color: #2d3436;
+      box-shadow: var(--glass-shadow);
+      transform: translateX(100%);
+      transition: var(--transition);
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast.success {
+      border-left: 4px solid #43e97b;
+    }
+
+    .toast.error {
+      border-left: 4px solid #f857a6;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .main {
+        padding: 1rem;
+      }
+      
+      .card {
+        padding: 1rem;
+        margin-bottom: 1rem;
+      }
+      
+      .kpi-card {
+        padding: 1rem;
+      }
+      
+      .welcome-content {
+        padding: 1rem;
+      }
+      
+      .startup-card {
+        padding: 1rem;
+      }
+      
+      .table th,
+      .table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8rem;
+      }
+      
+      .table .progress {
+        width: 60px;
+      }
+
+      .startup-name {
+        font-size: 1rem;
+      }
+
+      .score-display,
+      .match-display {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-gradient);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-gradient);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a class="logo" href="./home_page.html">
+          <img src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" alt="StartAI Logo">
+          StartAI
+        </a>
+        
+        <nav class="nav">
+          <a class="nav-link active" href="./investor_dashboard.html">
+            <i class="fa-solid fa-chart-line"></i> Dashboard
+          </a>
+          <a class="nav-link" href="./startup_discovery.html">
+            <i class="fa-solid fa-search"></i> Discovery
+          </a>
+          <a class="nav-link" href="./deal_pipeline.html">
+            <i class="fa-solid fa-funnel-dollar"></i> Pipeline
+          </a>
+          <a class="nav-link" href="./portfolio.html">
+            <i class="fa-solid fa-briefcase"></i> Portfolio
+          </a>
+          <a class="nav-link" href="./analytics.html">
+            <i class="fa-solid fa-chart-bar"></i> Analytics
+          </a>
+        </nav>
+        
+        <div class="user-menu">
+          <button class="btn btn-secondary btn-sm">
+            <i class="fa-solid fa-bell"></i>
+            <span class="badge badge-warning" style="font-size: 0.6rem; position: absolute; top: -5px; right: -5px;">3</span>
+          </button>
+          <button class="btn btn-secondary btn-sm">
+            <img src="https://picsum.photos/seed/investor/24/24" alt="Profile" style="width: 20px; height: 20px; border-radius: 50%; margin-right: 0.5rem;">
+            Alex <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <nav>
+        <div style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #636e72; margin-bottom: 1rem;">Investment</div>
+        
+        <a class="sidebar-link active" href="./investor_dashboard.html">
+          <i class="fa-solid fa-chart-line"></i>Dashboard
+        </a>
+        <a class="sidebar-link" href="./startup_discovery.html">
+          <i class="fa-solid fa-search"></i>Discovery
+        </a>
+        <a class="sidebar-link" href="./deal_pipeline.html">
+          <i class="fa-solid fa-funnel-dollar"></i>Deal Pipeline
+        </a>
+        <a class="sidebar-link" href="./portfolio.html">
+          <i class="fa-solid fa-briefcase"></i>Portfolio
+        </a>
+        <a class="sidebar-link" href="./due_diligence.html">
+          <i class="fa-solid fa-search-dollar"></i>Due Diligence
+        </a>
+        
+        <div style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #636e72; margin: 2rem 0 1rem 0;">Analytics</div>
+        
+        <a class="sidebar-link" href="./market_analysis.html">
+          <i class="fa-solid fa-chart-bar"></i>Market Analysis
+        </a>
+        <a class="sidebar-link" href="./performance.html">
+          <i class="fa-solid fa-chart-area"></i>Performance
+        </a>
+        <a class="sidebar-link" href="./reports.html">
+          <i class="fa-solid fa-file-chart"></i>Reports
+        </a>
+        
+        <div style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #636e72; margin: 2rem 0 1rem 0;">Account</div>
+        
+        <a class="sidebar-link" href="./settings.html">
+          <i class="fa-solid fa-cog"></i>Settings
+        </a>
+        <a class="sidebar-link" href="./subscription.html">
+          <i class="fa-solid fa-crown"></i>Subscription
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Welcome Section -->
+      <section class="welcome-section loading">
+        <div class="welcome-bg">
+          <img src="https://picsum.photos/seed/investment-office/1200/400" alt="Investment Dashboard">
+          <div class="welcome-overlay"></div>
+          <div class="welcome-content">
+            <h1>Welcome back, Alex</h1>
+            <p>Here's your investment snapshot: active deals, portfolio performance, and market opportunities at a glance.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- KPI Cards -->
+      <section class="loading">
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-value">24</div>
+            <div class="kpi-label">Active Deals</div>
+            <div class="kpi-trend positive">
+              <i class="fa-solid fa-arrow-up"></i> +12% this month
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">$2.4M</div>
+            <div class="kpi-label">Portfolio Value</div>
+            <div class="kpi-trend positive">
+              <i class="fa-solid fa-arrow-up"></i> +8.5% this quarter
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">89%</div>
+            <div class="kpi-label">Match Score Avg</div>
+            <div class="kpi-trend positive">
+              <i class="fa-solid fa-arrow-up"></i> +3% this week
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-value">12</div>
+            <div class="kpi-label">Companies Funded</div>
+            <div class="kpi-trend positive">
+              <i class="fa-solid fa-arrow-up"></i> +2 this month
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Curated Deal Flow -->
+      <section class="card loading">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h2><i class="fa-solid fa-star" style="margin-right: 0.75rem;"></i>Curated Deal Flow</h2>
+            <p class="text-muted mb-0">AI-powered startup matches based on your investment thesis and portfolio strategy.</p>
+          </div>
+          <a href="./startup_discovery.html" class="btn btn-primary btn-sm">
+            <i class="fa-solid fa-search"></i> View All
+          </a>
+        </div>
+
+        <!-- Loading State -->
+        <div id="curatedLoading" class="text-center" style="padding: 3rem 0;">
+          <div class="skeleton"></div>
+        </div>
+
+        <!-- Startup Cards -->
+        <div id="curatedStartups" class="startup-grid" style="display: none;">
+          <!-- Populated via JavaScript -->
+        </div>
+      </section>
+
+      <!-- FULL WIDTH SHORTLIST TABLE SECTION -->
+      <section class="shortlist-section loading">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h3><i class="fa-solid fa-bookmark" style="margin-right: 0.75rem;"></i>My Shortlist</h3>
+            <p class="text-muted mb-0">Track your most promising investment opportunities and monitor their progress.</p>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-secondary btn-sm" onclick="showToast('Filter modal would open here', 'info')">
+              <i class="fa-solid fa-filter"></i> Filter
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="showToast('Exporting shortlist data...', 'info')">
+              <i class="fa-solid fa-download"></i> Export
+            </button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="table" id="shortlistTable">
+            <thead>
+              <tr>
+                <th style="cursor: pointer;" onclick="sortTable('name')">
+                  Startup <i class="fa-solid fa-sort" style="opacity: 0.6;"></i>
+                </th>
+                <th style="cursor: pointer;" onclick="sortTable('stage')">
+                  Stage <i class="fa-solid fa-sort" style="opacity: 0.6;"></i>
+                </th>
+                <th style="cursor: pointer;" onclick="sortTable('score')">
+                  AI Score <i class="fa-solid fa-sort" style="opacity: 0.6;"></i>
+                </th>
+                <th style="cursor: pointer;" onclick="sortTable('match')">
+                  Match <i class="fa-solid fa-sort" style="opacity: 0.6;"></i>
+                </th>
+                <th style="cursor: pointer;" onclick="sortTable('updated')">
+                  Last Updated <i class="fa-solid fa-sort" style="opacity: 0.6;"></i>
+                </th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="shortlistBody">
+              <!-- Populated via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Table Footer -->
+        <div class="d-flex justify-content-between align-items-center" style="margin-top: 1.5rem;">
+          <small class="text-muted">Showing 1–6 of 12</small>
+          <div class="d-flex gap-2">
+            <button class="btn btn-secondary btn-sm" style="opacity: 0.5; cursor: not-allowed;">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button class="btn btn-primary btn-sm">1</button>
+            <button class="btn btn-secondary btn-sm">2</button>
+            <button class="btn btn-secondary btn-sm">3</button>
+            <button class="btn btn-secondary btn-sm">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Actions & Recent Activity in Cards Below -->
+      <div class="row">
+        <div class="col">
+          <!-- Quick Actions -->
+          <section class="card loading">
+            <h4 style="margin-bottom: 1.5rem;"><i class="fa-solid fa-lightning" style="margin-right: 0.75rem;"></i>Quick Actions</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
+              <a href="./startup_discovery.html" class="btn btn-primary">
+                <i class="fa-solid fa-search"></i> Discover Startups
+              </a>
+              <a href="./deal_pipeline.html" class="btn btn-success">
+                <i class="fa-solid fa-plus"></i> Add Deal
+              </a>
+              <a href="./portfolio.html" class="btn btn-warning">
+                <i class="fa-solid fa-chart-pie"></i> View Portfolio
+              </a>
+              <a href="./reports.html" class="btn btn-secondary">
+                <i class="fa-solid fa-file-alt"></i> Generate Report
+              </a>
+            </div>
+          </section>
+        </div>
+
+        <div class="col">
+          <!-- Recent Activity -->
+          <section class="card loading">
+            <h4 style="margin-bottom: 1.5rem;"><i class="fa-solid fa-clock" style="margin-right: 0.75rem;"></i>Recent Activity</h4>
+            <div id="recentActivity" style="display: grid; gap: 1rem; max-height: 400px; overflow-y: auto;">
+              <!-- Populated via JavaScript -->
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+  <script>
+    // PREVENT AUTO SCROLL TO BOTTOM ON REFRESH
+    document.addEventListener('DOMContentLoaded', function() {
+      // Force scroll to top on page load
+      window.scrollTo(0, 0);
+      
+      // Disable smooth scrolling during page load
+      document.body.style.scrollBehavior = 'auto';
+      document.documentElement.style.scrollBehavior = 'auto';
+      
+      // Re-enable smooth scrolling after page loads
+      setTimeout(() => {
+        document.body.style.scrollBehavior = 'smooth';
+        document.documentElement.style.scrollBehavior = 'smooth';
+      }, 1000);
+    });
+
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 100
+    });
+
+    // Mock Data
+    const mockStartups = [
+      {
+        id: 1,
+        name: "HealthTech AI",
+        stage: "Series A",
+        score: 94,
+        match: 89,
+        description: "AI-powered healthcare diagnostics platform revolutionizing medical imaging analysis.",
+        industry: "HealthTech",
+        founded: 2022,
+        funding: "$2.5M"
+      },
+      {
+        id: 2,
+        name: "GreenFlow Energy",
+        stage: "Seed",
+        score: 87,
+        match: 82,
+        description: "Sustainable energy storage solutions using advanced battery technology.",
+        industry: "CleanTech",
+        founded: 2023,
+        funding: "$800K"
+      },
+      {
+        id: 3,
+        name: "FinSync Solutions",
+        stage: "Pre-Series A",
+        score: 91,
+        match: 88,
+        description: "Next-generation payment infrastructure for emerging markets.",
+        industry: "FinTech",
+        founded: 2022,
+        funding: "$1.2M"
+      },
+      {
+        id: 4,
+        name: "EduLearn Platform",
+        stage: "Seed",
+        score: 85,
+        match: 79,
+        description: "Adaptive learning platform using AI to personalize education.",
+        industry: "EdTech",
+        founded: 2023,
+        funding: "$600K"
+      }
+    ];
+
+    const shortlistData = [
+      { name: "HealthTech AI", stage: "Series A", score: 94, match: 89, updated: "Jan 15", status: "Active" },
+      { name: "GreenFlow Energy", stage: "Seed", score: 87, match: 82, updated: "Jan 14", status: "Under Review" },
+      { name: "FinSync Solutions", stage: "Pre-Series A", score: 91, match: 88, updated: "Jan 13", status: "Active" },
+      { name: "EduTech Platform", stage: "Seed", score: 85, match: 79, updated: "Jan 12", status: "Paused" },
+      { name: "LogiChain Pro", stage: "Series A", score: 88, match: 84, updated: "Jan 11", status: "Active" },
+      { name: "AI Analytics Corp", stage: "Series B", score: 92, match: 91, updated: "Jan 10", status: "Due Diligence" },
+      { name: "DataFlow Systems", stage: "Seed", score: 89, match: 86, updated: "Jan 09", status: "Active" },
+      { name: "CloudTech Solutions", stage: "Series A", score: 90, match: 87, updated: "Jan 08", status: "Under Review" }
+    ];
+
+    const recentActivities = [
+      { icon: "fa-handshake", color: "success", title: "Deal Closed", description: "TechFlow raised $2M Series A", time: "2 hours ago" },
+      { icon: "fa-star", color: "primary", title: "New Match", description: "HealthAI - 94% match score", time: "5 hours ago" },
+      { icon: "fa-chart-line", color: "warning", title: "Portfolio Update", description: "Q4 performance report ready", time: "1 day ago" },
+      { icon: "fa-search-dollar", color: "info", title: "Due Diligence Complete", description: "CloudTech evaluation finished", time: "2 days ago" },
+      { icon: "fa-calendar", color: "secondary", title: "Meeting Scheduled", description: "Pitch with DataFlow tomorrow", time: "3 days ago" },
+      { icon: "fa-user-plus", color: "success", title: "New Connection", description: "Connected with Sarah Chen", time: "4 days ago" },
+      { icon: "fa-bell", color: "warning", title: "Follow-up Reminder", description: "Call scheduled with EduTech", time: "5 days ago" }
+    ];
+
+    // Toast System
+    function showToast(message, type = 'success') {
+      const toastContainer = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <i class="fa-solid fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+          <span style="flex-grow: 1;">${message}</span>
+          <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: inherit; cursor: pointer;">
+            <i class="fa-solid fa-times"></i>
+          </button>
+        </div>
+      `;
+      
+      toastContainer.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 100);
+      setTimeout(() => {
+        if (toast.parentNode) {
+          toast.classList.remove('show');
+          setTimeout(() => { if (toast.parentNode) toast.remove(); }, 300);
+        }
+      }, 4000);
+    }
+
+    // Helper functions for styling
+    function getBadgeClass(stage) {
+      const classes = {
+        'Series A': 'badge-series-a',
+        'Seed': 'badge-seed',
+        'Pre-Series A': 'badge-pre-series-a',
+        'Series B': 'badge-series-a'
+      };
+      return classes[stage] || 'badge-primary';
+    }
+
+    function getStatusClass(status) {
+      const classes = {
+        'Active': 'active',
+        'Under Review': 'review',
+        'Paused': 'paused',
+        'Due Diligence': 'diligence'
+      };
+      return classes[status] || 'active';
+    }
+
+    function sortTable(column) {
+      showToast(`Sorting by ${column}`, 'info');
+      // Add actual sorting logic here
+    }
+
+    // ENHANCED TABLE RENDERING WITH FULL WIDTH
+    function renderShortlist() {
+      const tbody = document.getElementById('shortlistBody');
+      tbody.innerHTML = shortlistData.map((item, index) => `
+        <tr>
+          <td>
+            <div class="startup-info">
+              <div class="startup-name">${item.name}</div>
+              <div class="startup-updated">Last updated: ${item.updated}</div>
+            </div>
+          </td>
+          <td>
+            <span class="badge ${getBadgeClass(item.stage)}">${item.stage}</span>
+          </td>
+          <td>
+            <div class="progress-container">
+              <span class="score-display">${item.score}%</span>
+              <div class="progress">
+                <div class="progress-bar" style="width: ${item.score}%"></div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="progress-container">
+              <span class="match-display">${item.match}%</span>
+              <div class="progress">
+                <div class="progress-bar match-score" style="width: ${item.match}%"></div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="status-info">
+              <div class="status-date">${item.updated}</div>
+              <div class="status-${getStatusClass(item.status)}">${item.status}</div>
+            </div>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <button class="btn-action btn-view" onclick="showToast('Opening details...')" title="View Details">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+              <button class="btn-action btn-call" onclick="showToast('Opening calendar...')" title="Schedule Call">
+                <i class="fa-solid fa-phone"></i>
+              </button>
+              <button class="btn-action btn-remove" onclick="showToast('Removed from shortlist', 'warning')" title="Remove">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Load Startups
+    function loadCuratedStartups() {
+      const loading = document.getElementById('curatedLoading');
+      const container = document.getElementById('curatedStartups');
+
+      setTimeout(() => {
+        container.innerHTML = mockStartups.map(startup => `
+          <div class="startup-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4>${startup.name}</h4>
+              <span class="badge badge-primary">${startup.stage}</span>
+            </div>
+            
+            <p class="text-muted mb-3" style="font-size: 0.85rem; line-height: 1.5;">${startup.description}</p>
+            
+            <div class="d-flex justify-content-between align-items-center mb-3" style="font-size: 0.85rem;">
+              <div>
+                <div><strong>Industry:</strong> ${startup.industry}</div>
+                <div><strong>Founded:</strong> ${startup.founded}</div>
+                <div><strong>Funding:</strong> ${startup.funding}</div>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <div class="d-flex justify-content-between align-items-center mb-2" style="font-size: 0.85rem;">
+                <span class="fw-semibold">AI Score: ${startup.score}%</span>
+                <span class="fw-semibold">Match: ${startup.match}%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" style="width: ${startup.score}%"></div>
+              </div>
+            </div>
+            
+            <div class="d-flex gap-2">
+              <button class="btn btn-primary btn-sm" style="flex: 1;" onclick="showToast('Opening startup details...')">
+                <i class="fa-solid fa-eye"></i> View Details
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="showToast('Added to shortlist!')">
+                <i class="fa-solid fa-bookmark"></i>
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="showToast('Opening calendar...')">
+                <i class="fa-solid fa-phone"></i>
+              </button>
+            </div>
+          </div>
+        `).join('');
+
+        loading.style.display = 'none';
+        container.style.display = 'grid';
+      }, 1500);
+    }
+
+    // Render Recent Activity
+    function renderRecentActivity() {
+      const container = document.getElementById('recentActivity');
+      container.innerHTML = recentActivities.map(activity => `
+        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border-radius: var(--border-radius); transition: var(--transition);" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--${activity.color}-gradient); display: flex; align-items: center; justify-content: center; color: white;">
+            <i class="fa-solid ${activity.icon}"></i>
+          </div>
+          <div style="flex: 1; min-width: 0;">
+            <div class="fw-semibold" style="font-size: 0.9rem;">${activity.title}</div>
+            <div class="text-muted small" style="font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${activity.description}</div>
+            <div class="text-muted small" style="font-size: 0.75rem;">${activity.time}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Initialize
+    setTimeout(() => {
+      document.querySelectorAll('.loading').forEach(el => el.classList.remove('loading'));
+    }, 1000);
+
+    loadCuratedStartups();
+    renderShortlist();
+    renderRecentActivity();
+
+    setTimeout(() => showToast('Welcome to your Premium Investment Dashboard!', 'success'), 2000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   StartAI – The AI Co‑Pilot for Your Startup Journey
+  </title>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <!-- AOS Animation Library -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet"/>
+  
+  <style>
+/* Enhanced Premium Design System */
+:root {
+    /* Premium Color Palette */
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    --dark-gradient: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
+    
+    /* Glassmorphism Colors */
+    --glass-bg: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    
+    /* Typography */
+    --font-sans: "Poppins", ui-sans-serif, system-ui, "-apple-system", "Segoe UI", "Roboto", "Inter", Helvetica, Arial, sans-serif;
+    
+    /* Spacing & Effects */
+    --blur-strength: 16px;
+    --border-radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Enhancements */
+* {
+    transition: var(--transition);
+}
+
+body {
+    font-family: var(--font-sans);
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Animated Background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.1) 0%, transparent 50%);
+    z-index: -1;
+    animation: backgroundFloat 20s ease-in-out infinite;
+}
+
+@keyframes backgroundFloat {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(30px, -30px) rotate(120deg); }
+    66% { transform: translate(-20px, 20px) rotate(240deg); }
+}
+
+/* Compact Header with Glassmorphism */
+.global-header {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(var(--blur-strength));
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    transition: var(--transition);
+    z-index: 1000;
+    padding: 0.5rem 0; /* Reduced padding */
+}
+
+.global-header.is-scrolled {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    padding: 0.25rem 0; /* Even more compact when scrolled */
+}
+
+.global-header .logo {
+    font-weight: 700;
+    font-size: 1.25rem; /* Smaller font size */
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.global-header .logo img {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    transition: var(--transition);
+    height: 32px; /* Fixed smaller height */
+    width: auto;
+}
+
+.global-header .logo:hover img {
+    transform: scale(1.05);
+}
+
+.global-header .nav-link {
+    position: relative;
+    font-weight: 500;
+    color: #2d3436;
+    padding: 0.5rem 1rem; /* Reduced padding */
+    border-radius: 8px; /* Smaller border radius */
+    overflow: hidden;
+    font-size: 0.9rem; /* Slightly smaller text */
+}
+
+.global-header .nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--primary-gradient);
+    opacity: 0;
+    transition: var(--transition);
+    z-index: -1;
+}
+
+.global-header .nav-link:hover {
+    color: white;
+    transform: translateY(-1px); /* Reduced hover lift */
+}
+
+.global-header .nav-link:hover::before {
+    opacity: 1;
+}
+
+/* Compact buttons in header */
+.global-header .btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+}
+
+/* Premium Button Styles */
+.btn {
+    position: relative;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    overflow: hidden;
+    text-transform: none;
+    letter-spacing: 0.5px;
+    transition: var(--transition);
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.6s;
+    z-index: 1;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn--primary {
+    background: var(--primary-gradient);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn--primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    color: white;
+}
+
+.btn--secondary {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-strength));
+    color: #2d3436;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+
+.btn--secondary:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.25);
+    color: #2d3436;
+}
+
+.btn--accent {
+    background: var(--accent-gradient);
+    color: white;
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+}
+
+.btn--accent:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.6);
+    color: white;
+}
+
+.btn--ghost {
+    background: transparent;
+    color: #2d3436;
+    border: 2px solid rgba(45, 52, 54, 0.2);
+}
+
+.btn--ghost:hover {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-strength));
+    border-color: var(--glass-border);
+    transform: translateY(-2px);
+    color: #2d3436;
+}
+
+.btn--success {
+    background: var(--success-gradient);
+    color: white;
+    box-shadow: 0 4px 15px rgba(67, 233, 123, 0.4);
+}
+
+.btn--success:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(67, 233, 123, 0.6);
+    color: white;
+}
+
+/* Enhanced Hero Section */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 120px; /* Increased top padding to push content further down */
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding-top: 100px; /* More padding on mobile */
+        min-height: 90vh; /* Reduce height on mobile for better UX */
+    }
+}
+
+@media (max-width: 576px) {
+    .hero {
+        padding-top: 90px; /* Adjust for very small screens */
+    }
+}
+
+.hero .hero-bg {
+    background: 
+        linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%),
+        linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9)),
+        url(assets/homepage_hero_section_backgrou_1_61330142.jpg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+}
+
+.hero .lead {
+    font-size: 1.25rem;
+    color: #636e72;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* KPI Cards with Glassmorphism */
+.kpi {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-strength));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: var(--glass-shadow);
+    transition: var(--transition);
+}
+
+.kpi:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(31, 38, 135, 0.2);
+}
+
+.kpi-title {
+    font-size: 0.875rem;
+    color: #636e72;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.kpi-value {
+    font-weight: 800;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Enhanced Cards */
+.card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-strength));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--glass-shadow);
+    transition: var(--transition);
+    padding: 2rem;
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(31, 38, 135, 0.3);
+}
+
+.card h3 {
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 1rem;
+}
+
+.card .icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    transition: var(--transition);
+}
+
+.card:hover .icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Section Enhancements */
+.section {
+    padding: 5rem 0;
+    position: relative;
+}
+
+.section h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    background: var(--dark-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+}
+
+/* Enhanced Navigation Tabs */
+.nav-tabs {
+    border: none;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.nav-tabs .nav-link {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-strength));
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: #2d3436;
+    font-weight: 600;
+    padding: 1rem 2rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-tabs .nav-link:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--glass-shadow);
+}
+
+.nav-tabs .nav-link.active {
+    background: var(--primary-gradient);
+    color: white;
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+/* Enhanced Table */
+.table-responsive {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+}
+
+.table {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-strength));
+    margin: 0;
+}
+
+.table th {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #2d3436;
+    font-weight: 600;
+    padding: 1rem;
+}
+
+.table td {
+    border: none;
+    padding: 1rem;
+    vertical-align: middle;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+}
+
+.table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.02);
+}
+
+/* Score Display Enhancement */
+.score {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.score__value {
+    font-weight: 700;
+    color: #2d3436;
+    min-width: 2rem;
+}
+
+.score__bar {
+    width: 60px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+}
+
+.score__bar span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: var(--success-gradient);
+    border-radius: 3px;
+    transition: width 1s ease-out;
+}
+
+/* Enhanced Footer */
+.footer {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-strength));
+    border-top: 1px solid var(--glass-border);
+    padding: 3rem 0 2rem;
+    margin-top: 0 !important;
+}
+
+.footer h5,
+.footer h6 {
+    background: var(--dark-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+}
+
+.footer a {
+    color: #636e72;
+    transition: var(--transition);
+}
+
+.footer a:hover {
+    color: #2d3436;
+    transform: translateX(4px);
+}
+
+/* Badge Enhancements */
+.badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+}
+
+.badge--success {
+    background: var(--success-gradient);
+    color: white;
+}
+
+.badge--info {
+    background: var(--accent-gradient);
+    color: white;
+}
+
+.badge--warning {
+    background: var(--secondary-gradient);
+    color: white;
+}
+
+/* List Enhancements */
+.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+    transition: var(--transition);
+    margin-bottom: 0.5rem;
+}
+
+.list-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(8px);
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid var(--glass-border);
+    transition: var(--transition);
+}
+
+.list-item:hover .avatar {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Search Bar Enhancement */
+.searchbar {
+    position: relative;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.searchbar input {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-strength));
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    color: #2d3436;
+    transition: var(--transition);
+    flex: 1;
+}
+
+.searchbar input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    border-color: rgba(102, 126, 234, 0.5);
+}
+
+.searchbar input::placeholder {
+    color: #636e72;
+}
+
+/* Toast Enhancements */
+.toast {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 9999;
+    display: none;
+    gap: 1rem;
+    flex-direction: column;
+    max-width: 400px;
+}
+
+.toast-item {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-strength));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: var(--glass-shadow);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .section {
+        padding: 3rem 0;
+    }
+    
+    .card {
+        padding: 1.5rem;
+    }
+    
+    .nav-tabs .nav-link {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Animation Classes for AOS */
+[data-aos] {
+    transition-property: transform, opacity;
+    transition-duration: 0.8s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Skip Link Enhancement */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--primary-gradient);
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    text-decoration: none;
+    z-index: 10000;
+    transition: var(--transition);
+}
+
+.skip-link:focus {
+    top: 6px;
+}
+
+/* Inner Container Enhancement */
+.inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Content Container Enhancement */
+.content {
+    position: relative;
+    z-index: 2;
+}
+
+/* CTA Section Enhancement */
+.cta {
+    margin-top: 2rem;
+}
+
+.cta .btn {
+    margin: 0 0.5rem;
+}
+
+@media (max-width: 576px) {
+    .cta {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .cta .btn {
+        margin: 0;
+        width: 100%;
+    }
+}
+  </style>
+ </head>
+ <body>
+  <a class="skip-link" href="#main">
+   Skip to content
+  </a>
+  <!-- Header (Navbar) - Enhanced with Glassmorphism -->
+  <header class="global-header fixed-top" id="siteHeader">
+   <div class="inner">
+    <a aria-label="StartAI Home" class="logo d-flex align-items-center text-decoration-none" href="./home_page.html">
+     <img alt="StartAI Logo" onerror="this.onerror=null;this.src='https://picsum.photos/seed/startai-logo/160/40';" src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png"/>
+     <span class="ms-2">
+      StartAI
+     </span>
+    </a>
+    <nav aria-label="Primary navigation" class="navbar navbar-expand-lg flex-grow-1 justify-content-end">
+     <button aria-controls="primaryNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#primaryNav" data-bs-toggle="collapse" type="button">
+      <span class="navbar-toggler-icon">
+      </span>
+     </button>
+     <div class="collapse navbar-collapse" id="primaryNav">
+      <ul class="navbar-nav ms-auto nav--primary align-items-lg-center">
+       <li class="nav-item">
+        <a class="nav-link" data-scrolltab="founders" href="#founders">
+         For Founders
+        </a>
+       </li>
+       <li class="nav-item">
+        <a class="nav-link" data-scrolltab="mentors" href="#mentors">
+         For Mentors
+        </a>
+       </li>
+       <li class="nav-item">
+        <a class="nav-link" data-scrolltab="investors" href="#investors">
+         For Investors
+        </a>
+       </li>
+      </ul>
+      <div class="d-flex align-items-center ms-lg-3 gap-2">
+       <a class="btn btn--secondary btn-sm" href="./login_page.html" id="loginBtn">
+        <i class="fa-solid fa-arrow-right-to-bracket">
+        </i>
+        Log In
+       </a>
+       <a class="btn btn--primary btn-sm" href="./registration_page.html" id="signupBtn">
+        <i class="fa-solid fa-user-plus">
+        </i>
+        Sign Up
+       </a>
+      </div>
+     </div>
+    </nav>
+   </div>
+  </header>
+  <main id="main" tabindex="-1">
+   <!-- Enhanced Hero Section -->
+   <section class="hero position-relative overflow-hidden" id="hero">
+    <div aria-hidden="true" class="hero-bg position-absolute top-0 start-0 w-100 h-100">
+    </div>
+    <div class="content container text-center" data-aos="fade-up" data-aos-duration="1000">
+     <h1 class="mb-3" data-aos="fade-up" data-aos-delay="200">
+      The AI Co‑Pilot for Your Startup Journey
+     </h1>
+     <p class="lead mx-auto mb-4" style="max-width: 760px;" data-aos="fade-up" data-aos-delay="400">
+      Validate your idea, simulate advisory sessions, and connect with curated mentors and investors—all in one intelligent ecosystem.
+     </p>
+     <div class="cta d-inline-flex gap-2" data-aos="fade-up" data-aos-delay="600">
+      <a class="btn btn--accent btn--lg" href="./registration_page.html" id="ctaGetStarted">
+       <i class="fa-solid fa-rocket">
+       </i>
+       Get Started for Free
+      </a>
+      <a class="btn btn--ghost btn--lg" href="#features">
+       <i class="fa-solid fa-circle-play">
+       </i>
+       See How It Works
+      </a>
+     </div>
+     <div class="row justify-content-center mt-5 g-3" data-aos="fade-up" data-aos-delay="800">
+      <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="900">
+       <div class="kpi">
+        <div class="kpi-title">
+         Active Founders
+        </div>
+        <div class="kpi-value display-6">
+         10k+
+        </div>
+       </div>
+      </div>
+      <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="1000">
+       <div class="kpi">
+        <div class="kpi-title">
+         Mentors
+        </div>
+        <div class="kpi-value display-6">
+         500+
+        </div>
+       </div>
+      </div>
+      <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="1100">
+       <div class="kpi">
+        <div class="kpi-title">
+         Investors
+        </div>
+        <div class="kpi-value display-6">
+         200+
+        </div>
+       </div>
+      </div>
+      <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="1200">
+       <div class="kpi">
+        <div class="kpi-title">
+         Funding Facilitated
+        </div>
+        <div class="kpi-value display-6">
+         $10M
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- Enhanced Features Section -->
+   <section class="section" id="features">
+    <div class="container">
+     <div class="text-center mb-5" data-aos="fade-up">
+      <h2 class="mb-2">
+       What You Get
+      </h2>
+      <p class="text-muted">
+       Purpose-built tools that scale with your journey.
+      </p>
+     </div>
+     <div class="row g-4">
+      <div class="col-12 col-md-4" data-aos="fade-up" data-aos-delay="200">
+       <div class="card h-100">
+        <div class="d-flex align-items-center gap-3 mb-3">
+         <div class="icon text-secondary">
+          <i class="fa-solid fa-gauge-high fa-2xl">
+          </i>
+         </div>
+         <h3 class="m-0">
+          AI Idea Evaluation
+         </h3>
+        </div>
+        <p>
+         Receive objective, data-driven feedback on your startup concept with our comprehensive AI analysis, scoring feasibility, scalability, and market viability.
+        </p>
+       </div>
+      </div>
+      <div class="col-12 col-md-4" data-aos="fade-up" data-aos-delay="400">
+       <div class="card h-100">
+        <div class="d-flex align-items-center gap-3 mb-3">
+         <div class="icon text-info">
+          <i class="fa-solid fa-user-tie fa-2xl">
+          </i>
+         </div>
+         <h3 class="m-0">
+          AI Advisory Simulation
+         </h3>
+        </div>
+        <p>
+         Chat with simulated advisory personas inspired by global leaders to stress-test your plans, get strategy tips, and unlock next steps.
+        </p>
+       </div>
+      </div>
+      <div class="col-12 col-md-4" data-aos="fade-up" data-aos-delay="600">
+       <div class="card h-100">
+        <div class="d-flex align-items-center gap-3 mb-3">
+         <div class="icon text-success">
+          <i class="fa-solid fa-people-arrows fa-2xl">
+          </i>
+         </div>
+         <h3 class="m-0">
+          Curated Network
+         </h3>
+        </div>
+        <p>
+         Discover mentors and investors aligned to your thesis and stage. Build relationships and manage deal flow without the noise.
+        </p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- Enhanced Social Proof / Chart -->
+   <section class="section pt-0" id="proof">
+    <div class="container">
+     <div class="row g-4 align-items-stretch">
+      <div class="col-12 col-lg-7" data-aos="fade-right">
+       <div class="card h-100">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+         <h3 class="m-0">
+          Analytics Dashboard
+         </h3>
+         <span class="badge badge--warning">
+          Coming Soon
+         </span>
+        </div>
+        
+        <div class="coming-soon-content text-center py-5">
+         <div class="coming-soon-icon mb-3">
+          <i class="fa-solid fa-chart-line fa-4x text-muted opacity-50"></i>
+         </div>
+         <h4 class="text-muted mb-2">Real-time Analytics</h4>
+         <p class="text-muted mb-3">
+          Advanced startup metrics, growth tracking, and performance insights will be available here soon.
+         </p>
+         <div class="progress mb-3" style="height: 8px;">
+          <div class="progress-bar" role="progressbar" style="width: 75%; background: var(--accent-gradient);" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+         </div>
+         <small class="text-muted">75% Complete</small>
+        </div>
+       </div>
+      </div>
+      <div class="col-12 col-lg-5" data-aos="fade-left">
+       <div class="card h-100">
+        <h3 class="mb-3">
+         Featured Mentors
+        </h3>
+        <ul class="list p-0">
+         <li class="list-item" data-aos="fade-up" data-aos-delay="100">
+          <img alt="Mentor avatar" class="avatar" src="https://picsum.photos/seed/mentorA/80/80"/>
+          <div>
+           <strong>
+            Alex Rivera
+           </strong>
+           <div class="text-muted">
+            Product Strategy • SaaS
+           </div>
+          </div>
+          <span class="badge badge--success">
+           Top Rated
+          </span>
+         </li>
+         <li class="list-item" data-aos="fade-up" data-aos-delay="200">
+          <img alt="Mentor avatar" class="avatar" src="https://picsum.photos/seed/mentorB/80/80"/>
+          <div>
+           <strong>
+            Sophia Chen
+           </strong>
+           <div class="text-muted">
+            Go-To-Market • Fintech
+           </div>
+          </div>
+          <span class="badge badge--info">
+           New
+          </span>
+         </li>
+         <li class="list-item" data-aos="fade-up" data-aos-delay="300">
+          <img alt="Mentor avatar" class="avatar" src="https://picsum.photos/seed/mentorC/80/80"/>
+          <div>
+           <strong>
+            Rahul Singh
+           </strong>
+           <div class="text-muted">
+            Fundraising • AI/ML
+           </div>
+          </div>
+          <span class="badge badge--warning">
+           Hot
+          </span>
+         </li>
+        </ul>
+        <div class="text-end mt-3">
+         <a class="btn btn--link" href="./mentor_discovery_page.html">
+          Browse Mentors
+          <i class="fa-solid fa-arrow-right">
+          </i>
+         </a>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- Enhanced Target Audience Section (Tabbed) -->
+   <section class="section" id="audience">
+    <div class="container">
+     <div class="text-center mb-4" data-aos="fade-up">
+      <h2>
+       Built for Every Role
+      </h2>
+      <p class="text-muted">
+       Founders, Mentors, and Investors thrive together on StartAI.
+      </p>
+     </div>
+     <ul class="nav nav-tabs justify-content-center" id="audienceTabs" role="tablist" data-aos="fade-up" data-aos-delay="200">
+      <li class="nav-item" role="presentation">
+       <button aria-controls="panel-founders" aria-selected="true" class="nav-link active" data-bs-target="#panel-founders" data-bs-toggle="tab" id="tab-founders" role="tab" type="button">
+        For Founders
+       </button>
+      </li>
+      <li class="nav-item" role="presentation">
+       <button aria-controls="panel-mentors" aria-selected="false" class="nav-link" data-bs-target="#panel-mentors" data-bs-toggle="tab" id="tab-mentors" role="tab" type="button">
+        For Mentors
+       </button>
+      </li>
+      <li class="nav-item" role="presentation">
+       <button aria-controls="panel-investors" aria-selected="false" class="nav-link" data-bs-target="#panel-investors" data-bs-toggle="tab" id="tab-investors" role="tab" type="button">
+        For Investors
+       </button>
+      </li>
+     </ul>
+     <div class="tab-content pt-4" id="audienceTabsContent">
+      <!-- Founders Panel -->
+      <div aria-labelledby="tab-founders" class="tab-pane fade show active" id="panel-founders" role="tabpanel">
+       <div class="row g-4 align-items-center">
+        <div class="col-12 col-lg-6" data-aos="fade-right">
+         <h3 class="mb-3">
+          Empower Your Vision
+         </h3>
+         <ul>
+          <li>
+           Validate your idea instantly.
+          </li>
+          <li>
+           Simulate investor pitches.
+          </li>
+          <li>
+           Connect with expert mentors.
+          </li>
+         </ul>
+         <a class="btn btn--primary" href="./registration_page.html" id="founderCta">
+          Sign Up as a Founder
+         </a>
+        </div>
+        <div class="col-12 col-lg-6" data-aos="fade-left">
+         <img alt="Founders collaborating" class="w-100 rounded shadow-sm border" data-seed="founders1" onerror="this.onerror=null;this.src='https://picsum.photos/seed/founders1/1200/800';" src="assets/image_for_for_founders_tab_1_b5f6565b.jpg"/>
+        </div>
+       </div>
+      </div>
+      <!-- Mentors Panel -->
+      <div aria-labelledby="tab-mentors" class="tab-pane fade" id="panel-mentors" role="tabpanel">
+       <div class="row g-4 align-items-center">
+        <div class="col-12 col-lg-6" data-aos="fade-right">
+         <h3 class="mb-3">
+          Amplify Your Impact
+         </h3>
+         <ul>
+          <li>
+           Discover startups that match your expertise.
+          </li>
+          <li>
+           Provide structured, trackable feedback.
+          </li>
+          <li>
+           Grow your reputation in a trusted network.
+          </li>
+         </ul>
+         <a class="btn btn--secondary" href="./registration_page.html" id="mentorCta">
+          Become a Mentor
+         </a>
+        </div>
+        <div class="col-12 col-lg-6" data-aos="fade-left">
+         <img alt="Mentor guiding a founder" class="w-100 rounded shadow-sm border" data-seed="mentors1" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mentors1/1200/800';" src="assets/image_for_for_founders_tab_3_ccdcbf20.jpg"/>
+        </div>
+       </div>
+      </div>
+      <!-- Investors Panel -->
+      <div aria-labelledby="tab-investors" class="tab-pane fade" id="panel-investors" role="tabpanel">
+       <div class="row g-4 align-items-center">
+        <div class="col-12 col-lg-6" data-aos="fade-right">
+         <h3 class="mb-3">
+          Invest with Confidence
+         </h3>
+         <ul>
+          <li>
+           Curated, AI-validated deal flow.
+          </li>
+          <li>
+           Secure due diligence &amp; deal rooms.
+          </li>
+          <li>
+           Filter by sector, stage, and score.
+          </li>
+         </ul>
+         <a class="btn btn--success" href="./registration_page.html" id="investorCta">
+          Join as an Investor
+         </a>
+        </div>
+        <div class="col-12 col-lg-6" data-aos="fade-left">
+         <img alt="Investor reviewing data" class="w-100 rounded shadow-sm border" data-seed="investors1" onerror="this.onerror=null;this.src='https://picsum.photos/seed/investors1/1200/800';" src="assets/homepage_hero_section_backgrou_2_9a56ebd4.jpg"/>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- Enhanced Sample AI-Validated Startups Table -->
+   <section class="section pt-0" id="sample-table">
+    <div class="container">
+     <div class="card" data-aos="fade-up">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+       <h3 class="m-0">
+        Sample AI‑Validated Startups
+       </h3>
+       <div class="searchbar" style="max-width:360px;">
+        <input aria-label="Filter table" id="tableSearch" placeholder="Filter by name, sector, stage..." type="search"/>
+        <button class="btn btn--secondary btn--sm" id="btnClearFilter">
+         <i class="fa-solid fa-filter-circle-xmark">
+         </i>
+         Clear
+        </button>
+       </div>
+      </div>
+      <div class="table-responsive">
+       <table aria-describedby="tableCaption" class="table" id="startupsTable">
+        <caption class="visually-hidden" id="tableCaption">
+         AI‑validated startups sample list with sorting and filtering
+        </caption>
+        <thead>
+         <tr>
+          <th class="sortable" data-sortkey="name" scope="col">
+           Startup
+           <i class="fa-solid fa-sort">
+           </i>
+          </th>
+          <th class="sortable" data-sortkey="sector" scope="col">
+           Sector
+           <i class="fa-solid fa-sort">
+           </i>
+          </th>
+          <th class="sortable" data-sortkey="stage" scope="col">
+           Stage
+           <i class="fa-solid fa-sort">
+           </i>
+          </th>
+          <th class="sortable text-end" data-sortkey="score" scope="col">
+           AI Score
+           <i class="fa-solid fa-sort">
+           </i>
+          </th>
+          <th class="sortable" data-sortkey="updated" scope="col">
+           Last Update
+           <i class="fa-solid fa-sort">
+           </i>
+          </th>
+          <th class="sortable text-end" data-sortkey="funding" scope="col">
+           Funding Sought
+           <i class="fa-solid fa-sort">
+           </i>
+          </th>
+          <th class="text-center" scope="col">
+           Actions
+          </th>
+         </tr>
+        </thead>
+        <tbody>
+         <!-- Rows injected by JS for easier sorting/filtering -->
+        </tbody>
+       </table>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mt-2">
+       <small class="text-muted" id="paginationInfo">
+        Showing 1–6 of 6
+       </small>
+       <div aria-label="Table pagination" class="pagination" role="navigation">
+        <button aria-current="page" class="page-btn is-active" type="button">
+         1
+        </button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+  </main>
+  <!-- Enhanced Footer -->
+  <footer class="footer mt-5">
+   <div class="inner">
+    <div class="row g-4">
+     <div class="col-12 col-md-4" data-aos="fade-up" data-aos-delay="100">
+      <h5>
+       StartAI
+      </h5>
+      <p class="mb-2">
+       An AI‑powered ecosystem for founders, mentors, and investors.
+      </p>
+      <div class="cluster">
+       <a class="btn btn--light btn--sm" href="./learning_hub_page.html">
+        <i class="fa-solid fa-graduation-cap">
+        </i>
+        Learning Hub
+       </a>
+       <a class="btn btn--light btn--sm" href="./startup_discovery_page.html">
+        <i class="fa-solid fa-compass">
+        </i>
+        Discover Startups
+       </a>
+      </div>
+     </div>
+     <div class="col-6 col-md-2" data-aos="fade-up" data-aos-delay="200">
+      <h6>
+       Product
+      </h6>
+      <ul class="list-unstyled">
+       <li>
+        <a class="text-decoration-none" href="#features">
+         Features
+        </a>
+       </li>
+       <li>
+        <a class="text-decoration-none" href="#audience">
+         Who It's For
+        </a>
+       </li>
+       <li>
+        <a class="text-decoration-none" href="./idea_submission_page.html">
+         Try Idea Submission
+        </a>
+       </li>
+      </ul>
+     </div>
+     <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
+      <h6>
+       Company
+      </h6>
+      <ul class="list-unstyled">
+       <li>
+        <a class="text-decoration-none" href="#hero">
+         About
+        </a>
+       </li>
+       <li>
+        <a class="text-decoration-none" href="./account_settings_page.html#terms">
+         Terms of Service
+        </a>
+       </li>
+       <li>
+        <a class="text-decoration-none" href="./subscription_page.html">
+         Pricing
+        </a>
+       </li>
+      </ul>
+     </div>
+     <div class="col-12 col-md-3" data-aos="fade-up" data-aos-delay="400">
+      <h6>
+       Connect
+      </h6>
+      <div class="d-flex align-items-center gap-2">
+       <a aria-label="LinkedIn" class="btn btn--ghost btn--icon" href="https://linkedin.com/company/startai" rel="noopener" target="_blank">
+        <i class="fab fa-linkedin-in">
+        </i>
+       </a>
+       <a aria-label="Share on X" class="btn btn--ghost btn--icon" href="https://twitter.com/intent/tweet?text=Exploring%20StartAI" rel="noopener" target="_blank">
+        <i class="fa-brands fa-x-twitter">
+        </i>
+       </a>
+      </div>
+      <small class="d-block mt-3 text-muted">
+       © 2026 StartAI, Inc. All rights reserved.
+      </small>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <!-- Enhanced System feedback / notification area -->
+  <div aria-atomic="true" aria-live="polite" class="toast" id="systemToast" style="display:none;">
+   <!-- Toasts will be injected here -->
+  </div>
+
+  <!-- JavaScript Libraries -->
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- AOS Animation Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+  <!-- Enhanced Page Scripts -->
+  <script>
+// Initialize AOS (Animate On Scroll)
+AOS.init({
+    duration: 800,
+    easing: 'ease-out-cubic',
+    once: true,
+    offset: 100,
+    disable: 'mobile'
+});
+
+// Enhanced Header transparency with smooth transitions
+(function() {
+    const header = document.getElementById('siteHeader');
+    let ticking = false;
+
+    function onScroll() {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                if (window.scrollY > 10) {
+                    header.classList.add('is-scrolled');
+                } else {
+                    header.classList.remove('is-scrolled');
+                }
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+    
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+})();
+
+// Smooth-scroll to tabs with enhanced animations
+document.querySelectorAll('a[data-scrolltab]').forEach(link => {
+    link.addEventListener('click', (e) => {
+        const target = link.getAttribute('data-scrolltab');
+        const tabBtn = document.querySelector(`#tab-${target}`);
+        if (tabBtn) {
+            const tab = new bootstrap.Tab(tabBtn);
+            tab.show();
+            
+            // Add smooth scroll to section
+            const section = document.querySelector('#audience');
+            if (section) {
+                section.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+        }
+    });
+});
+
+// Enhanced CTA redirections with premium animations
+function redirectWithSwal(url, title) {
+    Swal.fire({
+        title: title || 'Redirecting…',
+        text: 'Taking you to the next step',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1200,
+        timerProgressBar: true,
+        background: 'rgba(255, 255, 255, 0.95)',
+        backdrop: 'rgba(0,0,0,0.4)',
+        customClass: {
+            popup: 'swal-glass'
+        }
+    }).then(() => {
+        window.location.href = url;
+    });
+}
+
+// Add glass effect to SweetAlert
+const style = document.createElement('style');
+style.textContent = `
+    .swal-glass {
+        backdrop-filter: blur(16px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 16px !important;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37) !important;
+    }
+`;
+document.head.appendChild(style);
+
+// Enhanced button interactions
+document.getElementById('ctaGetStarted').addEventListener('click', function(e) {
+    e.preventDefault();
+    this.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+        this.style.transform = '';
+        redirectWithSwal('./registration_page.html', 'Create your free account');
+    }, 100);
+});
+
+document.getElementById('loginBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    redirectWithSwal('./login_page.html', 'Sign in to StartAI');
+});
+
+document.getElementById('signupBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    redirectWithSwal('./registration_page.html', 'Create your free account');
+});
+
+// Coming Soon Animation
+(function initComingSoon() {
+    const comingSoonSection = document.querySelector('.coming-soon-content');
+    if (!comingSoonSection) return;
+    
+    // Add subtle animation to the icon
+    const icon = comingSoonSection.querySelector('.coming-soon-icon i');
+    if (icon) {
+        let rotation = 0;
+        setInterval(() => {
+            rotation += 0.5;
+            icon.style.transform = `rotate(${rotation}deg)`;
+        }, 100);
+    }
+    
+    // Animate progress bar on load
+    setTimeout(() => {
+        const progressBar = comingSoonSection.querySelector('.progress-bar');
+        if (progressBar) {
+            progressBar.style.width = '0%';
+            setTimeout(() => {
+                progressBar.style.width = '75%';
+            }, 500);
+        }
+    }, 1000);
+})();
+
+// Enhanced mock table data with premium interactions
+const mockRows = [
+    { name: 'NovaSense AI', sector: 'Healthcare', stage: 'Seed', score: 82, updated: '2026-07-12', funding: 350000 },
+    { name: 'FinEdge', sector: 'Fintech', stage: 'Pre-Seed', score: 76, updated: '2026-07-15', funding: 200000 },
+    { name: 'GreenGrid', sector: 'ClimateTech', stage: 'Series A', score: 88, updated: '2026-07-09', funding: 5000000 },
+    { name: 'ShopLiftXR', sector: 'E-commerce', stage: 'Seed', score: 73, updated: '2026-07-10', funding: 600000 },
+    { name: 'FleetIQ', sector: 'Logistics', stage: 'Seed', score: 79, updated: '2026-07-14', funding: 900000 },
+    { name: 'TutorVerse', sector: 'EdTech', stage: 'Pre-Seed', score: 69, updated: '2026-07-08', funding: 150000 }
+];
+
+const tbody = document.querySelector('#startupsTable tbody');
+const paginationInfo = document.getElementById('paginationInfo');
+let currentSort = { key: null, dir: 1 };
+
+function formatCurrency(n) {
+    return n.toLocaleString(undefined, {
+        style: 'currency',
+        currency: 'USD',
+        maximumFractionDigits: 0
+    });
+}
+
+function renderTable(rows) {
+    tbody.innerHTML = '';
+    rows.forEach((r, index) => {
+        const tr = document.createElement('tr');
+        tr.style.animationDelay = `${index * 50}ms`;
+        tr.innerHTML = `
+          <td><strong>${r.name}</strong></td>
+          <td><span class="badge bg-light text-dark">${r.sector}</span></td>
+          <td><span class="badge bg-secondary">${r.stage}</span></td>
+          <td class="text-end">
+            <div class="score">
+              <strong class="score__value">${r.score}</strong>
+              <div class="score__bar">
+                <span style="width:${Math.max(0, Math.min(100, r.score))}%;"></span>
+              </div>
+            </div>
+          </td>
+          <td>${new Date(r.updated).toLocaleDateString()}</td>
+          <td class="text-end"><strong>${formatCurrency(r.funding)}</strong></td>
+          <td class="text-center">
+            <div class="btn-group">
+              <a class="btn btn--sm btn--secondary" href="./startup_profile_page.html" title="View Profile">
+                <i class="fa-regular fa-eye"></i>
+              </a>
+              <a class="btn btn--sm btn--primary" href="./deal_room_page.html" title="Deal Room">
+                <i class="fa-solid fa-briefcase"></i>
+              </a>
+            </div>
+          </td>`;
+        tbody.appendChild(tr);
+    });
+    paginationInfo.textContent = `Showing 1–${rows.length} of ${rows.length}`;
+    
+    // Animate score bars
+    setTimeout(() => {
+        document.querySelectorAll('.score__bar span').forEach(span => {
+            span.style.transition = 'width 1.5s ease-out';
+        });
+    }, 100);
+}
+
+function applySort(rows, key) {
+    const r2 = [...rows];
+    if (currentSort.key === key) {
+        currentSort.dir *= -1;
+    } else {
+        currentSort.key = key;
+        currentSort.dir = 1;
+    }
+    
+    r2.sort((a, b) => {
+        let va = a[key], vb = b[key];
+        if (key === 'updated') {
+            va = new Date(va).getTime();
+            vb = new Date(vb).getTime();
+        }
+        if (key === 'name' || key === 'sector' || key === 'stage') {
+            va = (va + '').toLowerCase();
+            vb = (vb + '').toLowerCase();
+        }
+        return (va > vb ? 1 : va < vb ? -1 : 0) * currentSort.dir;
+    });
+    return r2;
+}
+
+// Initial render with animations
+let filtered = [...mockRows];
+renderTable(filtered);
+
+// Enhanced sorting with visual feedback
+document.querySelectorAll('#startupsTable th.sortable').forEach(th => {
+    th.addEventListener('click', () => {
+        const key = th.getAttribute('data-sortkey');
+        
+        // Add click animation
+        th.style.transform = 'scale(0.98)';
+        setTimeout(() => { th.style.transform = ''; }, 100);
+        
+        filtered = applySort(filtered, key);
+        renderTable(filtered);
+        
+        // Update sort icons with smooth transitions
+        document.querySelectorAll('#startupsTable th.sortable i').forEach(i => {
+            i.className = 'fa-solid fa-sort';
+            i.style.opacity = '0.5';
+        });
+        const icon = th.querySelector('i');
+        icon.className = currentSort.dir > 0 ? 'fa-solid fa-sort-up' : 'fa-solid fa-sort-down';
+        icon.style.opacity = '1';
+        icon.style.color = '#4facfe';
+    });
+});
+
+// Enhanced filtering with debounce
+let searchTimeout;
+const search = document.getElementById('tableSearch');
+
+search.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        const q = search.value.trim().toLowerCase();
+        filtered = mockRows.filter(r => 
+            [r.name, r.sector, r.stage].some(v => 
+                (v + '').toLowerCase().includes(q)
+            )
+        );
+        if (currentSort.key) {
+            filtered = applySort(filtered, currentSort.key);
+        }
+        renderTable(filtered);
+    }, 300);
+});
+
+document.getElementById('btnClearFilter').addEventListener('click', () => {
+    search.value = '';
+    filtered = [...mockRows];
+    if (currentSort.key) {
+        filtered = applySort(filtered, currentSort.key);
+    }
+    renderTable(filtered);
+});
+
+// Enhanced toast notifications
+function pushToast(message, iconHtml, type = 'info') {
+    const zone = document.getElementById('systemToast');
+    zone.style.display = 'grid';
+    
+    const item = document.createElement('div');
+    item.className = `toast-item toast-${type}`;
+    item.innerHTML = `
+        <span class="toast-icon">${iconHtml || '🔔'}</span>
+        <span class="toast-message">${message}</span>
+        <button class="btn btn--ghost btn--sm toast-dismiss">
+            <i class="fa-solid fa-times"></i>
+        </button>
+    `;
+    
+    const dismissBtn = item.querySelector('.toast-dismiss');
+    dismissBtn.addEventListener('click', () => {
+        item.style.transform = 'translateX(100%)';
+        item.style.opacity = '0';
+        setTimeout(() => item.remove(), 300);
+    });
+    
+    zone.appendChild(item);
+    
+    // Auto-dismiss after 6 seconds
+    setTimeout(() => {
+        if (item.parentNode) {
+            dismissBtn.click();
+        }
+    }, 6000);
+}
+
+// Enhanced page load experience
+window.addEventListener('load', () => {
+    // Welcome toast
+    setTimeout(() => {
+        pushToast('Welcome to StartAI! Explore our premium features below.', '✨', 'success');
+    }, 1000);
+    
+    // Enhanced cookie notice
+    setTimeout(() => {
+        if (!localStorage.getItem('startai_cookies_ok')) {
+            Swal.fire({
+                title: 'We value your privacy',
+                text: 'We use cookies to enhance your experience. By using StartAI, you agree to our cookie policy.',
+                icon: 'info',
+                showDenyButton: true,
+                confirmButtonText: 'Accept All',
+                denyButtonText: 'Essential Only',
+                background: 'rgba(255, 255, 255, 0.95)',
+                backdrop: 'rgba(0,0,0,0.4)',
+                customClass: {
+                    popup: 'swal-glass'
+                }
+            }).then((res) => {
+                if (res.isConfirmed) {
+                    localStorage.setItem('startai_cookies_ok', '1');
+                    pushToast('Cookie preferences saved!', '🍪', 'success');
+                } else if (res.isDenied) {
+                    localStorage.setItem('startai_cookies_essential', '1');
+                    pushToast('Essential cookies enabled.', 'ℹ️', 'info');
+                }
+            });
+        }
+    }, 2000);
+});
+
+// Parallax effect for hero background
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const parallax = document.querySelector('.hero-bg');
+    if (parallax) {
+        const speed = scrolled * 0.5;
+        parallax.style.transform = `translateY(${speed}px)`;
+    }
+}, { passive: true });
+
+// Add interactive hover effects for nav links
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-2px)';
+    });
+    
+    link.addEventListener('mouseleave', function() {
+        this.style.transform = '';
+    });
+});
+
+// Add glow effect to buttons on hover
+document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('mouseenter', function() {
+        this.style.boxShadow = this.style.boxShadow.replace(/rgba\([^)]+\)/g, (match) => {
+            return match.replace(/0\.\d+/, '0.8');
+        });
+    });
+    
+    btn.addEventListener('mouseleave', function() {
+        this.style.boxShadow = this.style.boxShadow.replace(/rgba\([^)]+\)/g, (match) => {
+            return match.replace(/0\.\d+/, '0.4');
+        });
+    });
+});
+
+// Add smooth reveal animations for cards
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.card, .kpi').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+    observer.observe(el);
+});
+
+// Enhanced tab switching with smooth transitions
+document.querySelectorAll('[data-bs-toggle="tab"]').forEach(tab => {
+    tab.addEventListener('shown.bs.tab', function(e) {
+        const targetPane = document.querySelector(e.target.getAttribute('data-bs-target'));
+        if (targetPane) {
+            targetPane.style.opacity = '0';
+            targetPane.style.transform = 'translateX(20px)';
+            
+            setTimeout(() => {
+                targetPane.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+                targetPane.style.opacity = '1';
+                targetPane.style.transform = 'translateX(0)';
+            }, 50);
+        }
+    });
+});
+
+// Add loading skeleton fade-out effect
+const skeleton = document.getElementById('signupChartSkeleton');
+if (skeleton) {
+    skeleton.style.background = `
+        linear-gradient(90deg, 
+            rgba(255,255,255,0.1) 25%, 
+            rgba(255,255,255,0.3) 50%, 
+            rgba(255,255,255,0.1) 75%
+        )
+    `;
+    skeleton.style.backgroundSize = '200% 100%';
+    skeleton.style.animation = 'shimmer 2s infinite';
+}
+
+// Add shimmer animation
+const shimmerStyle = document.createElement('style');
+shimmerStyle.textContent = `
+    @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
+`;
+document.head.appendChild(shimmerStyle);
+
+// Add premium cursor trail effect (optional - can be disabled on mobile)
+if (window.innerWidth > 768) {
+    const trail = [];
+    const trailLength = 20;
+    
+    for (let i = 0; i < trailLength; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'cursor-trail';
+        dot.style.cssText = `
+            position: fixed;
+            width: ${4 - (i * 0.15)}px;
+            height: ${4 - (i * 0.15)}px;
+            background: radial-gradient(circle, rgba(79, 172, 254, ${0.8 - (i * 0.04)}) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: opacity 0.3s ease-out;
+        `;
+        document.body.appendChild(dot);
+        trail.push(dot);
+    }
+    
+    let mouseX = 0, mouseY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+    
+    function animateTrail() {
+        let x = mouseX, y = mouseY;
+        
+        trail.forEach((dot, index) => {
+            const nextDot = trail[index + 1] || trail[0];
+            
+            dot.style.left = x - 2 + 'px';
+            dot.style.top = y - 2 + 'px';
+            
+            x += (parseFloat(nextDot.style.left) - x) * 0.3;
+            y += (parseFloat(nextDot.style.top) - y) * 0.3;
+        });
+        
+        requestAnimationFrame(animateTrail);
+    }
+    
+    animateTrail();
+}
+
+// Add enhanced scroll indicator
+const scrollIndicator = document.createElement('div');
+scrollIndicator.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    z-index: 10001;
+    transition: width 0.1s ease-out;
+`;
+document.body.appendChild(scrollIndicator);
+
+window.addEventListener('scroll', () => {
+    const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    scrollIndicator.style.width = scrollPercent + '%';
+}, { passive: true });
+
+console.log('🚀 StartAI Enhanced - Premium experience loaded!');
+  </script>
+ </body>
+</html>

@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>StartAI • Premium Mentor Dashboard</title>
+  
+  <!-- Enhanced Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
+  
+  <!-- AOS Animation Library -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <style>
+    /* === PREMIUM MENTOR DASHBOARD DESIGN SYSTEM === */
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --warning-gradient: linear-gradient(135deg, #ffa726 0%, #ff8a65 100%);
+      --danger-gradient: linear-gradient(135deg, #f857a6 0%, #ff5858 100%);
+      --info-gradient: linear-gradient(135deg, #667eea 0%, #4facfe 100%);
+      --mentor-gradient: linear-gradient(135deg, #a8e6cf 0%, #88d8a3 100%);
+      
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-bg-strong: rgba(255, 255, 255, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      --blur-strength: 16px;
+      
+      --font-sans: "Poppins", system-ui, sans-serif;
+      --border-radius: 16px;
+      --border-radius-lg: 24px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: auto; /* Prevent auto-scroll */
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      color: #2d3436;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      scroll-behavior: auto;
+    }
+
+    /* Animated Background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 25% 25%, rgba(168, 230, 207, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 75% 25%, rgba(102, 126, 234, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 50% 75%, rgba(79, 172, 254, 0.06) 0%, transparent 50%);
+      z-index: -1;
+      animation: float 25s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(20px, -20px) scale(1.02); }
+      66% { transform: translate(-15px, 15px) scale(0.98); }
+    }
+
+    /* Header */
+    .header {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength)) saturate(140%);
+      -webkit-backdrop-filter: blur(var(--blur-strength)) saturate(140%);
+      border-bottom: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: var(--transition);
+    }
+
+    .header:hover {
+      background: var(--glass-bg-strong);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      background: var(--mentor-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 4px 8px rgba(168, 230, 207, 0.3));
+    }
+
+    .logo img {
+      height: 2rem;
+      width: auto;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+
+    .nav {
+      display: none;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .nav {
+        display: flex;
+      }
+    }
+
+    .nav-link {
+      color: #2d3436;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-link::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--mentor-gradient);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: -1;
+    }
+
+    .nav-link:hover {
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .nav-link:hover::before {
+      opacity: 1;
+    }
+
+    .nav-link.active {
+      background: var(--mentor-gradient);
+      color: white;
+      box-shadow: 0 4px 12px rgba(168, 230, 207, 0.4);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Layout */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      min-height: calc(100vh - 80px);
+    }
+
+    @media (min-width: 992px) {
+      .layout {
+        grid-template-columns: 320px 1fr;
+      }
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border-right: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      padding: 2rem;
+      position: sticky;
+      top: 80px;
+      height: calc(100vh - 80px);
+      overflow-y: auto;
+      transition: var(--transition);
+    }
+
+    .sidebar:hover {
+      background: var(--glass-bg-strong);
+    }
+
+    @media (max-width: 991.98px) {
+      .sidebar {
+        display: none;
+      }
+    }
+
+    .sidebar-link {
+      color: #636e72;
+      padding: 0.75rem 1rem;
+      border: 1px solid transparent;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar-link::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.6s;
+    }
+
+    .sidebar-link:hover::before {
+      left: 100%;
+    }
+
+    .sidebar-link:hover {
+      background: var(--glass-bg);
+      color: #2d3436;
+      border-color: var(--glass-border);
+      transform: translateX(4px);
+    }
+
+    .sidebar-link.active {
+      border-color: rgba(168, 230, 207, 0.5);
+      background: var(--mentor-gradient);
+      color: white;
+      box-shadow: 0 4px 12px rgba(168, 230, 207, 0.3);
+      transform: translateX(4px);
+    }
+
+    .sidebar-link i {
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Main Content */
+    .main {
+      padding: 2rem;
+      background: transparent;
+      min-height: calc(100vh - 80px);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-shadow);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--mentor-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(31, 38, 135, 0.5);
+      border-color: rgba(168, 230, 207, 0.3);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+      position: relative;
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .welcome-bg {
+      position: relative;
+      min-height: 340px;
+      overflow: hidden;
+    }
+
+    .welcome-bg img {
+      width: 100%;
+      height: 100%;
+      max-height: 340px;
+      object-fit: cover;
+      filter: saturate(110%) contrast(105%);
+      transition: var(--transition);
+    }
+
+    .welcome-section:hover .welcome-bg img {
+      transform: scale(1.05);
+      filter: saturate(120%) contrast(110%);
+    }
+
+    .welcome-overlay {
+      position: absolute;
+      inset: 0;
+      background: 
+        linear-gradient(135deg, rgba(168, 230, 207, 0.3), rgba(136, 216, 163, 0.4)),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3));
+      backdrop-filter: blur(2px);
+      transition: var(--transition);
+    }
+
+    .welcome-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      color: white;
+      z-index: 2;
+    }
+
+    .welcome-content h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.9) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .welcome-content p {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      line-height: 1.6;
+      opacity: 0.95;
+      max-width: 600px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .kpi-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-shadow);
+      padding: 1.5rem;
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--mentor-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 48px rgba(31, 38, 135, 0.5);
+      border-color: rgba(168, 230, 207, 0.4);
+    }
+
+    .kpi-card:hover::before {
+      opacity: 1;
+    }
+
+    .kpi-card.mentees::before { background: var(--mentor-gradient); }
+    .kpi-card.sessions::before { background: var(--accent-gradient); }
+    .kpi-card.hours::before { background: var(--warning-gradient); }
+    .kpi-card.rating::before { background: var(--success-gradient); }
+
+    .kpi-value {
+      font-family: var(--font-sans);
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--mentor-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .kpi-card.mentees .kpi-value { background: var(--mentor-gradient); }
+    .kpi-card.sessions .kpi-value { background: var(--accent-gradient); }
+    .kpi-card.hours .kpi-value { background: var(--warning-gradient); }
+    .kpi-card.rating .kpi-value { background: var(--success-gradient); }
+
+    .kpi-label {
+      font-size: 0.9rem;
+      color: #636e72;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .kpi-trend {
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+
+    .kpi-trend.positive {
+      color: #43e97b;
+    }
+
+    /* Startup Cards Grid */
+    .startup-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .startup-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-shadow);
+      padding: 1.5rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .startup-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--success-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .startup-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(31, 38, 135, 0.5);
+      border-color: rgba(67, 233, 123, 0.3);
+    }
+
+    .startup-card:hover::before {
+      opacity: 1;
+    }
+
+    .startup-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .startup-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--glass-border);
+    }
+
+    .startup-info h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: #2d3436;
+    }
+
+    .startup-industry {
+      font-size: 0.8rem;
+      color: #636e72;
+      font-weight: 500;
+    }
+
+    /* FULL WIDTH REQUESTS TABLE */
+    .requests-section {
+      width: 100%;
+    }
+
+    .table-container {
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      margin: 1.5rem 0;
+      position: relative;
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .table-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--mentor-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .table-container:hover::before {
+      opacity: 1;
+    }
+
+    .table {
+      width: 100%;
+      background: transparent;
+      margin: 0;
+      font-size: 0.9rem;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+      min-width: 800px;
+    }
+
+    .table th:nth-child(1) { width: 25%; }  /* Mentee */
+    .table th:nth-child(2) { width: 20%; }  /* Startup */
+    .table th:nth-child(3) { width: 15%; }  /* Expertise */
+    .table th:nth-child(4) { width: 15%; }  /* Requested */
+    .table th:nth-child(5) { width: 25%; }  /* Actions */
+
+    .table th {
+      background: linear-gradient(135deg, rgba(168, 230, 207, 0.12), rgba(136, 216, 163, 0.08));
+      border: none;
+      color: #2d3436;
+      font-weight: 700;
+      padding: 1.2rem 1rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .table th:nth-child(2), 
+    .table th:nth-child(3), 
+    .table th:nth-child(4),
+    .table th:nth-child(5) {
+      text-align: center;
+    }
+
+    .table th::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(168, 230, 207, 0.3), transparent);
+    }
+
+    .table td {
+      border: none;
+      padding: 1.2rem 1rem;
+      vertical-align: middle;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+      transition: var(--transition);
+      position: relative;
+      text-align: left;
+    }
+
+    .table td:nth-child(2), 
+    .table td:nth-child(3), 
+    .table td:nth-child(4),
+    .table td:nth-child(5) {
+      text-align: center;
+    }
+
+    .table tbody tr:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(168, 230, 207, 0.03));
+    }
+
+    /* Enhanced Badges */
+    .badge {
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid transparent;
+      display: inline-block;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .badge-tech {
+      background: var(--primary-gradient);
+      color: white;
+    }
+
+    .badge-business {
+      background: var(--warning-gradient);
+      color: white;
+    }
+
+    .badge-marketing {
+      background: var(--accent-gradient);
+      color: white;
+    }
+
+    .badge-strategy {
+      background: var(--mentor-gradient);
+      color: white;
+    }
+
+    /* Mentee Info Display */
+    .mentee-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .mentee-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--glass-border);
+    }
+
+    .mentee-details h5 {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: #2d3436;
+    }
+
+    .mentee-details small {
+      color: #636e72;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-action {
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      color: #636e72;
+      transition: var(--transition);
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      min-width: 80px;
+    }
+
+    .btn-action:hover {
+      background: var(--glass-bg-strong);
+      color: #2d3436;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-action.accept {
+      background: var(--success-gradient);
+      color: white;
+      border-color: transparent;
+    }
+
+    .btn-action.accept:hover {
+      color: white;
+      box-shadow: 0 8px 20px rgba(67, 233, 123, 0.4);
+    }
+
+    .btn-action.decline {
+      background: var(--danger-gradient);
+      color: white;
+      border-color: transparent;
+    }
+
+    .btn-action.decline:hover {
+      color: white;
+      box-shadow: 0 8px 20px rgba(248, 87, 166, 0.4);
+    }
+
+    /* Chart Container */
+    .chart-container {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      height: 400px;
+    }
+
+    .chart-container canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    /* Buttons */
+    .btn {
+      font-weight: 600;
+      border-radius: var(--border-radius);
+      padding: 0.75rem 1.5rem;
+      border: none;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+      font-family: var(--font-sans);
+      justify-content: center;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--mentor-gradient);
+      color: white;
+      box-shadow: 0 4px 16px rgba(168, 230, 207, 0.4);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 8px 24px rgba(168, 230, 207, 0.6);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: var(--glass-bg);
+      color: #2d3436;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-secondary:hover {
+      background: var(--glass-bg-strong);
+      color: #2d3436;
+      border-color: rgba(168, 230, 207, 0.3);
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+    }
+
+    /* Sidebar Cards */
+    .sidebar-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      transition: var(--transition);
+    }
+
+    .sidebar-card:hover {
+      background: var(--glass-bg-strong);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(31, 38, 135, 0.3);
+    }
+
+    .sidebar-card h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+
+    /* Request List */
+    .request-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: var(--transition);
+    }
+
+    .request-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(4px);
+    }
+
+    .request-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--glass-border);
+    }
+
+    .request-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .request-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+      color: #2d3436;
+    }
+
+    .request-startup {
+      font-size: 0.75rem;
+      color: #636e72;
+    }
+
+    /* Utilities */
+    .d-flex { display: flex; }
+    .align-items-center { align-items: center; }
+    .justify-content-between { justify-content: space-between; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-3 { gap: 0.75rem; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .mb-0 { margin-bottom: 0; }
+    .mb-3 { margin-bottom: 0.75rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .text-muted { color: #636e72; }
+
+    /* Typography */
+    h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      background: var(--mentor-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+
+    h3 {
+      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+
+    h4 {
+      font-size: clamp(1.125rem, 2vw, 1.5rem);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #2d3436;
+    }
+
+    h5 {
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #2d3436;
+    }
+
+    /* Loading Animation */
+    .loading {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out 0.3s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 9999;
+      max-width: 400px;
+    }
+
+    .toast {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 1rem 1.5rem;
+      margin-bottom: 0.75rem;
+      color: #2d3436;
+      box-shadow: var(--glass-shadow);
+      transform: translateX(100%);
+      transition: var(--transition);
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast.success {
+      border-left: 4px solid #43e97b;
+    }
+
+    .toast.error {
+      border-left: 4px solid #f857a6;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .main {
+        padding: 1rem;
+      }
+      
+      .card, .sidebar-card {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      
+      .kpi-card {
+        padding: 1rem;
+      }
+      
+      .welcome-content {
+        padding: 1rem;
+      }
+      
+      .startup-card {
+        padding: 1rem;
+      }
+      
+      .table th,
+      .table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8rem;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .btn-action {
+        min-width: 60px;
+        padding: 0.25rem 0.5rem;
+      }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--mentor-gradient);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-gradient);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a class="logo" href="./home_page.html">
+          <img src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" alt="StartAI Logo">
+          StartAI Mentor
+        </a>
+        
+        <nav class="nav">
+          <a class="nav-link active" href="./mentor_dashboard.html">
+            <i class="fa-solid fa-chart-line"></i> Dashboard
+          </a>
+          <a class="nav-link" href="./my_mentees.html">
+            <i class="fa-solid fa-users"></i> My Mentees
+          </a>
+          <a class="nav-link" href="./session_schedule.html">
+            <i class="fa-solid fa-calendar"></i> Schedule
+          </a>
+          <a class="nav-link" href="./startup_discovery.html">
+            <i class="fa-solid fa-search"></i> Discover
+          </a>
+          <a class="nav-link" href="./resources.html">
+            <i class="fa-solid fa-book"></i> Resources
+          </a>
+        </nav>
+        
+        <div class="user-menu">
+          <button class="btn btn-secondary btn-sm">
+            <i class="fa-solid fa-bell"></i>
+            <span style="position: absolute; top: -5px; right: -5px; background: #f857a6; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">4</span>
+          </button>
+          <button class="btn btn-secondary btn-sm">
+            <img src="https://picsum.photos/seed/mentor/24/24" alt="Profile" style="width: 20px; height: 20px; border-radius: 50%; margin-right: 0.5rem;">
+            Dr. Sarah <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <nav>
+        <div style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #636e72; margin-bottom: 1rem;">Mentorship</div>
+        
+        <a class="sidebar-link active" href="./mentor_dashboard.html">
+          <i class="fa-solid fa-chart-line"></i>Dashboard
+        </a>
+        <a class="sidebar-link" href="./my_mentees.html">
+          <i class="fa-solid fa-users"></i>My Mentees
+        </a>
+        <a class="sidebar-link" href="./mentoring_requests.html">
+          <i class="fa-solid fa-user-plus"></i>Requests
+        </a>
+        <a class="sidebar-link" href="./session_schedule.html">
+          <i class="fa-solid fa-calendar-alt"></i>Schedule
+        </a>
+        <a class="sidebar-link" href="./session_history.html">
+          <i class="fa-solid fa-history"></i>Session History
+        </a>
+        
+        <div style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #636e72; margin: 2rem 0 1rem 0;">Discovery</div>
+        
+        <a class="sidebar-link" href="./startup_discovery.html">
+          <i class="fa-solid fa-search"></i>Discover Startups
+        </a>
+        <a class="sidebar-link" href="./industry_insights.html">
+          <i class="fa-solid fa-chart-bar"></i>Industry Insights
+        </a>
+        <a class="sidebar-link" href="./mentor_network.html">
+          <i class="fa-solid fa-network-wired"></i>Mentor Network
+        </a>
+        
+        <div style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #636e72; margin: 2rem 0 1rem 0;">Resources</div>
+        
+        <a class="sidebar-link" href="./mentor_resources.html">
+          <i class="fa-solid fa-book"></i>Resources
+        </a>
+        <a class="sidebar-link" href="./community.html">
+          <i class="fa-solid fa-comments"></i>Community
+        </a>
+        <a class="sidebar-link" href="./settings.html">
+          <i class="fa-solid fa-cog"></i>Settings
+        </a>
+      </nav>
+
+      <!-- Quick Requests Card -->
+      <div class="sidebar-card">
+        <h4><i class="fa-solid fa-clock" style="margin-right: 0.5rem;"></i>Recent Requests</h4>
+        <div id="sidebarRequests">
+          <!-- Populated via JavaScript -->
+        </div>
+        <button class="btn btn-primary btn-sm w-100" onclick="showToast('Opening all requests...', 'info')">
+          View All Requests
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Welcome Section -->
+      <section class="welcome-section loading">
+        <div class="welcome-bg">
+          <img src="https://picsum.photos/seed/mentor-office/1200/400" alt="Mentor Dashboard">
+          <div class="welcome-overlay"></div>
+          <div class="welcome-content">
+            <h1>Welcome back, Dr. Sarah</h1>
+            <p>Your mentorship dashboard: track your impact, manage requests, and discover new promising startups to guide.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- KPI Cards -->
+      <section class="loading">
+        <div class="kpi-grid">
+          <div class="kpi-card mentees">
+            <div class="kpi-value">18</div>
+            <div class="kpi-label">Active Mentees</div>
+            <div class="kpi-trend positive">
+              <i class="fa-solid fa-arrow-up"></i> +3 this month
+            </div>
+          </div>
+          <div class="kpi-card sessions">
+            <div class="kpi-value">47</div>
+            <div class="kpi-label">Sessions This Month</div>
+            <div class="kpi-trend positive">
+              <i class="fa-solid fa-arrow-up"></i> +8% vs last month
+            </div>
+          </div>
+          <div class="kpi-card hours">
+            <div class="kpi-value">156</div>
+            <div class="kpi-label">Total Hours</div>
+            <div class="kpi-trend positive">
+              <i class="fa-solid fa-arrow-up"></i> +12 this month
+            </div>
+          </div>
+          <div class="kpi-card rating">
+            <div class="kpi-value">4.9</div>
+            <div class="kpi-label">Avg Rating</div>
+            <div class="kpi-trend positive">
+              <i class="fa-solid fa-star"></i> Excellent feedback
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mentee Sessions Chart -->
+      <section class="loading">
+        <div class="card">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <h3><i class="fa-solid fa-chart-area" style="margin-right: 0.75rem;"></i>Mentee Sessions</h3>
+              <p class="text-muted mb-0">Weekly mentoring sessions over the last 8 weeks showing your impact and engagement.</p>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-secondary btn-sm" onclick="changeChartRange('4w')">4w</button>
+              <button class="btn btn-primary btn-sm" onclick="changeChartRange('8w')">8w</button>
+              <button class="btn btn-secondary btn-sm" onclick="changeChartRange('12w')">12w</button>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="sessionsChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI-Recommended Startups -->
+      <section class="loading">
+        <div class="card">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <h3><i class="fa-solid fa-robot" style="margin-right: 0.75rem;"></i>AI-Recommended Startups</h3>
+              <p class="text-muted mb-0">Discover startups that match your expertise and mentoring interests based on AI analysis.</p>
+            </div>
+            <a href="./startup_discovery.html" class="btn btn-primary btn-sm">
+              <i class="fa-solid fa-search"></i> Discover More
+            </a>
+          </div>
+
+          <div id="startupLoading" class="text-center" style="padding: 3rem 0;">
+            <div style="background: linear-gradient(90deg, rgba(200,200,200,0.2) 25%, rgba(200,200,200,0.4) 50%, rgba(200,200,200,0.2) 75%); background-size: 200% 100%; animation: skeleton-loading 1.2s infinite; border-radius: var(--border-radius-lg); height: 200px;"></div>
+          </div>
+
+          <div id="recommendedStartups" class="startup-grid" style="display: none;">
+            <!-- Populated via JavaScript -->
+          </div>
+        </div>
+      </section>
+
+      <!-- FULL WIDTH MENTORING REQUESTS TABLE -->
+      <section class="requests-section loading">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h3><i class="fa-solid fa-user-plus" style="margin-right: 0.75rem;"></i>Mentoring Requests</h3>
+            <p class="text-muted mb-0">Review and respond to founders seeking your guidance and expertise.</p>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-secondary btn-sm" onclick="showToast('Filter options would open here', 'info')">
+              <i class="fa-solid fa-filter"></i> Filter
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="showToast('Exporting requests data...', 'info')">
+              <i class="fa-solid fa-download"></i> Export
+            </button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="table" id="requestsTable">
+            <thead>
+              <tr>
+                <th>Mentee</th>
+                <th>Startup</th>
+                <th>Expertise Needed</th>
+                <th>Requested</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="requestsBody">
+              <!-- Populated via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Table Footer -->
+        <div class="d-flex justify-content-between align-items-center" style="margin-top: 1.5rem;">
+          <small class="text-muted">Showing 1–6 of 12 pending requests</small>
+          <div class="d-flex gap-2">
+            <button class="btn btn-secondary btn-sm" style="opacity: 0.5; cursor: not-allowed;">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button class="btn btn-primary btn-sm">1</button>
+            <button class="btn btn-secondary btn-sm">2</button>
+            <button class="btn btn-secondary btn-sm">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+  <script>
+    // PREVENT AUTO SCROLL TO BOTTOM ON REFRESH
+    document.addEventListener('DOMContentLoaded', function() {
+      window.scrollTo(0, 0);
+      document.body.style.scrollBehavior = 'auto';
+      document.documentElement.style.scrollBehavior = 'auto';
+      
+      setTimeout(() => {
+        document.body.style.scrollBehavior = 'smooth';
+        document.documentElement.style.scrollBehavior = 'smooth';
+      }, 1000);
+    });
+
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 100
+    });
+
+    // Mock Data
+    const mentorshipRequests = [
+      {
+        name: "Alex Chen",
+        email: "alex@techstartup.ai",
+        startup: "TechFlow AI",
+        expertise: "Product Strategy",
+        requested: "Jan 15",
+        message: "Looking for guidance on product-market fit and scaling strategies."
+      },
+      {
+        name: "Maria Rodriguez",
+        email: "maria@greentech.co",
+        startup: "GreenTech Solutions",
+        expertise: "Business Development",
+        requested: "Jan 14",
+        message: "Need help with go-to-market strategy for B2B sales."
+      },
+      {
+        name: "David Kim",
+        email: "david@fintech.io",
+        startup: "FinFlow",
+        expertise: "Technical Leadership",
+        requested: "Jan 13",
+        message: "Seeking advice on scaling engineering team and tech architecture."
+      },
+      {
+        name: "Sarah Wilson",
+        email: "sarah@healthtech.com",
+        startup: "HealthAI",
+        expertise: "Marketing Strategy",
+        requested: "Jan 12",
+        message: "Looking for guidance on digital marketing and customer acquisition."
+      },
+      {
+        name: "James Park",
+        email: "james@edtech.org",
+        startup: "EduLearn",
+        expertise: "Product Strategy",
+        requested: "Jan 11",
+        message: "Need mentorship on product development and user experience design."
+      },
+      {
+        name: "Lisa Zhang",
+        email: "lisa@cleantech.net",
+        startup: "CleanEnergy Pro",
+        expertise: "Business Development",
+        requested: "Jan 10",
+        message: "Seeking help with fundraising strategy and investor relations."
+      }
+    ];
+
+    const recommendedStartupsData = [
+      {
+        name: "AI Analytics Pro",
+        industry: "AI/ML",
+        stage: "Seed",
+        description: "Advanced analytics platform using machine learning for business intelligence.",
+        founder: "Michael Chen",
+        match: 95
+      },
+      {
+        name: "GreenTech Innovations",
+        industry: "CleanTech",
+        stage: "Pre-Seed",
+        description: "Sustainable energy solutions for commercial buildings using IoT technology.",
+        founder: "Emma Rodriguez",
+        match: 88
+      },
+      {
+        name: "HealthScore Platform",
+        industry: "HealthTech",
+        stage: "Series A",
+        description: "Patient health monitoring platform with predictive analytics capabilities.",
+        founder: "Dr. Robert Kim",
+        match: 92
+      }
+    ];
+
+    // Toast System
+    function showToast(message, type = 'success') {
+      const toastContainer = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <i class="fa-solid fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+          <span style="flex-grow: 1;">${message}</span>
+          <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: inherit; cursor: pointer;">
+            <i class="fa-solid fa-times"></i>
+          </button>
+        </div>
+      `;
+      
+      toastContainer.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 100);
+      setTimeout(() => {
+        if (toast.parentNode) {
+          toast.classList.remove('show');
+          setTimeout(() => { if (toast.parentNode) toast.remove(); }, 300);
+        }
+      }, 4000);
+    }
+
+    // Helper functions
+    function getBadgeClass(expertise) {
+      const classes = {
+        'Product Strategy': 'badge-strategy',
+        'Business Development': 'badge-business',
+        'Technical Leadership': 'badge-tech',
+        'Marketing Strategy': 'badge-marketing'
+      };
+      return classes[expertise] || 'badge-strategy';
+    }
+
+    function changeChartRange(range) {
+      showToast(`Switching to ${range} view`, 'info');
+    }
+
+    // Render Requests Table
+    function renderMentorshipRequests() {
+      const tbody = document.getElementById('requestsBody');
+      tbody.innerHTML = mentorshipRequests.map((request, index) => `
+        <tr>
+          <td>
+            <div class="mentee-info">
+              <img src="https://picsum.photos/seed/${request.name}/40/40" alt="${request.name}" class="mentee-avatar">
+              <div class="mentee-details">
+                <h5>${request.name}</h5>
+                <small>${request.email}</small>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div style="font-weight: 600;">${request.startup}</div>
+          </td>
+          <td>
+            <span class="badge ${getBadgeClass(request.expertise)}">${request.expertise}</span>
+          </td>
+          <td>${request.requested}</td>
+          <td>
+            <div class="action-buttons">
+              <button class="btn-action accept" onclick="acceptRequest('${request.name}')">
+                <i class="fa-solid fa-check"></i> Accept
+              </button>
+              <button class="btn-action decline" onclick="declineRequest('${request.name}')">
+                <i class="fa-solid fa-times"></i> Decline
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function acceptRequest(name) {
+      showToast(`Accepted mentorship request from ${name}!`, 'success');
+      // Update UI or make API call
+    }
+
+    function declineRequest(name) {
+      showToast(`Declined mentorship request from ${name}`, 'error');
+      // Update UI or make API call
+    }
+
+    // Render Sidebar Requests
+    function renderSidebarRequests() {
+      const container = document.getElementById('sidebarRequests');
+      const recentRequests = mentorshipRequests.slice(0, 3);
+      
+      container.innerHTML = recentRequests.map(request => `
+        <div class="request-item">
+          <img src="https://picsum.photos/seed/${request.name}/36/36" alt="${request.name}" class="request-avatar">
+          <div class="request-details">
+            <div class="request-name">${request.name}</div>
+            <div class="request-startup">${request.startup}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Load Recommended Startups
+    function loadRecommendedStartups() {
+      const loading = document.getElementById('startupLoading');
+      const container = document.getElementById('recommendedStartups');
+
+      setTimeout(() => {
+        container.innerHTML = recommendedStartupsData.map(startup => `
+          <div class="startup-card">
+            <div class="startup-header">
+              <img src="https://picsum.photos/seed/${startup.name}/48/48" alt="${startup.name}" class="startup-avatar">
+              <div class="startup-info">
+                <h4>${startup.name}</h4>
+                <div class="startup-industry">${startup.industry} • ${startup.stage}</div>
+              </div>
+            </div>
+            
+            <p class="text-muted mb-3" style="font-size: 0.85rem; line-height: 1.5;">${startup.description}</p>
+            
+            <div class="d-flex justify-content-between align-items-center mb-3" style="font-size: 0.85rem;">
+              <div><strong>Founder:</strong> ${startup.founder}</div>
+              <div><strong>Match:</strong> <span style="color: #43e97b; font-weight: 600;">${startup.match}%</span></div>
+            </div>
+            
+            <div class="d-flex gap-2">
+              <button class="btn btn-primary btn-sm" style="flex: 1;" onclick="showToast('Opening startup profile...')">
+                <i class="fa-solid fa-eye"></i> View Profile
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="showToast('Contacting founder...')">
+                <i class="fa-solid fa-envelope"></i> Connect
+              </button>
+            </div>
+          </div>
+        `).join('');
+
+        loading.style.display = 'none';
+        container.style.display = 'grid';
+      }, 2000);
+    }
+
+    // Initialize Chart
+    function initSessionChart() {
+      const ctx = document.getElementById('sessionsChart');
+      if (!ctx) return;
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
+          datasets: [{
+            label: 'Mentoring Sessions',
+            data: [8, 12, 6, 15, 10, 14, 11, 18],
+            borderColor: '#a8e6cf',
+            backgroundColor: 'rgba(168, 230, 207, 0.1)',
+            tension: 0.4,
+            borderWidth: 3,
+            pointBackgroundColor: '#a8e6cf',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointRadius: 6
+          }, {
+            label: 'Hours Mentored',
+            data: [16, 24, 12, 30, 20, 28, 22, 36],
+            borderColor: '#4facfe',
+            backgroundColor: 'rgba(79, 172, 254, 0.1)',
+            tension: 0.4,
+            borderWidth: 3,
+            pointBackgroundColor: '#4facfe',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                usePointStyle: true,
+                padding: 20,
+                font: {
+                  family: 'Poppins',
+                  size: 12
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)',
+                borderDash: [5, 5]
+              },
+              ticks: {
+                font: {
+                  family: 'Poppins'
+                }
+              }
+            },
+            x: {
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)',
+                borderDash: [5, 5]
+              },
+              ticks: {
+                font: {
+                  family: 'Poppins'
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Initialize everything
+    setTimeout(() => {
+      document.querySelectorAll('.loading').forEach(el => el.classList.remove('loading'));
+    }, 1000);
+
+    renderMentorshipRequests();
+    renderSidebarRequests();
+    loadRecommendedStartups();
+    
+    // Initialize chart after delay
+    setTimeout(initSessionChart, 1500);
+
+    setTimeout(() => showToast('Welcome to your Mentorship Dashboard, Dr. Sarah!', 'success'), 2000);
+  </script>
+</body>
+</html>

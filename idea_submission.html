@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>StartAI • Premium Idea Submission</title>
+  
+  <!-- Enhanced Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
+  
+  <!-- AOS Animation Library -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  
+  <style>
+    /* === PREMIUM IDEA SUBMISSION DESIGN SYSTEM === */
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --warning-gradient: linear-gradient(135deg, #ffa726 0%, #ff8a65 100%);
+      --danger-gradient: linear-gradient(135deg, #f857a6 0%, #ff5858 100%);
+      --info-gradient: linear-gradient(135deg, #667eea 0%, #4facfe 100%);
+      
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-bg-strong: rgba(255, 255, 255, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      --blur-strength: 16px;
+      
+      --font-sans: "Poppins", system-ui, sans-serif;
+      --border-radius: 16px;
+      --border-radius-lg: 24px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: auto; /* Prevent auto-scroll */
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      color: #2d3436;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      scroll-behavior: auto;
+    }
+
+    /* Animated Background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 75% 25%, rgba(240, 147, 251, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 50% 75%, rgba(79, 172, 254, 0.06) 0%, transparent 50%);
+      z-index: -1;
+      animation: float 25s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(20px, -20px) scale(1.02); }
+      66% { transform: translate(-15px, 15px) scale(0.98); }
+    }
+
+    /* Header */
+    .header {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength)) saturate(140%);
+      -webkit-backdrop-filter: blur(var(--blur-strength)) saturate(140%);
+      border-bottom: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: var(--transition);
+    }
+
+    .header:hover {
+      background: var(--glass-bg-strong);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
+    }
+
+    .logo img {
+      height: 2rem;
+      width: auto;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+
+    .nav {
+      display: none;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .nav {
+        display: flex;
+      }
+    }
+
+    .nav-link {
+      color: #2d3436;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-link::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: -1;
+    }
+
+    .nav-link:hover {
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .nav-link:hover::before {
+      opacity: 1;
+    }
+
+    .nav-link.active {
+      background: var(--primary-gradient);
+      color: white;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Main Layout */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      min-height: calc(100vh - 80px);
+    }
+
+    @media (min-width: 992px) {
+      .main-layout {
+        grid-template-columns: 380px 1fr;
+      }
+    }
+
+    /* PREMIUM PROGRESS PANEL */
+    .progress-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border-right: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: 
+        linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.15)),
+        url('https://picsum.photos/seed/startup-ideas/600/800') center/cover no-repeat;
+      z-index: -1;
+    }
+
+    .progress-panel .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.4));
+      backdrop-filter: blur(4px);
+    }
+
+    .progress-panel .panel-content {
+      position: relative;
+      z-index: 2;
+      padding: 2rem;
+      height: 100%;
+      color: white;
+    }
+
+    @media (max-width: 991.98px) {
+      .progress-panel {
+        display: none;
+      }
+    }
+
+    .progress-header h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: white;
+    }
+
+    .progress-header p {
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+    }
+
+    .progress-bar-container {
+      margin-bottom: 2rem;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--success-gradient);
+      border-radius: 20px;
+      transition: width 0.8s ease;
+      box-shadow: 0 0 16px rgba(67, 233, 123, 0.5);
+    }
+
+    .progress-text {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    /* PREMIUM VERTICAL STEPPER */
+    .v-stepper {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .v-stepper__item {
+      position: relative;
+    }
+
+    .v-stepper__btn {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 1rem;
+      align-items: center;
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      color: white;
+      text-align: left;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .v-stepper__btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateX(4px);
+    }
+
+    .v-stepper__btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .v-stepper__bullet {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid white;
+      color: white;
+      font-weight: 700;
+      transition: var(--transition);
+    }
+
+    .v-stepper__label {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .v-stepper__item.is-active .v-stepper__btn {
+      border-color: white;
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2);
+    }
+
+    .v-stepper__item.is-complete .v-stepper__bullet {
+      background: var(--success-gradient);
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(67, 233, 123, 0.4);
+    }
+
+    .v-stepper__item.is-complete .v-stepper__bullet::before {
+      content: "✓";
+      font-size: 0.8rem;
+    }
+
+    /* Main Content Area */
+    .main-content {
+      padding: 2rem;
+      background: transparent;
+      min-height: calc(100vh - 80px);
+    }
+
+    /* Form Cards */
+    .form-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-shadow);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .form-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(31, 38, 135, 0.5);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .form-card:hover::before {
+      opacity: 1;
+    }
+
+    /* Form Groups */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #2d3436;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: block;
+    }
+
+    /* Enhanced Form Controls */
+    .form-control,
+    .input,
+    select,
+    textarea {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border: 2px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      color: #2d3436;
+      transition: var(--transition);
+      width: 100%;
+      font-family: var(--font-sans);
+    }
+
+    .form-control:focus,
+    .input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: rgba(102, 126, 234, 0.6);
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+      background: white;
+      transform: translateY(-2px);
+    }
+
+    .form-control::placeholder,
+    .input::placeholder,
+    textarea::placeholder {
+      color: rgba(45, 52, 54, 0.5);
+      font-weight: 400;
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    /* Enhanced Buttons */
+    .btn {
+      font-weight: 600;
+      border-radius: var(--border-radius);
+      padding: 0.75rem 1.5rem;
+      border: none;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+      font-family: var(--font-sans);
+      justify-content: center;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--primary-gradient);
+      color: white;
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 8px 24px rgba(102, 126, 234, 0.6);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: var(--glass-bg);
+      color: #2d3436;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-secondary:hover {
+      background: var(--glass-bg-strong);
+      color: #2d3436;
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-success {
+      background: var(--success-gradient);
+      color: white;
+      box-shadow: 0 4px 16px rgba(67, 233, 123, 0.4);
+    }
+
+    .btn-success:hover {
+      box-shadow: 0 8px 24px rgba(67, 233, 123, 0.6);
+      color: white;
+    }
+
+    .btn-warning {
+      background: var(--warning-gradient);
+      color: white;
+      box-shadow: 0 4px 16px rgba(255, 167, 38, 0.4);
+    }
+
+    .btn-warning:hover {
+      box-shadow: 0 8px 24px rgba(255, 167, 38, 0.6);
+      color: white;
+    }
+
+    /* FULL WIDTH DRAFTS TABLE */
+    .drafts-section {
+      margin-top: 2rem;
+      width: 100%;
+    }
+
+    .table-container {
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      margin: 1.5rem 0;
+      position: relative;
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .table-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .table-container:hover::before {
+      opacity: 1;
+    }
+
+    .table {
+      width: 100%;
+      background: transparent;
+      margin: 0;
+      font-size: 0.9rem;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+      min-width: 700px;
+    }
+
+    .table th:nth-child(1) { width: 30%; }  /* Title */
+    .table th:nth-child(2) { width: 15%; }  /* Updated */
+    .table th:nth-child(3) { width: 15%; }  /* Status */
+    .table th:nth-child(4) { width: 20%; }  /* AI Score */
+    .table th:nth-child(5) { width: 20%; }  /* Actions */
+
+    .table th {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.12), rgba(79, 172, 254, 0.08));
+      border: none;
+      color: #2d3436;
+      font-weight: 700;
+      padding: 1.2rem 1rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .table th:nth-child(2), 
+    .table th:nth-child(3), 
+    .table th:nth-child(4),
+    .table th:nth-child(5) {
+      text-align: center;
+    }
+
+    .table th::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+    }
+
+    .table td {
+      border: none;
+      padding: 1.2rem 1rem;
+      vertical-align: middle;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+      transition: var(--transition);
+      position: relative;
+      text-align: left;
+    }
+
+    .table td:nth-child(2), 
+    .table td:nth-child(3), 
+    .table td:nth-child(4),
+    .table td:nth-child(5) {
+      text-align: center;
+    }
+
+    .table tbody tr:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(102, 126, 234, 0.03));
+    }
+
+    /* Badges */
+    .badge {
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid transparent;
+      display: inline-block;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .badge-draft {
+      background: var(--warning-gradient);
+      color: white;
+    }
+
+    .badge-submitted {
+      background: var(--success-gradient);
+      color: white;
+    }
+
+    .badge-review {
+      background: var(--info-gradient);
+      color: white;
+    }
+
+    /* AI Score Display */
+    .ai-score {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .score-value {
+      font-weight: 700;
+      font-size: 1rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .score-bar {
+      width: 40px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .score-fill {
+      height: 100%;
+      background: var(--accent-gradient);
+      border-radius: 20px;
+      transition: width 1s ease;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-action {
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      color: #636e72;
+      transition: var(--transition);
+      cursor: pointer;
+      font-size: 0.8rem;
+      min-width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .btn-action:hover {
+      background: var(--glass-bg-strong);
+      color: #2d3436;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-action.edit:hover {
+      border-color: rgba(102, 126, 234, 0.5);
+      color: #667eea;
+    }
+
+    .btn-action.delete:hover {
+      border-color: rgba(248, 87, 166, 0.5);
+      color: #f857a6;
+    }
+
+    .btn-action.view:hover {
+      border-color: rgba(67, 233, 123, 0.5);
+      color: #43e97b;
+    }
+
+    /* Sticky Actions */
+    .sticky-actions {
+      position: sticky;
+      bottom: 0;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border-top: 1px solid var(--glass-border);
+      padding: 1.5rem;
+      z-index: 10;
+      box-shadow: 0 -4px 16px rgba(31, 38, 135, 0.2);
+    }
+
+    /* Validation */
+    .invalid-feedback {
+      color: #f857a6;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: var(--transition);
+    }
+
+    .invalid-feedback.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .is-invalid {
+      border-color: rgba(248, 87, 166, 0.6) !important;
+      box-shadow: 0 0 0 4px rgba(248, 87, 166, 0.15) !important;
+    }
+
+    .is-invalid + .invalid-feedback {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Utilities */
+    .d-flex { display: flex; }
+    .align-items-center { align-items: center; }
+    .justify-content-between { justify-content: space-between; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-3 { gap: 0.75rem; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .mb-0 { margin-bottom: 0; }
+    .mb-3 { margin-bottom: 0.75rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .text-muted { color: #636e72; }
+
+    /* Typography */
+    h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+
+    h3 {
+      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+
+    h4 {
+      font-size: clamp(1.125rem, 2vw, 1.5rem);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #2d3436;
+    }
+
+    h5 {
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #2d3436;
+    }
+
+    /* Loading Animation */
+    .loading {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out 0.3s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 9999;
+      max-width: 400px;
+    }
+
+    .toast {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 1rem 1.5rem;
+      margin-bottom: 0.75rem;
+      color: #2d3436;
+      box-shadow: var(--glass-shadow);
+      transform: translateX(100%);
+      transition: var(--transition);
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast.success {
+      border-left: 4px solid #43e97b;
+    }
+
+    .toast.error {
+      border-left: 4px solid #f857a6;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 1rem;
+      }
+      
+      .form-card {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      
+      .table th,
+      .table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8rem;
+      }
+
+      .sticky-actions {
+        padding: 1rem;
+      }
+
+      .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-gradient);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-gradient);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a class="logo" href="./home_page.html">
+          <img src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" alt="StartAI Logo">
+          StartAI
+        </a>
+        
+        <nav class="nav">
+          <a class="nav-link" href="./founder_dashboard.html">
+            <i class="fa-solid fa-chart-line"></i> Dashboard
+          </a>
+          <a class="nav-link active" href="./idea_submission.html">
+            <i class="fa-solid fa-lightbulb"></i> Submit Idea
+          </a>
+          <a class="nav-link" href="./my_ideas.html">
+            <i class="fa-solid fa-folder"></i> My Ideas
+          </a>
+          <a class="nav-link" href="./mentorship.html">
+            <i class="fa-solid fa-users"></i> Mentorship
+          </a>
+          <a class="nav-link" href="./resources.html">
+            <i class="fa-solid fa-book"></i> Resources
+          </a>
+        </nav>
+        
+        <div class="user-menu">
+          <button class="btn btn-secondary" style="padding: 0.5rem;">
+            <i class="fa-solid fa-bell"></i>
+          </button>
+          <button class="btn btn-secondary" style="padding: 0.5rem 1rem;">
+            <img src="https://picsum.photos/seed/founder/24/24" alt="Profile" style="width: 20px; height: 20px; border-radius: 50%; margin-right: 0.5rem;">
+            John <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    <!-- Premium Progress Panel -->
+    <aside class="progress-panel">
+      <div class="overlay"></div>
+      <div class="panel-content">
+        <div class="progress-header">
+          <h2>Submit Your Idea</h2>
+          <p>Transform your startup concept into a comprehensive pitch with our AI-powered guidance.</p>
+        </div>
+        
+        <div class="progress-bar-container">
+          <div class="progress-bar">
+            <div class="progress-bar-fill" style="width: 20%" id="overallProgress"></div>
+          </div>
+          <div class="progress-text">Progress: <span id="progressText">20%</span></div>
+        </div>
+
+        <div class="v-stepper" id="stepperNavigation">
+          <div class="v-stepper__item is-active" data-step="1">
+            <button class="v-stepper__btn" onclick="goToStep(1)">
+              <span class="v-stepper__bullet">1</span>
+              <span class="v-stepper__label">Idea Overview</span>
+            </button>
+          </div>
+          <div class="v-stepper__item" data-step="2">
+            <button class="v-stepper__btn" onclick="goToStep(2)">
+              <span class="v-stepper__bullet">2</span>
+              <span class="v-stepper__label">Problem & Solution</span>
+            </button>
+          </div>
+          <div class="v-stepper__item" data-step="3">
+            <button class="v-stepper__btn" onclick="goToStep(3)">
+              <span class="v-stepper__bullet">3</span>
+              <span class="v-stepper__label">Market Landscape</span>
+            </button>
+          </div>
+          <div class="v-stepper__item" data-step="4">
+            <button class="v-stepper__btn" onclick="goToStep(4)">
+              <span class="v-stepper__bullet">4</span>
+              <span class="v-stepper__label">Business Model</span>
+            </button>
+          </div>
+          <div class="v-stepper__item" data-step="5">
+            <button class="v-stepper__btn" onclick="goToStep(5)">
+              <span class="v-stepper__bullet">5</span>
+              <span class="v-stepper__label">Review & Finalize</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Step 1: Idea Overview -->
+      <section id="step-1" class="form-card loading">
+        <h3><i class="fa-solid fa-lightbulb" style="margin-right: 0.75rem;"></i>Idea Overview</h3>
+        <p class="text-muted mb-4">Start with the basics - tell us about your innovative idea and what industry it targets.</p>
+        
+        <div class="form-group">
+          <label class="form-label" for="projectName">Project Name *</label>
+          <input type="text" id="projectName" class="form-control" placeholder="Enter your project name" required>
+          <div class="invalid-feedback">Please enter a project name</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="industry">Industry *</label>
+          <select id="industry" class="form-control" required>
+            <option value="">Select an industry</option>
+            <option value="fintech">FinTech</option>
+            <option value="healthtech">HealthTech</option>
+            <option value="edtech">EdTech</option>
+            <option value="cleantech">CleanTech</option>
+            <option value="ai-ml">AI/ML</option>
+            <option value="ecommerce">E-commerce</option>
+            <option value="saas">SaaS</option>
+            <option value="consumer">Consumer Products</option>
+            <option value="b2b">B2B Services</option>
+            <option value="other">Other</option>
+          </select>
+          <div class="invalid-feedback">Please select an industry</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="elevatorPitch">Elevator Pitch *</label>
+          <textarea id="elevatorPitch" class="form-control" placeholder="Describe your idea in 2-3 sentences. What problem does it solve and how?" required></textarea>
+          <div class="invalid-feedback">Please provide an elevator pitch</div>
+        </div>
+      </section>
+
+      <!-- Step 2: Problem & Solution -->
+      <section id="step-2" class="form-card" style="display: none;">
+        <h3><i class="fa-solid fa-puzzle-piece" style="margin-right: 0.75rem;"></i>Problem & Solution</h3>
+        <p class="text-muted mb-4">Define the problem you're solving and explain your unique solution approach.</p>
+        
+        <div class="form-group">
+          <label class="form-label" for="problem">Problem Statement *</label>
+          <textarea id="problem" class="form-control" placeholder="What specific problem are you solving? Who experiences this problem and how significant is it?" required></textarea>
+          <div class="invalid-feedback">Please describe the problem</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="solution">Solution Description *</label>
+          <textarea id="solution" class="form-control" placeholder="How does your solution address the problem? What makes it unique or innovative?" required></textarea>
+          <div class="invalid-feedback">Please describe your solution</div>
+        </div>
+      </section>
+
+      <!-- Step 3: Market Landscape -->
+      <section id="step-3" class="form-card" style="display: none;">
+        <h3><i class="fa-solid fa-chart-bar" style="margin-right: 0.75rem;"></i>Market Landscape</h3>
+        <p class="text-muted mb-4">Help us understand your target market and competitive positioning.</p>
+        
+        <div class="form-group">
+          <label class="form-label" for="targetMarket">Target Market *</label>
+          <textarea id="targetMarket" class="form-control" placeholder="Who are your target customers? What are their demographics and characteristics?" required></textarea>
+          <div class="invalid-feedback">Please describe your target market</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="competitors">Competitors Analysis</label>
+          <textarea id="competitors" class="form-control" placeholder="Who are your main competitors? How do they currently address this problem?"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="competitiveAdvantage">Competitive Advantage *</label>
+          <textarea id="competitiveAdvantage" class="form-control" placeholder="What gives you an edge over existing solutions? Why will customers choose you?" required></textarea>
+          <div class="invalid-feedback">Please describe your competitive advantage</div>
+        </div>
+      </section>
+
+      <!-- Step 4: Business Model -->
+      <section id="step-4" class="form-card" style="display: none;">
+        <h3><i class="fa-solid fa-dollar-sign" style="margin-right: 0.75rem;"></i>Business Model</h3>
+        <p class="text-muted mb-4">Outline how your startup will generate revenue and sustain growth.</p>
+        
+        <div class="form-group">
+          <label class="form-label" for="monetization">Monetization Strategy *</label>
+          <textarea id="monetization" class="form-control" placeholder="How will you make money? Describe your revenue streams and pricing strategy." required></textarea>
+          <div class="invalid-feedback">Please describe your monetization strategy</div>
+        </div>
+      </section>
+
+      <!-- Step 5: Review & Finalize -->
+      <section id="step-5" class="form-card" style="display: none;">
+        <h3><i class="fa-solid fa-check-circle" style="margin-right: 0.75rem;"></i>Review & Finalize</h3>
+        <p class="text-muted mb-4">Review your submission and make any final adjustments before submitting.</p>
+        
+        <div id="reviewSummary" class="mb-4">
+          <!-- Summary will be populated by JavaScript -->
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <input type="checkbox" id="termsAgreement" style="margin-right: 0.5rem;" required>
+            I agree to the <a href="#" style="color: #667eea;">Terms of Service</a> and <a href="#" style="color: #667eea;">Privacy Policy</a>
+          </label>
+          <div class="invalid-feedback">Please agree to the terms</div>
+        </div>
+      </section>
+
+      <!-- FULL WIDTH DRAFTS TABLE -->
+      <section class="drafts-section loading">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h3><i class="fa-solid fa-folder-open" style="margin-right: 0.75rem;"></i>Your Recent Drafts</h3>
+            <p class="text-muted mb-0">Continue working on your saved ideas or start fresh with a new submission.</p>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-secondary" onclick="showToast('Loading all drafts...', 'info')">
+              <i class="fa-solid fa-folder"></i> View All Drafts
+            </button>
+            <button class="btn btn-primary" onclick="newIdea()">
+              <i class="fa-solid fa-plus"></i> New Idea
+            </button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="table" id="draftsTable">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Updated</th>
+                <th>Status</th>
+                <th>AI Score</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="draftsBody">
+              <!-- Populated via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Sticky Actions -->
+      <div class="sticky-actions">
+        <div class="d-flex justify-content-between align-items-center">
+          <button id="prevBtn" class="btn btn-secondary" onclick="previousStep()" style="display: none;">
+            <i class="fa-solid fa-arrow-left"></i> Previous
+          </button>
+          <div></div>
+          <button id="nextBtn" class="btn btn-primary" onclick="nextStep()">
+            Next Step <i class="fa-solid fa-arrow-right"></i>
+          </button>
+          <button id="submitBtn" class="btn btn-success" onclick="submitIdea()" style="display: none;">
+            <i class="fa-solid fa-paper-plane"></i> Submit Idea
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+  <script>
+    // PREVENT AUTO SCROLL TO BOTTOM ON REFRESH
+    document.addEventListener('DOMContentLoaded', function() {
+      window.scrollTo(0, 0);
+      document.body.style.scrollBehavior = 'auto';
+      document.documentElement.style.scrollBehavior = 'auto';
+      
+      setTimeout(() => {
+        document.body.style.scrollBehavior = 'smooth';
+        document.documentElement.style.scrollBehavior = 'smooth';
+      }, 1000);
+    });
+
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 100
+    });
+
+    // State Management
+    let currentStep = 1;
+    const totalSteps = 5;
+    const formData = {};
+
+    // Mock drafts data
+    const draftsData = [
+      { 
+        title: "AI-Powered Learning Platform", 
+        updated: "Jan 15", 
+        status: "Draft", 
+        score: 85,
+        industry: "EdTech"
+      },
+      { 
+        title: "Sustainable Food Delivery", 
+        updated: "Jan 12", 
+        status: "Submitted", 
+        score: 92,
+        industry: "CleanTech"
+      },
+      { 
+        title: "FinTech Mobile Banking", 
+        updated: "Jan 10", 
+        status: "Under Review", 
+        score: 78,
+        industry: "FinTech"
+      },
+      { 
+        title: "Healthcare Diagnostic Tool", 
+        updated: "Jan 08", 
+        status: "Draft", 
+        score: 0,
+        industry: "HealthTech"
+      }
+    ];
+
+    // Toast System
+    function showToast(message, type = 'success') {
+      const toastContainer = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <i class="fa-solid fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+          <span style="flex-grow: 1;">${message}</span>
+          <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: inherit; cursor: pointer;">
+            <i class="fa-solid fa-times"></i>
+          </button>
+        </div>
+      `;
+      
+      toastContainer.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 100);
+      setTimeout(() => {
+        if (toast.parentNode) {
+          toast.classList.remove('show');
+          setTimeout(() => { if (toast.parentNode) toast.remove(); }, 300);
+        }
+      }, 4000);
+    }
+
+    // Step Navigation
+    function goToStep(step) {
+      if (step <= currentStep || validateCurrentStep()) {
+        showStep(step);
+        currentStep = step;
+        updateStepper();
+        updateProgress();
+        updateButtons();
+      }
+    }
+
+    function showStep(step) {
+      // Hide all steps
+      for (let i = 1; i <= totalSteps; i++) {
+        document.getElementById(`step-${i}`).style.display = 'none';
+      }
+      // Show current step
+      document.getElementById(`step-${step}`).style.display = 'block';
+    }
+
+    function nextStep() {
+      if (validateCurrentStep()) {
+        if (currentStep < totalSteps) {
+          currentStep++;
+          showStep(currentStep);
+          updateStepper();
+          updateProgress();
+          updateButtons();
+          if (currentStep === 5) {
+            generateReviewSummary();
+          }
+        }
+      }
+    }
+
+    function previousStep() {
+      if (currentStep > 1) {
+        currentStep--;
+        showStep(currentStep);
+        updateStepper();
+        updateProgress();
+        updateButtons();
+      }
+    }
+
+    function updateStepper() {
+      const items = document.querySelectorAll('.v-stepper__item');
+      items.forEach((item, index) => {
+        const step = index + 1;
+        item.classList.remove('is-active', 'is-complete', 'is-pending');
+        
+        if (step < currentStep) {
+          item.classList.add('is-complete');
+        } else if (step === currentStep) {
+          item.classList.add('is-active');
+        } else {
+          item.classList.add('is-pending');
+        }
+      });
+    }
+
+    function updateProgress() {
+      const progress = (currentStep / totalSteps) * 100;
+      document.getElementById('overallProgress').style.width = `${progress}%`;
+      document.getElementById('progressText').textContent = `${Math.round(progress)}%`;
+    }
+
+    function updateButtons() {
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const submitBtn = document.getElementById('submitBtn');
+
+      prevBtn.style.display = currentStep > 1 ? 'block' : 'none';
+      
+      if (currentStep === totalSteps) {
+        nextBtn.style.display = 'none';
+        submitBtn.style.display = 'block';
+      } else {
+        nextBtn.style.display = 'block';
+        submitBtn.style.display = 'none';
+      }
+    }
+
+    function validateCurrentStep() {
+      const stepElement = document.getElementById(`step-${currentStep}`);
+      const requiredInputs = stepElement.querySelectorAll('[required]');
+      let isValid = true;
+
+      requiredInputs.forEach(input => {
+        if (!input.value.trim()) {
+          input.classList.add('is-invalid');
+          isValid = false;
+        } else {
+          input.classList.remove('is-invalid');
+        }
+      });
+
+      if (!isValid) {
+        showToast('Please fill in all required fields', 'error');
+      }
+
+      return isValid;
+    }
+
+    function generateReviewSummary() {
+      const projectName = document.getElementById('projectName').value;
+      const industry = document.getElementById('industry').value;
+      const elevatorPitch = document.getElementById('elevatorPitch').value;
+      const problem = document.getElementById('problem').value;
+      const solution = document.getElementById('solution').value;
+
+      const reviewHTML = `
+        <div style="background: rgba(255, 255, 255, 0.1); padding: 1.5rem; border-radius: var(--border-radius); border: 1px solid var(--glass-border);">
+          <h5><strong>Project:</strong> ${projectName}</h5>
+          <p><strong>Industry:</strong> ${industry}</p>
+          <p><strong>Elevator Pitch:</strong> ${elevatorPitch}</p>
+          <p><strong>Problem:</strong> ${problem.substring(0, 150)}${problem.length > 150 ? '...' : ''}</p>
+          <p><strong>Solution:</strong> ${solution.substring(0, 150)}${solution.length > 150 ? '...' : ''}</p>
+        </div>
+      `;
+
+      document.getElementById('reviewSummary').innerHTML = reviewHTML;
+    }
+
+    function submitIdea() {
+      if (validateCurrentStep()) {
+        showToast('Submitting your idea for AI analysis...', 'success');
+        
+        // Simulate submission process
+        setTimeout(() => {
+          showToast('Your idea has been submitted successfully! You will receive feedback within 24 hours.', 'success');
+          // Reset form or redirect
+        }, 2000);
+      }
+    }
+
+    function newIdea() {
+      // Reset form
+      currentStep = 1;
+      showStep(1);
+      updateStepper();
+      updateProgress();
+      updateButtons();
+      
+      // Clear all inputs
+      document.querySelectorAll('input, textarea, select').forEach(input => {
+        input.value = '';
+        input.classList.remove('is-invalid');
+      });
+      
+      showToast('Started new idea submission', 'info');
+    }
+
+    // Render Drafts Table
+    function renderDrafts() {
+      const tbody = document.getElementById('draftsBody');
+      
+      if (draftsData.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="text-center" style="padding: 2rem;">
+              <div style="color: #636e72;">
+                <i class="fa-solid fa-folder-open" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                <p>No drafts yet. Start creating your first idea!</p>
+                <button class="btn btn-primary" onclick="newIdea()">
+                  <i class="fa-solid fa-plus"></i> Create New Idea
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = draftsData.map((draft, index) => `
+        <tr>
+          <td>
+            <div>
+              <div style="font-weight: 600; margin-bottom: 0.25rem;">${draft.title}</div>
+              <small class="text-muted">${draft.industry}</small>
+            </div>
+          </td>
+          <td>${draft.updated}</td>
+          <td>
+            <span class="badge ${getBadgeClass(draft.status)}">${draft.status}</span>
+          </td>
+          <td>
+            ${draft.score > 0 ? `
+              <div class="ai-score">
+                <span class="score-value">${draft.score}%</span>
+                <div class="score-bar">
+                  <div class="score-fill" style="width: ${draft.score}%"></div>
+                </div>
+              </div>
+            ` : '<span class="text-muted">Not analyzed</span>'}
+          </td>
+          <td>
+            <div class="action-buttons">
+              <button class="btn-action edit" onclick="editDraft(${index})" title="Edit">
+                <i class="fa-solid fa-edit"></i>
+              </button>
+              <button class="btn-action view" onclick="viewDraft(${index})" title="View">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+              <button class="btn-action delete" onclick="deleteDraft(${index})" title="Delete">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function getBadgeClass(status) {
+      const classes = {
+        'Draft': 'badge-draft',
+        'Submitted': 'badge-submitted',
+        'Under Review': 'badge-review'
+      };
+      return classes[status] || 'badge-draft';
+    }
+
+    function editDraft(index) {
+      showToast(`Loading draft: ${draftsData[index].title}`, 'info');
+    }
+
+    function viewDraft(index) {
+      showToast(`Opening draft: ${draftsData[index].title}`, 'info');
+    }
+
+    function deleteDraft(index) {
+      showToast(`Deleted draft: ${draftsData[index].title}`, 'warning');
+      draftsData.splice(index, 1);
+      renderDrafts();
+    }
+
+    // Initialize
+    setTimeout(() => {
+      document.querySelectorAll('.loading').forEach(el => el.classList.remove('loading'));
+    }, 1000);
+
+    renderDrafts();
+    updateStepper();
+    updateProgress();
+    updateButtons();
+
+    setTimeout(() => showToast('Welcome! Start building your startup idea step by step.', 'success'), 2000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>StartAI • Premium Learning Hub</title>
+  
+  <!-- Enhanced Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
+  
+  <!-- AOS Animation Library -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  
+  <style>
+    /* === PREMIUM LEARNING HUB DESIGN SYSTEM === */
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --warning-gradient: linear-gradient(135deg, #ffa726 0%, #ff8a65 100%);
+      --danger-gradient: linear-gradient(135deg, #f857a6 0%, #ff5858 100%);
+      --info-gradient: linear-gradient(135deg, #667eea 0%, #4facfe 100%);
+      --education-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+      
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-bg-strong: rgba(255, 255, 255, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      --blur-strength: 16px;
+      
+      --font-sans: "Poppins", system-ui, sans-serif;
+      --border-radius: 16px;
+      --border-radius-lg: 24px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: auto; /* Prevent auto-scroll */
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      color: #2d3436;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      scroll-behavior: auto;
+    }
+
+    /* Animated Background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 25% 25%, rgba(255, 154, 158, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 75% 25%, rgba(102, 126, 234, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 50% 75%, rgba(79, 172, 254, 0.06) 0%, transparent 50%);
+      z-index: -1;
+      animation: float 25s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(20px, -20px) scale(1.02); }
+      66% { transform: translate(-15px, 15px) scale(0.98); }
+    }
+
+    /* Header */
+    .header {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength)) saturate(140%);
+      -webkit-backdrop-filter: blur(var(--blur-strength)) saturate(140%);
+      border-bottom: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: var(--transition);
+    }
+
+    .header:hover {
+      background: var(--glass-bg-strong);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      background: var(--education-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 4px 8px rgba(255, 154, 158, 0.3));
+    }
+
+    .logo img {
+      height: 2rem;
+      width: auto;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+
+    .nav {
+      display: none;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .nav {
+        display: flex;
+      }
+    }
+
+    .nav-link {
+      color: #2d3436;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-link::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--education-gradient);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: -1;
+    }
+
+    .nav-link:hover {
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .nav-link:hover::before {
+      opacity: 1;
+    }
+
+    .nav-link.active {
+      background: var(--education-gradient);
+      color: white;
+      box-shadow: 0 4px 12px rgba(255, 154, 158, 0.4);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Main Content */
+    .main {
+      padding: 2rem;
+      background: transparent;
+      min-height: calc(100vh - 80px);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-shadow);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--education-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(31, 38, 135, 0.5);
+      border-color: rgba(255, 154, 158, 0.3);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+      position: relative;
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .welcome-bg {
+      position: relative;
+      min-height: 300px;
+      overflow: hidden;
+    }
+
+    .welcome-bg img {
+      width: 100%;
+      height: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      filter: saturate(110%) contrast(105%);
+      transition: var(--transition);
+    }
+
+    .welcome-section:hover .welcome-bg img {
+      transform: scale(1.05);
+      filter: saturate(120%) contrast(110%);
+    }
+
+    .welcome-overlay {
+      position: absolute;
+      inset: 0;
+      background: 
+        linear-gradient(135deg, rgba(255, 154, 158, 0.3), rgba(254, 207, 239, 0.4)),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3));
+      backdrop-filter: blur(2px);
+      transition: var(--transition);
+    }
+
+    .welcome-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      color: white;
+      z-index: 2;
+    }
+
+    .welcome-content h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.9) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .welcome-content p {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      line-height: 1.6;
+      opacity: 0.95;
+      max-width: 600px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-shadow);
+      padding: 1.5rem;
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--education-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 48px rgba(31, 38, 135, 0.5);
+      border-color: rgba(255, 154, 158, 0.4);
+    }
+
+    .stat-card:hover::before {
+      opacity: 1;
+    }
+
+    .stat-value {
+      font-family: var(--font-sans);
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--education-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #636e72;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* PREMIUM STICKY FILTER BAR */
+    .sticky-filter {
+      position: sticky;
+      top: 80px;
+      z-index: 100;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-shadow);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .filter-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .search-container {
+      position: relative;
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border: 2px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 0.75rem 1rem 0.75rem 3rem;
+      font-size: 1rem;
+      color: #2d3436;
+      transition: var(--transition);
+      font-family: var(--font-sans);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: rgba(255, 154, 158, 0.6);
+      box-shadow: 0 0 0 4px rgba(255, 154, 158, 0.15);
+      background: white;
+      transform: translateY(-2px);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #636e72;
+      font-size: 1rem;
+    }
+
+    .filter-select {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border: 2px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      color: #2d3436;
+      transition: var(--transition);
+      font-family: var(--font-sans);
+      cursor: pointer;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: rgba(255, 154, 158, 0.6);
+      box-shadow: 0 0 0 4px rgba(255, 154, 158, 0.15);
+      background: white;
+    }
+
+    /* Resource Cards Grid */
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .resource-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-shadow);
+      overflow: hidden;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .resource-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--education-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .resource-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 48px rgba(31, 38, 135, 0.5);
+      border-color: rgba(255, 154, 158, 0.3);
+    }
+
+    .resource-card:hover::before {
+      opacity: 1;
+    }
+
+    .resource-thumbnail {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .resource-card:hover .resource-thumbnail {
+      transform: scale(1.05);
+    }
+
+    .resource-content {
+      padding: 1.5rem;
+    }
+
+    .resource-type {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    .resource-type.article {
+      background: var(--primary-gradient);
+      color: white;
+    }
+
+    .resource-type.video {
+      background: var(--danger-gradient);
+      color: white;
+    }
+
+    .resource-type.template {
+      background: var(--success-gradient);
+      color: white;
+    }
+
+    .resource-type.course {
+      background: var(--warning-gradient);
+      color: white;
+    }
+
+    .resource-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: #2d3436;
+      line-height: 1.4;
+    }
+
+    .resource-description {
+      color: #636e72;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .resource-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: #636e72;
+    }
+
+    .resource-duration {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .resource-rating {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: #ffa726;
+    }
+
+    /* Featured Picks */
+    .featured-picks {
+      margin-bottom: 3rem;
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .featured-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-shadow);
+      padding: 1.5rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--education-gradient);
+      opacity: 1;
+    }
+
+    .featured-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(31, 38, 135, 0.5);
+    }
+
+    .featured-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--education-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .featured-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #2d3436;
+    }
+
+    .featured-description {
+      color: #636e72;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* FULL WIDTH RESOURCES TABLE */
+    .resources-table-section {
+      width: 100%;
+    }
+
+    .table-container {
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      margin: 1.5rem 0;
+      position: relative;
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .table-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--education-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .table-container:hover::before {
+      opacity: 1;
+    }
+
+    .table {
+      width: 100%;
+      background: transparent;
+      margin: 0;
+      font-size: 0.9rem;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+      min-width: 800px;
+    }
+
+    .table th:nth-child(1) { width: 35%; }  /* Title */
+    .table th:nth-child(2) { width: 15%; }  /* Type */
+    .table th:nth-child(3) { width: 15%; }  /* Category */
+    .table th:nth-child(4) { width: 15%; }  /* Duration */
+    .table th:nth-child(5) { width: 20%; }  /* Actions */
+
+    .table th {
+      background: linear-gradient(135deg, rgba(255, 154, 158, 0.12), rgba(254, 207, 239, 0.08));
+      border: none;
+      color: #2d3436;
+      font-weight: 700;
+      padding: 1.2rem 1rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .table th:nth-child(2), 
+    .table th:nth-child(3), 
+    .table th:nth-child(4),
+    .table th:nth-child(5) {
+      text-align: center;
+    }
+
+    .table th::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 154, 158, 0.3), transparent);
+    }
+
+    .table td {
+      border: none;
+      padding: 1.2rem 1rem;
+      vertical-align: middle;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+      transition: var(--transition);
+      position: relative;
+      text-align: left;
+    }
+
+    .table td:nth-child(2), 
+    .table td:nth-child(3), 
+    .table td:nth-child(4),
+    .table td:nth-child(5) {
+      text-align: center;
+    }
+
+    .table tbody tr:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 154, 158, 0.03));
+    }
+
+    /* Resource Info Display */
+    .resource-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .resource-thumb {
+      width: 60px;
+      height: 45px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid var(--glass-border);
+    }
+
+    .resource-details h5 {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: #2d3436;
+      font-size: 1rem;
+    }
+
+    .resource-details small {
+      color: #636e72;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-action {
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      color: #636e72;
+      transition: var(--transition);
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      min-width: 70px;
+    }
+
+    .btn-action:hover {
+      background: var(--glass-bg-strong);
+      color: #2d3436;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-action.view {
+      background: var(--education-gradient);
+      color: white;
+      border-color: transparent;
+    }
+
+    .btn-action.view:hover {
+      color: white;
+      box-shadow: 0 8px 20px rgba(255, 154, 158, 0.4);
+    }
+
+    .btn-action.download {
+      background: var(--success-gradient);
+      color: white;
+      border-color: transparent;
+    }
+
+    .btn-action.download:hover {
+      color: white;
+      box-shadow: 0 8px 20px rgba(67, 233, 123, 0.4);
+    }
+
+    /* Buttons */
+    .btn {
+      font-weight: 600;
+      border-radius: var(--border-radius);
+      padding: 0.75rem 1.5rem;
+      border: none;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+      font-family: var(--font-sans);
+      justify-content: center;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--education-gradient);
+      color: white;
+      box-shadow: 0 4px 16px rgba(255, 154, 158, 0.4);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 8px 24px rgba(255, 154, 158, 0.6);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: var(--glass-bg);
+      color: #2d3436;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-secondary:hover {
+      background: var(--glass-bg-strong);
+      color: #2d3436;
+      border-color: rgba(255, 154, 158, 0.3);
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #636e72;
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.3;
+    }
+
+    .empty-state h3 {
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+
+    /* Tips Section */
+    .tips-section {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .tip-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .tip-icon {
+      padding: 0.5rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    .tip-icon.pro {
+      background: var(--primary-gradient);
+      color: white;
+    }
+
+    .tip-icon.new {
+      background: var(--success-gradient);
+      color: white;
+    }
+
+    .tip-icon.video {
+      background: var(--danger-gradient);
+      color: white;
+    }
+
+    /* Utilities */
+    .d-flex { display: flex; }
+    .align-items-center { align-items: center; }
+    .justify-content-between { justify-content: space-between; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-3 { gap: 0.75rem; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .mb-0 { margin-bottom: 0; }
+    .mb-3 { margin-bottom: 0.75rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .text-muted { color: #636e72; }
+
+    /* Typography */
+    h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      background: var(--education-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+
+    h3 {
+      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+
+    h4 {
+      font-size: clamp(1.125rem, 2vw, 1.5rem);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #2d3436;
+    }
+
+    h5 {
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #2d3436;
+    }
+
+    /* Loading Animation */
+    .loading {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out 0.3s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .skeleton {
+      background: linear-gradient(90deg, 
+        rgba(200,200,200,0.2) 25%, 
+        rgba(200,200,200,0.4) 50%, 
+        rgba(200,200,200,0.2) 75%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.2s infinite;
+      border-radius: var(--border-radius-lg);
+      height: 200px;
+    }
+
+    @keyframes skeleton-loading {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 9999;
+      max-width: 400px;
+    }
+
+    .toast {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 1rem 1.5rem;
+      margin-bottom: 0.75rem;
+      color: #2d3436;
+      box-shadow: var(--glass-shadow);
+      transform: translateX(100%);
+      transition: var(--transition);
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast.success {
+      border-left: 4px solid #43e97b;
+    }
+
+    .toast.info {
+      border-left: 4px solid #4facfe;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .main {
+        padding: 1rem;
+      }
+      
+      .card, .tips-section, .sticky-filter {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      
+      .stat-card {
+        padding: 1rem;
+      }
+      
+      .welcome-content {
+        padding: 1rem;
+      }
+      
+      .resource-card {
+        margin-bottom: 1rem;
+      }
+      
+      .table th,
+      .table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8rem;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .btn-action {
+        min-width: 60px;
+        padding: 0.25rem 0.5rem;
+      }
+
+      .filter-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-container {
+        min-width: auto;
+      }
+
+      .sticky-filter {
+        top: 60px;
+      }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--education-gradient);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-gradient);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a class="logo" href="./home_page.html">
+          <img src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" alt="StartAI Logo">
+          StartAI Learning Hub
+        </a>
+        
+        <nav class="nav">
+          <a class="nav-link" href="./founder_dashboard.html">
+            <i class="fa-solid fa-chart-line"></i> Dashboard
+          </a>
+          <a class="nav-link active" href="./learning_hub.html">
+            <i class="fa-solid fa-graduation-cap"></i> Learning Hub
+          </a>
+          <a class="nav-link" href="./mentorship.html">
+            <i class="fa-solid fa-users"></i> Mentorship
+          </a>
+          <a class="nav-link" href="./my_ideas.html">
+            <i class="fa-solid fa-lightbulb"></i> My Ideas
+          </a>
+          <a class="nav-link" href="./community.html">
+            <i class="fa-solid fa-comments"></i> Community
+          </a>
+        </nav>
+        
+        <div class="user-menu">
+          <button class="btn btn-secondary btn-sm">
+            <i class="fa-solid fa-bookmark"></i>
+          </button>
+          <button class="btn btn-secondary btn-sm">
+            <img src="https://picsum.photos/seed/learner/24/24" alt="Profile" style="width: 20px; height: 20px; border-radius: 50%; margin-right: 0.5rem;">
+            John <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <!-- Welcome Section -->
+    <section class="welcome-section loading">
+      <div class="welcome-bg">
+        <img src="https://picsum.photos/seed/learning/1200/300" alt="Learning Hub">
+        <div class="welcome-overlay"></div>
+        <div class="welcome-content">
+          <h1>Learning Hub</h1>
+          <p>Discover curated articles, videos, and templates to accelerate your startup journey.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Cards -->
+    <section class="loading">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">847</div>
+          <div class="stat-label">Total Resources</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">156</div>
+          <div class="stat-label">Video Courses</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">234</div>
+          <div class="stat-label">Articles</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">89</div>
+          <div class="stat-label">Templates</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section class="tips-section loading">
+      <h4 style="margin-bottom: 1.5rem;"><i class="fa-solid fa-lightbulb" style="margin-right: 0.75rem;"></i>Tips</h4>
+      <div class="tips-grid">
+        <div class="tip-item">
+          <div class="tip-icon pro">Pro</div>
+          <div>
+            <strong>Use the search and filters together</strong> for precise results.
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-icon new">New</div>
+          <div>
+            <strong>Save filters to quickly revisit</strong> your preferred topics.
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-icon video">Video</div>
+          <div>
+            <strong>Prefer videos? Filter by type</strong> to watch masterclasses.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sticky Filter Bar -->
+    <section class="sticky-filter loading">
+      <div class="filter-row">
+        <div class="search-container">
+          <i class="fa-solid fa-search search-icon"></i>
+          <input type="text" class="search-input" placeholder="Search resources..." id="searchInput">
+        </div>
+        <select class="filter-select" id="typeFilter">
+          <option value="">All Types</option>
+          <option value="article">Articles</option>
+          <option value="video">Videos</option>
+          <option value="template">Templates</option>
+          <option value="course">Courses</option>
+        </select>
+        <select class="filter-select" id="categoryFilter">
+          <option value="">All Categories</option>
+          <option value="startup-basics">Startup Basics</option>
+          <option value="fundraising">Fundraising</option>
+          <option value="marketing">Marketing</option>
+          <option value="product-development">Product Development</option>
+          <option value="leadership">Leadership</option>
+        </select>
+        <button class="btn btn-secondary btn-sm" onclick="clearFilters()">
+          <i class="fa-solid fa-times"></i> Clear
+        </button>
+      </div>
+    </section>
+
+    <!-- Featured Picks -->
+    <section class="loading">
+      <div class="card">
+        <h3 style="margin-bottom: 2rem;"><i class="fa-solid fa-star" style="margin-right: 0.75rem;"></i>Featured Picks</h3>
+        <div class="featured-grid">
+          <div class="featured-card">
+            <div class="featured-icon">
+              <i class="fa-solid fa-lightbulb"></i>
+            </div>
+            <div class="featured-title">From Idea to MVP</div>
+            <div class="featured-description">Complete guide on transforming your startup idea into a minimum viable product.</div>
+          </div>
+          <div class="featured-card">
+            <div class="featured-icon">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <div class="featured-title">Growth Hacking Masterclass</div>
+            <div class="featured-description">Learn proven strategies to scale your startup with limited resources.</div>
+          </div>
+          <div class="featured-card">
+            <div class="featured-icon">
+              <i class="fa-solid fa-dollar-sign"></i>
+            </div>
+            <div class="featured-title">Fundraising Playbook</div>
+            <div class="featured-description">Step-by-step guide to raising capital from seed to Series A.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resource Cards Grid -->
+    <section class="loading">
+      <div id="resourcesLoading" class="text-center" style="padding: 3rem 0;">
+        <div class="skeleton"></div>
+      </div>
+
+      <div id="resourcesGrid" class="resources-grid" style="display: none;">
+        <!-- Populated via JavaScript -->
+      </div>
+
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <i class="fa-solid fa-search"></i>
+        <h3>No results found</h3>
+        <p>Try adjusting your search or clearing filters.</p>
+        <button class="btn btn-primary" onclick="clearFilters()">
+          <i class="fa-solid fa-refresh"></i> Reset Filters
+        </button>
+      </div>
+    </section>
+
+    <!-- FULL WIDTH RESOURCES TABLE -->
+    <section class="resources-table-section loading">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h3><i class="fa-solid fa-table" style="margin-right: 0.75rem;"></i>All Resources</h3>
+          <p class="text-muted mb-0">Comprehensive list of all learning materials with detailed information.</p>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-secondary btn-sm" onclick="showToast('Switching to grid view...', 'info')">
+            <i class="fa-solid fa-th"></i> Grid View
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="showToast('Exporting resources...', 'info')">
+            <i class="fa-solid fa-download"></i> Export
+          </button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="table" id="resourcesTable">
+          <thead>
+            <tr>
+              <th style="cursor: pointer;" onclick="sortTable('title')">
+                Title <i class="fa-solid fa-sort" style="opacity: 0.6;"></i>
+              </th>
+              <th style="cursor: pointer;" onclick="sortTable('type')">
+                Type <i class="fa-solid fa-sort" style="opacity: 0.6;"></i>
+              </th>
+              <th style="cursor: pointer;" onclick="sortTable('category')">
+                Category <i class="fa-solid fa-sort" style="opacity: 0.6;"></i>
+              </th>
+              <th style="cursor: pointer;" onclick="sortTable('duration')">
+                Duration <i class="fa-solid fa-sort" style="opacity: 0.6;"></i>
+              </th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="resourcesTableBody">
+            <!-- Populated via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Table Footer -->
+      <div class="d-flex justify-content-between align-items-center" style="margin-top: 1.5rem;">
+        <small class="text-muted">Showing 1–10 of 847 resources</small>
+        <div class="d-flex gap-2">
+          <button class="btn btn-secondary btn-sm" style="opacity: 0.5; cursor: not-allowed;">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button class="btn btn-primary btn-sm">1</button>
+          <button class="btn btn-secondary btn-sm">2</button>
+          <button class="btn btn-secondary btn-sm">3</button>
+          <button class="btn btn-secondary btn-sm">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+  <script>
+    // PREVENT AUTO SCROLL TO BOTTOM ON REFRESH
+    document.addEventListener('DOMContentLoaded', function() {
+      window.scrollTo(0, 0);
+      document.body.style.scrollBehavior = 'auto';
+      document.documentElement.style.scrollBehavior = 'auto';
+      
+      setTimeout(() => {
+        document.body.style.scrollBehavior = 'smooth';
+        document.documentElement.style.scrollBehavior = 'smooth';
+      }, 1000);
+    });
+
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 100
+    });
+
+    // Mock Data
+    const resourcesData = [
+      {
+        title: "The Lean Startup Methodology",
+        type: "article",
+        category: "Startup Basics",
+        duration: "15 min read",
+        description: "Learn how to build a successful startup using lean principles and validated learning.",
+        thumbnail: "https://picsum.photos/seed/lean-startup/300/200",
+        rating: 4.8
+      },
+      {
+        title: "Pitch Deck Mastery",
+        type: "video",
+        category: "Fundraising",
+        duration: "45 min",
+        description: "Complete guide to creating compelling pitch decks that attract investors.",
+        thumbnail: "https://picsum.photos/seed/pitch-deck/300/200",
+        rating: 4.9
+      },
+      {
+        title: "Business Model Canvas Template",
+        type: "template",
+        category: "Product Development",
+        duration: "Download",
+        description: "Ready-to-use template for mapping your business model and value proposition.",
+        thumbnail: "https://picsum.photos/seed/business-model/300/200",
+        rating: 4.7
+      },
+      {
+        title: "Digital Marketing for Startups",
+        type: "course",
+        category: "Marketing",
+        duration: "2h 30min",
+        description: "Comprehensive course covering SEO, social media, and content marketing strategies.",
+        thumbnail: "https://picsum.photos/seed/digital-marketing/300/200",
+        rating: 4.6
+      },
+      {
+        title: "Leadership in High-Growth Teams",
+        type: "article",
+        category: "Leadership",
+        duration: "12 min read",
+        description: "Essential leadership skills for managing rapidly growing startup teams.",
+        thumbnail: "https://picsum.photos/seed/leadership/300/200",
+        rating: 4.8
+      },
+      {
+        title: "Customer Development Framework",
+        type: "video",
+        category: "Startup Basics",
+        duration: "38 min",
+        description: "Steve Blank's customer development process for validating your startup idea.",
+        thumbnail: "https://picsum.photos/seed/customer-dev/300/200",
+        rating: 4.9
+      },
+      {
+        title: "Financial Planning Spreadsheet",
+        type: "template",
+        category: "Fundraising",
+        duration: "Download",
+        description: "Complete financial model template for startup planning and investor presentations.",
+        thumbnail: "https://picsum.photos/seed/financial-planning/300/200",
+        rating: 4.5
+      },
+      {
+        title: "Growth Hacking Tactics",
+        type: "course",
+        category: "Marketing",
+        duration: "3h 15min",
+        description: "Advanced growth strategies used by successful startups to scale rapidly.",
+        thumbnail: "https://picsum.photos/seed/growth-hacking/300/200",
+        rating: 4.7
+      }
+    ];
+
+    let filteredResources = [...resourcesData];
+
+    // Toast System
+    function showToast(message, type = 'success') {
+      const toastContainer = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <i class="fa-solid fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+          <span style="flex-grow: 1;">${message}</span>
+          <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: inherit; cursor: pointer;">
+            <i class="fa-solid fa-times"></i>
+          </button>
+        </div>
+      `;
+      
+      toastContainer.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 100);
+      setTimeout(() => {
+        if (toast.parentNode) {
+          toast.classList.remove('show');
+          setTimeout(() => { if (toast.parentNode) toast.remove(); }, 300);
+        }
+      }, 4000);
+    }
+
+    // Helper functions
+    function getTypeClass(type) {
+      return `resource-type ${type}`;
+    }
+
+    function getTypeIcon(type) {
+      const icons = {
+        'article': 'fa-newspaper',
+        'video': 'fa-play-circle',
+        'template': 'fa-file-download',
+        'course': 'fa-graduation-cap'
+      };
+      return icons[type] || 'fa-file';
+    }
+
+    function sortTable(column) {
+      showToast(`Sorting by ${column}`, 'info');
+    }
+
+    function clearFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('typeFilter').value = '';
+      document.getElementById('categoryFilter').value = '';
+      filteredResources = [...resourcesData];
+      renderResources();
+      showToast('Filters cleared', 'info');
+    }
+
+    // Render Resource Cards
+    function renderResourceCards() {
+      const container = document.getElementById('resourcesGrid');
+      const emptyState = document.getElementById('emptyState');
+      
+      if (filteredResources.length === 0) {
+        container.style.display = 'none';
+        emptyState.style.display = 'block';
+        return;
+      }
+      
+      container.style.display = 'grid';
+      emptyState.style.display = 'none';
+      
+      container.innerHTML = filteredResources.map(resource => `
+        <div class="resource-card">
+          <img src="${resource.thumbnail}" alt="${resource.title}" class="resource-thumbnail">
+          <div class="resource-content">
+            <span class="${getTypeClass(resource.type)}">${resource.type}</span>
+            <h4 class="resource-title">${resource.title}</h4>
+            <p class="resource-description">${resource.description}</p>
+            <div class="resource-meta">
+              <div class="resource-duration">
+                <i class="${getTypeIcon(resource.type)}"></i>
+                ${resource.duration}
+              </div>
+              <div class="resource-rating">
+                <i class="fa-solid fa-star"></i>
+                ${resource.rating}
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render Resources Table
+    function renderResourcesTable() {
+      const tbody = document.getElementById('resourcesTableBody');
+      
+      tbody.innerHTML = filteredResources.map((resource, index) => `
+        <tr>
+          <td>
+            <div class="resource-info">
+              <img src="${resource.thumbnail}" alt="${resource.title}" class="resource-thumb">
+              <div class="resource-details">
+                <h5>${resource.title}</h5>
+                <small>${resource.description.substring(0, 60)}...</small>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="${getTypeClass(resource.type)}">${resource.type}</span>
+          </td>
+          <td>${resource.category}</td>
+          <td>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+              <i class="${getTypeIcon(resource.type)}"></i>
+              ${resource.duration}
+            </div>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <button class="btn-action view" onclick="viewResource(${index})">
+                <i class="fa-solid fa-eye"></i> View
+              </button>
+              ${resource.type === 'template' ? 
+                `<button class="btn-action download" onclick="downloadResource(${index})">
+                  <i class="fa-solid fa-download"></i> Download
+                </button>` :
+                `<button class="btn-action" onclick="bookmarkResource(${index})">
+                  <i class="fa-solid fa-bookmark"></i>
+                </button>`
+              }
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Render Resources (both cards and table)
+    function renderResources() {
+      renderResourceCards();
+      renderResourcesTable();
+    }
+
+    // Load Resources with delay
+    function loadResources() {
+      const loading = document.getElementById('resourcesLoading');
+      const container = document.getElementById('resourcesGrid');
+
+      setTimeout(() => {
+        renderResources();
+        loading.style.display = 'none';
+        container.style.display = 'grid';
+      }, 2000);
+    }
+
+    // Action functions
+    function viewResource(index) {
+      const resource = filteredResources[index];
+      showToast(`Opening: ${resource.title}`, 'info');
+    }
+
+    function downloadResource(index) {
+      const resource = filteredResources[index];
+      showToast(`Downloading: ${resource.title}`, 'success');
+    }
+
+    function bookmarkResource(index) {
+      const resource = filteredResources[index];
+      showToast(`Bookmarked: ${resource.title}`, 'success');
+    }
+
+    // Filter functionality
+    function applyFilters() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const typeFilter = document.getElementById('typeFilter').value;
+      const categoryFilter = document.getElementById('categoryFilter').value;
+
+      filteredResources = resourcesData.filter(resource => {
+        const matchesSearch = !searchTerm || 
+          resource.title.toLowerCase().includes(searchTerm) ||
+          resource.description.toLowerCase().includes(searchTerm);
+        
+        const matchesType = !typeFilter || resource.type === typeFilter;
+        const matchesCategory = !categoryFilter || resource.category.toLowerCase().replace(' ', '-') === categoryFilter;
+
+        return matchesSearch && matchesType && matchesCategory;
+      });
+
+      renderResources();
+    }
+
+    // Event listeners
+    document.getElementById('searchInput').addEventListener('input', applyFilters);
+    document.getElementById('typeFilter').addEventListener('change', applyFilters);
+    document.getElementById('categoryFilter').addEventListener('change', applyFilters);
+
+    // Initialize everything
+    setTimeout(() => {
+      document.querySelectorAll('.loading').forEach(el => el.classList.remove('loading'));
+    }, 1000);
+
+    loadResources();
+
+    setTimeout(() => showToast('Welcome to the Learning Hub! Start exploring resources.', 'info'), 2500);
+  </script>
+</body>
+</html>
