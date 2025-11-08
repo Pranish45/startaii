@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>StartAI • Premium Account Settings</title>
+  
+  <!-- Enhanced Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
+  
+  <!-- AOS Animation Library -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  
+  <style>
+    /* === PREMIUM ACCOUNT SETTINGS DESIGN SYSTEM === */
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --warning-gradient: linear-gradient(135deg, #ffa726 0%, #ff8a65 100%);
+      --danger-gradient: linear-gradient(135deg, #f857a6 0%, #ff5858 100%);
+      --info-gradient: linear-gradient(135deg, #667eea 0%, #4facfe 100%);
+      --settings-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-bg-strong: rgba(255, 255, 255, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      --blur-strength: 16px;
+      
+      --font-sans: "Poppins", system-ui, sans-serif;
+      --border-radius: 16px;
+      --border-radius-lg: 24px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: auto; /* Prevent auto-scroll */
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      color: #2d3436;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      scroll-behavior: auto;
+    }
+
+    /* Animated Background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 75% 25%, rgba(118, 75, 162, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 50% 75%, rgba(79, 172, 254, 0.06) 0%, transparent 50%);
+      z-index: -1;
+      animation: float 25s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(20px, -20px) scale(1.02); }
+      66% { transform: translate(-15px, 15px) scale(0.98); }
+    }
+
+    /* Header */
+    .header {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength)) saturate(140%);
+      -webkit-backdrop-filter: blur(var(--blur-strength)) saturate(140%);
+      border-bottom: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: var(--transition);
+    }
+
+    .header:hover {
+      background: var(--glass-bg-strong);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      background: var(--settings-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
+    }
+
+    .logo img {
+      height: 2rem;
+      width: auto;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+
+    .nav {
+      display: none;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .nav {
+        display: flex;
+      }
+    }
+
+    .nav-link {
+      color: #2d3436;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-link::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--settings-gradient);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: -1;
+    }
+
+    .nav-link:hover {
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .nav-link:hover::before {
+      opacity: 1;
+    }
+
+    .nav-link.active {
+      background: var(--settings-gradient);
+      color: white;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Main Layout */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      min-height: calc(100vh - 80px);
+      padding: 2rem;
+      gap: 2rem;
+    }
+
+    @media (min-width: 992px) {
+      .main-layout {
+        grid-template-columns: 280px 1fr;
+      }
+    }
+
+    /* PREMIUM SETTINGS NAVIGATION */
+    .settings-nav {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-shadow);
+      padding: 1.5rem;
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+      transition: var(--transition);
+    }
+
+    .settings-nav:hover {
+      background: var(--glass-bg-strong);
+    }
+
+    .settings-nav h4 {
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: #2d3436;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-item {
+      display: block;
+      color: #636e72;
+      text-decoration: none;
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      transition: var(--transition);
+      border: 1px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-item::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.6s;
+    }
+
+    .nav-item:hover::before {
+      left: 100%;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #2d3436;
+      border-color: var(--glass-border);
+      transform: translateX(4px);
+    }
+
+    .nav-item.active {
+      background: var(--settings-gradient);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+      transform: translateX(4px);
+    }
+
+    .nav-item i {
+      width: 20px;
+      margin-right: 0.75rem;
+    }
+
+    /* Settings Content */
+    .settings-content {
+      min-height: calc(100vh - 200px);
+    }
+
+    .settings-panel {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: var(--transition);
+    }
+
+    .settings-panel.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-shadow);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--settings-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(31, 38, 135, 0.4);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #2d3436;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      display: block;
+    }
+
+    .form-control,
+    .form-select {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border: 2px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      color: #2d3436;
+      transition: var(--transition);
+      width: 100%;
+      font-family: var(--font-sans);
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: rgba(102, 126, 234, 0.6);
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+      background: white;
+      transform: translateY(-2px);
+    }
+
+    .form-control::placeholder {
+      color: rgba(45, 52, 54, 0.5);
+      font-weight: 400;
+    }
+
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    /* Avatar Upload */
+    .avatar-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--glass-border);
+      margin-bottom: 1rem;
+      transition: var(--transition);
+    }
+
+    .avatar:hover {
+      border-color: rgba(102, 126, 234, 0.6);
+      transform: scale(1.05);
+    }
+
+    .avatar-upload {
+      position: relative;
+      display: inline-block;
+    }
+
+    .avatar-upload input[type="file"] {
+      display: none;
+    }
+
+    .avatar-upload-btn {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background: var(--settings-gradient);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .avatar-upload-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
+    }
+
+    /* Enhanced Buttons */
+    .btn {
+      font-weight: 600;
+      border-radius: var(--border-radius);
+      padding: 0.75rem 1.5rem;
+      border: none;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+      font-family: var(--font-sans);
+      justify-content: center;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--settings-gradient);
+      color: white;
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 8px 24px rgba(102, 126, 234, 0.6);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: var(--glass-bg);
+      color: #2d3436;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-secondary:hover {
+      background: var(--glass-bg-strong);
+      color: #2d3436;
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-success {
+      background: var(--success-gradient);
+      color: white;
+      box-shadow: 0 4px 16px rgba(67, 233, 123, 0.4);
+    }
+
+    .btn-success:hover {
+      box-shadow: 0 8px 24px rgba(67, 233, 123, 0.6);
+      color: white;
+    }
+
+    .btn-danger {
+      background: var(--danger-gradient);
+      color: white;
+      box-shadow: 0 4px 16px rgba(248, 87, 166, 0.4);
+    }
+
+    .btn-danger:hover {
+      box-shadow: 0 8px 24px rgba(248, 87, 166, 0.6);
+      color: white;
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+    }
+
+    /* Status Indicators */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-badge.active {
+      background: var(--success-gradient);
+      color: white;
+    }
+
+    .status-badge.inactive {
+      background: var(--danger-gradient);
+      color: white;
+    }
+
+    .status-badge.warning {
+      background: var(--warning-gradient);
+      color: white;
+    }
+
+    /* MFA Toggle */
+    .mfa-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--border-radius-lg);
+      border: 1px solid var(--glass-border);
+      margin-bottom: 1.5rem;
+    }
+
+    .mfa-info h6 {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #2d3436;
+    }
+
+    .mfa-info p {
+      color: #636e72;
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    /* Toggle Switch */
+    .toggle-switch {
+      position: relative;
+      width: 60px;
+      height: 30px;
+      background: #e0e6ed;
+      border-radius: 20px;
+      padding: 2px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .toggle-switch.active {
+      background: var(--success-gradient);
+    }
+
+    .toggle-knob {
+      width: 26px;
+      height: 26px;
+      background: white;
+      border-radius: 50%;
+      transition: var(--transition);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle-switch.active .toggle-knob {
+      transform: translateX(30px);
+    }
+
+    /* FULL WIDTH BILLING TABLE */
+    .billing-section {
+      width: 100%;
+    }
+
+    .table-container {
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      -webkit-backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      margin: 1.5rem 0;
+      position: relative;
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .table-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--settings-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .table-container:hover::before {
+      opacity: 1;
+    }
+
+    .table {
+      width: 100%;
+      background: transparent;
+      margin: 0;
+      font-size: 0.9rem;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+      min-width: 700px;
+    }
+
+    .table th:nth-child(1) { width: 15%; }  /* Date */
+    .table th:nth-child(2) { width: 30%; }  /* Description */
+    .table th:nth-child(3) { width: 15%; }  /* Amount */
+    .table th:nth-child(4) { width: 15%; }  /* Status */
+    .table th:nth-child(5) { width: 25%; }  /* Action */
+
+    .table th {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.12), rgba(118, 75, 162, 0.08));
+      border: none;
+      color: #2d3436;
+      font-weight: 700;
+      padding: 1.2rem 1rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .table th:nth-child(3), 
+    .table th:nth-child(4),
+    .table th:nth-child(5) {
+      text-align: center;
+    }
+
+    .table th::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+    }
+
+    .table td {
+      border: none;
+      padding: 1.2rem 1rem;
+      vertical-align: middle;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+      transition: var(--transition);
+      position: relative;
+      text-align: left;
+    }
+
+    .table td:nth-child(3), 
+    .table td:nth-child(4),
+    .table td:nth-child(5) {
+      text-align: center;
+    }
+
+    .table tbody tr:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(102, 126, 234, 0.03));
+    }
+
+    /* Plan Card */
+    .plan-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      padding: 2rem;
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .plan-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--settings-gradient);
+      opacity: 1;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(31, 38, 135, 0.5);
+    }
+
+    .plan-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: var(--settings-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .plan-price {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+
+    .plan-status {
+      color: #636e72;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Notification Settings */
+    .notification-group {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--border-radius-lg);
+      border: 1px solid var(--glass-border);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .notification-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .notification-item:last-child {
+      border-bottom: none;
+    }
+
+    .notification-info h6 {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: #2d3436;
+    }
+
+    .notification-info p {
+      color: #636e72;
+      font-size: 0.85rem;
+      margin: 0;
+    }
+
+    /* Multi-select Tags */
+    .tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .tag {
+      background: var(--settings-gradient);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tag .remove-tag {
+      cursor: pointer;
+      opacity: 0.8;
+      transition: var(--transition);
+    }
+
+    .tag .remove-tag:hover {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+
+    /* Utilities */
+    .d-flex { display: flex; }
+    .align-items-center { align-items: center; }
+    .justify-content-between { justify-content: space-between; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-3 { gap: 0.75rem; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .mb-0 { margin-bottom: 0; }
+    .mb-3 { margin-bottom: 0.75rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .text-muted { color: #636e72; }
+
+    /* Typography */
+    h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      background: var(--settings-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+
+    h3 {
+      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+
+    h4 {
+      font-size: clamp(1.125rem, 2vw, 1.5rem);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #2d3436;
+    }
+
+    h5 {
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #2d3436;
+    }
+
+    /* Loading Animation */
+    .loading {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out 0.3s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 9999;
+      max-width: 400px;
+    }
+
+    .toast {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur-strength));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 1rem 1.5rem;
+      margin-bottom: 0.75rem;
+      color: #2d3436;
+      box-shadow: var(--glass-shadow);
+      transform: translateX(100%);
+      transition: var(--transition);
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast.success {
+      border-left: 4px solid #43e97b;
+    }
+
+    .toast.info {
+      border-left: 4px solid #4facfe;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 991.98px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+      }
+
+      .settings-nav {
+        position: static;
+        margin-bottom: 2rem;
+      }
+      
+      .card {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      
+      .table th,
+      .table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8rem;
+      }
+
+      .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+      }
+
+      .mfa-toggle {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--settings-gradient);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-gradient);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a class="logo" href="./home_page.html">
+          <img src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" alt="StartAI Logo">
+          StartAI Settings
+        </a>
+        
+        <nav class="nav">
+          <a class="nav-link" href="./founder_dashboard.html">
+            <i class="fa-solid fa-chart-line"></i> Dashboard
+          </a>
+          <a class="nav-link" href="./my_ideas.html">
+            <i class="fa-solid fa-lightbulb"></i> My Ideas
+          </a>
+          <a class="nav-link" href="./mentorship.html">
+            <i class="fa-solid fa-users"></i> Mentorship
+          </a>
+          <a class="nav-link" href="./learning_hub.html">
+            <i class="fa-solid fa-graduation-cap"></i> Learning
+          </a>
+          <a class="nav-link active" href="./account_settings.html">
+            <i class="fa-solid fa-cog"></i> Settings
+          </a>
+        </nav>
+        
+        <div class="user-menu">
+          <button class="btn btn-secondary btn-sm">
+            <i class="fa-solid fa-bell"></i>
+          </button>
+          <button class="btn btn-secondary btn-sm">
+            <img src="https://picsum.photos/seed/user/24/24" alt="Profile" style="width: 20px; height: 20px; border-radius: 50%; margin-right: 0.5rem;">
+            John <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    <!-- Settings Navigation -->
+    <nav class="settings-nav loading">
+      <h4><i class="fa-solid fa-cog"></i>Account Settings</h4>
+      <a href="#profile" class="nav-item active" data-section="profile">
+        <i class="fa-solid fa-user"></i>Profile
+      </a>
+      <a href="#security" class="nav-item" data-section="security">
+        <i class="fa-solid fa-shield-alt"></i>Security
+      </a>
+      <a href="#notifications" class="nav-item" data-section="notifications">
+        <i class="fa-solid fa-bell"></i>Notifications
+      </a>
+      <a href="#role-profile" class="nav-item" data-section="role-profile">
+        <i class="fa-solid fa-briefcase"></i>Role Profile
+      </a>
+      <a href="#billing" class="nav-item" data-section="billing">
+        <i class="fa-solid fa-credit-card"></i>Subscription & Billing
+      </a>
+    </nav>
+
+    <!-- Settings Content -->
+    <div class="settings-content">
+      <!-- Profile Section -->
+      <div id="profile" class="settings-panel active loading">
+        <div class="card">
+          <h3 style="margin-bottom: 2rem;"><i class="fa-solid fa-user" style="margin-right: 0.75rem;"></i>Profile Information</h3>
+          
+          <div class="avatar-section">
+            <div class="avatar-upload">
+              <img src="https://picsum.photos/seed/user-profile/120/120" alt="Profile" class="avatar" id="avatarImage">
+              <input type="file" id="avatarInput" accept="image/*">
+              <label for="avatarInput" class="avatar-upload-btn">
+                <i class="fa-solid fa-camera"></i>
+              </label>
+            </div>
+            <p class="text-muted">Click to upload a new profile picture</p>
+          </div>
+
+          <div class="row" style="display: flex; gap: 2rem; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px;">
+              <div class="form-group">
+                <label class="form-label" for="firstName">First Name</label>
+                <input type="text" id="firstName" class="form-control" value="John" placeholder="Enter your first name">
+              </div>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+              <div class="form-group">
+                <label class="form-label" for="lastName">Last Name</label>
+                <input type="text" id="lastName" class="form-control" value="Doe" placeholder="Enter your last name">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address</label>
+            <input type="email" id="email" class="form-control" value="john.doe@example.com" placeholder="Enter your email">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="bio">Bio</label>
+            <textarea id="bio" class="form-control" placeholder="Tell us about yourself...">Passionate entrepreneur focused on building innovative solutions in the tech space.</textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="location">Location</label>
+            <input type="text" id="location" class="form-control" value="San Francisco, CA" placeholder="Enter your location">
+          </div>
+
+          <div class="d-flex gap-3">
+            <button class="btn btn-primary" onclick="saveProfile()">
+              <i class="fa-solid fa-save"></i> Save Changes
+            </button>
+            <button class="btn btn-secondary" onclick="resetProfile()">
+              <i class="fa-solid fa-undo"></i> Reset
+            </button>
+          </div>
+
+          <div style="margin-top: 1rem;">
+            <span class="status-badge active">
+              <i class="fa-solid fa-check-circle"></i> Profile Up to Date
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security Section -->
+      <div id="security" class="settings-panel loading">
+        <div class="card">
+          <h3 style="margin-bottom: 2rem;"><i class="fa-solid fa-shield-alt" style="margin-right: 0.75rem;"></i>Security Settings</h3>
+          
+          <h5>Change Password</h5>
+          <div class="form-group">
+            <label class="form-label" for="currentPassword">Current Password</label>
+            <input type="password" id="currentPassword" class="form-control" placeholder="Enter your current password">
+          </div>
+
+          <div class="row" style="display: flex; gap: 2rem; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px;">
+              <div class="form-group">
+                <label class="form-label" for="newPassword">New Password</label>
+                <input type="password" id="newPassword" class="form-control" placeholder="Enter new password">
+              </div>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+              <div class="form-group">
+                <label class="form-label" for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm new password">
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary mb-4" onclick="changePassword()">
+            <i class="fa-solid fa-key"></i> Update Password
+          </button>
+
+          <h5>Multi-Factor Authentication (MFA)</h5>
+          <div class="mfa-toggle">
+            <div class="mfa-info">
+              <h6>Two-Factor Authentication</h6>
+              <p>Add an extra layer of security to your account. When enabled, you'll be prompted for a one-time code on login.</p>
+            </div>
+            <div class="toggle-switch" id="mfaToggle" onclick="toggleMFA()">
+              <div class="toggle-knob"></div>
+            </div>
+          </div>
+
+          <div style="text-align: center;">
+            <span class="status-badge inactive">
+              <i class="fa-solid fa-times-circle"></i> MFA is Disabled
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifications Section -->
+      <div id="notifications" class="settings-panel loading">
+        <div class="card">
+          <h3 style="margin-bottom: 2rem;"><i class="fa-solid fa-bell" style="margin-right: 0.75rem;"></i>Notification Preferences</h3>
+          
+          <div class="notification-group">
+            <h5>Email Notifications</h5>
+            <div class="notification-item">
+              <div class="notification-info">
+                <h6>Investment Opportunities</h6>
+                <p>Receive alerts about new startup matches and investment opportunities</p>
+              </div>
+              <div class="toggle-switch active">
+                <div class="toggle-knob"></div>
+              </div>
+            </div>
+            <div class="notification-item">
+              <div class="notification-info">
+                <h6>Weekly Summary</h6>
+                <p>Get a weekly digest of platform activity and your portfolio performance</p>
+              </div>
+              <div class="toggle-switch active">
+                <div class="toggle-knob"></div>
+              </div>
+            </div>
+            <div class="notification-item">
+              <div class="notification-info">
+                <h6>System Updates</h6>
+                <p>Important platform updates and maintenance notifications</p>
+              </div>
+              <div class="toggle-switch active">
+                <div class="toggle-knob"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="notification-group">
+            <h5>Push Notifications</h5>
+            <div class="notification-item">
+              <div class="notification-info">
+                <h6>Real-time Alerts</h6>
+                <p>Instant notifications for urgent activities and responses</p>
+              </div>
+              <div class="toggle-switch">
+                <div class="toggle-knob"></div>
+              </div>
+            </div>
+            <div class="notification-item">
+              <div class="notification-info">
+                <h6>Mentorship Requests</h6>
+                <p>Get notified when founders request mentorship or schedule sessions</p>
+              </div>
+              <div class="toggle-switch active">
+                <div class="toggle-knob"></div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" onclick="saveNotifications()">
+            <i class="fa-solid fa-save"></i> Save Preferences
+          </button>
+        </div>
+      </div>
+
+      <!-- Role Profile Section -->
+      <div id="role-profile" class="settings-panel loading">
+        <div class="card">
+          <h3 style="margin-bottom: 2rem;"><i class="fa-solid fa-briefcase" style="margin-right: 0.75rem;"></i>Professional Profile</h3>
+          
+          <h5>Expertise Areas</h5>
+          <p class="text-muted mb-3">Choose multiple tags that best describe your strengths and areas of expertise.</p>
+          
+          <div class="form-group">
+            <label class="form-label" for="expertiseInput">Add Expertise</label>
+            <input type="text" id="expertiseInput" class="form-control" placeholder="Type and press Enter to add expertise...">
+          </div>
+
+          <div class="tags-container" id="expertiseTags">
+            <div class="tag">
+              Product Strategy
+              <span class="remove-tag" onclick="removeTag(this)">
+                <i class="fa-solid fa-times"></i>
+              </span>
+            </div>
+            <div class="tag">
+              Fundraising
+              <span class="remove-tag" onclick="removeTag(this)">
+                <i class="fa-solid fa-times"></i>
+              </span>
+            </div>
+            <div class="tag">
+              Team Building
+              <span class="remove-tag" onclick="removeTag(this)">
+                <i class="fa-solid fa-times"></i>
+              </span>
+            </div>
+          </div>
+
+          <h5 style="margin-top: 2rem;">Investment Thesis</h5>
+          <div class="form-group">
+            <label class="form-label" for="investmentThesis">Investment Focus</label>
+            <textarea id="investmentThesis" class="form-control" placeholder="Describe your investment thesis and areas of interest...">Focused on early-stage B2B SaaS startups with strong product-market fit and scalable business models. Particularly interested in AI/ML, cybersecurity, and enterprise automation solutions.</textarea>
+          </div>
+
+          <button class="btn btn-primary" onclick="saveRoleProfile()">
+            <i class="fa-solid fa-save"></i> Update Profile
+          </button>
+        </div>
+      </div>
+
+      <!-- Billing Section -->
+      <div id="billing" class="settings-panel loading">
+        <div class="card">
+          <h3 style="margin-bottom: 2rem;"><i class="fa-solid fa-credit-card" style="margin-right: 0.75rem;"></i>Subscription & Billing</h3>
+          
+          <div class="row" style="display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem;">
+            <div style="flex: 1; min-width: 300px;">
+              <div class="plan-card">
+                <div class="plan-name">Premium Plan</div>
+                <div class="plan-price">$29<small>/month</small></div>
+                <div class="plan-status">Active • Renews on Nov 28, 2025</div>
+                <button class="btn btn-secondary btn-sm">
+                  <i class="fa-solid fa-edit"></i> Manage Plan
+                </button>
+              </div>
+            </div>
+            <div style="flex: 1; min-width: 300px;">
+              <div class="card" style="margin: 0; text-align: center;">
+                <h5>Monthly Spend</h5>
+                <div style="font-size: 2rem; font-weight: 800; color: #2d3436; margin: 1rem 0;">$29.00</div>
+                <div class="d-flex justify-content-between" style="font-size: 0.9rem;">
+                  <span>Base Plan:</span>
+                  <span>$29.00</span>
+                </div>
+                <div class="d-flex justify-content-between" style="font-size: 0.9rem;">
+                  <span>Add-ons:</span>
+                  <span>$0.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h5>Billing History</h5>
+          <div class="billing-section">
+            <div class="table-container">
+              <table class="table" id="billingTable">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="billingTableBody">
+                  <!-- Populated via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+  <script>
+    // PREVENT AUTO SCROLL TO BOTTOM ON REFRESH
+    document.addEventListener('DOMContentLoaded', function() {
+      window.scrollTo(0, 0);
+      document.body.style.scrollBehavior = 'auto';
+      document.documentElement.style.scrollBehavior = 'auto';
+      
+      setTimeout(() => {
+        document.body.style.scrollBehavior = 'smooth';
+        document.documentElement.style.scrollBehavior = 'smooth';
+      }, 1000);
+    });
+
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 100
+    });
+
+    // Mock billing data
+    const billingData = [
+      { date: "Dec 1, 2024", description: "Premium Plan - Monthly", amount: "$29.00", status: "Paid" },
+      { date: "Nov 1, 2024", description: "Premium Plan - Monthly", amount: "$29.00", status: "Paid" },
+      { date: "Oct 1, 2024", description: "Premium Plan - Monthly", amount: "$29.00", status: "Paid" },
+      { date: "Sep 1, 2024", description: "Premium Plan - Monthly", amount: "$29.00", status: "Paid" },
+      { date: "Aug 1, 2024", description: "Premium Plan - Monthly", amount: "$29.00", status: "Paid" },
+      { date: "Jul 1, 2024", description: "Premium Plan - Monthly", amount: "$29.00", status: "Failed" }
+    ];
+
+    // Toast System
+    function showToast(message, type = 'success') {
+      const toastContainer = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <i class="fa-solid fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+          <span style="flex-grow: 1;">${message}</span>
+          <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: inherit; cursor: pointer;">
+            <i class="fa-solid fa-times"></i>
+          </button>
+        </div>
+      `;
+      
+      toastContainer.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 100);
+      setTimeout(() => {
+        if (toast.parentNode) {
+          toast.classList.remove('show');
+          setTimeout(() => { if (toast.parentNode) toast.remove(); }, 300);
+        }
+      }, 4000);
+    }
+
+    // Navigation
+    function switchSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('.settings-panel').forEach(panel => {
+        panel.classList.remove('active');
+      });
+
+      // Remove active class from nav items
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+
+      // Show target section
+      const targetSection = document.getElementById(sectionId);
+      if (targetSection) {
+        targetSection.classList.add('active');
+      }
+
+      // Add active class to nav item
+      document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+    }
+
+    // Event listeners for navigation
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', function(e) {
+        e.preventDefault();
+        const section = this.getAttribute('data-section');
+        switchSection(section);
+      });
+    });
+
+    // Profile functions
+    function saveProfile() {
+      showToast('Profile updated successfully!', 'success');
+    }
+
+    function resetProfile() {
+      showToast('Profile reset to last saved state', 'info');
+    }
+
+    // Security functions
+    function changePassword() {
+      const current = document.getElementById('currentPassword').value;
+      const newPass = document.getElementById('newPassword').value;
+      const confirm = document.getElementById('confirmPassword').value;
+
+      if (!current || !newPass || !confirm) {
+        showToast('Please fill in all password fields', 'error');
+        return;
+      }
+
+      if (newPass !== confirm) {
+        showToast('New passwords do not match', 'error');
+        return;
+      }
+
+      showToast('Password updated successfully!', 'success');
+      // Clear form
+      document.getElementById('currentPassword').value = '';
+      document.getElementById('newPassword').value = '';
+      document.getElementById('confirmPassword').value = '';
+    }
+
+    function toggleMFA() {
+      const toggle = document.getElementById('mfaToggle');
+      toggle.classList.toggle('active');
+      
+      if (toggle.classList.contains('active')) {
+        showToast('MFA enabled successfully!', 'success');
+      } else {
+        showToast('MFA disabled', 'info');
+      }
+    }
+
+    // Notifications functions
+    function saveNotifications() {
+      showToast('Notification preferences saved!', 'success');
+    }
+
+    // Role profile functions
+    function saveRoleProfile() {
+      showToast('Professional profile updated!', 'success');
+    }
+
+    function removeTag(element) {
+      element.parentElement.remove();
+      showToast('Expertise removed', 'info');
+    }
+
+    // Add expertise tag
+    document.getElementById('expertiseInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        const value = this.value.trim();
+        if (value) {
+          const tagsContainer = document.getElementById('expertiseTags');
+          const tag = document.createElement('div');
+          tag.className = 'tag';
+          tag.innerHTML = `
+            ${value}
+            <span class="remove-tag" onclick="removeTag(this)">
+              <i class="fa-solid fa-times"></i>
+            </span>
+          `;
+          tagsContainer.appendChild(tag);
+          this.value = '';
+          showToast(`Added expertise: ${value}`, 'success');
+        }
+      }
+    });
+
+    // Render billing table
+    function renderBillingTable() {
+      const tbody = document.getElementById('billingTableBody');
+      tbody.innerHTML = billingData.map((bill, index) => `
+        <tr>
+          <td>${bill.date}</td>
+          <td>${bill.description}</td>
+          <td style="font-weight: 600;">${bill.amount}</td>
+          <td>
+            <span class="status-badge ${bill.status === 'Paid' ? 'active' : 'inactive'}">
+              <i class="fa-solid fa-${bill.status === 'Paid' ? 'check-circle' : 'times-circle'}"></i>
+              ${bill.status}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-secondary btn-sm" onclick="downloadInvoice(${index})">
+              <i class="fa-solid fa-download"></i> Invoice
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function downloadInvoice(index) {
+      const bill = billingData[index];
+      showToast(`Downloading invoice for ${bill.date}`, 'info');
+    }
+
+    // Avatar upload
+    document.getElementById('avatarInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('avatarImage').src = e.target.result;
+          showToast('Profile picture updated!', 'success');
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Toggle switches
+    document.querySelectorAll('.toggle-switch').forEach(toggle => {
+      toggle.addEventListener('click', function() {
+        this.classList.toggle('active');
+      });
+    });
+
+    // Initialize
+    setTimeout(() => {
+      document.querySelectorAll('.loading').forEach(el => el.classList.remove('loading'));
+    }, 1000);
+
+    renderBillingTable();
+
+    setTimeout(() => showToast('Welcome to your Account Settings!', 'info'), 2000);
+  </script>
+</body>
+</html>

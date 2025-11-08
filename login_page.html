@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>StartAI • Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-Sw4d2kX2B27F8tF3cB+2dV7Y0z4O9r7LvjQ8m3lCj3C9mR5Xb8H7N8kJv7k8m0c8cM2J3e4zv6wRk0V2HqH9aw==" referrerpolicy="no-referrer" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'sans': ['Inter', 'ui-sans-serif', 'system-ui'],
+          },
+          colors: {
+            'primary': {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a'
+            },
+            'accent': '#6366f1',
+            'success': '#10b981',
+            'error': '#ef4444',
+            'warning': '#f59e0b',
+          },
+          backgroundImage: {
+            'auth-bg': 'linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #0f0f23 100%)',
+            'gradient-primary': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            'gradient-mesh': 'radial-gradient(circle at 20% 80%, #667eea 0%, transparent 50%), radial-gradient(circle at 80% 20%, #764ba2 0%, transparent 50%), radial-gradient(circle at 40% 40%, #f093fb 0%, transparent 50%)',
+            'shimmer': 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-slow': 'pulse 3s ease-in-out infinite',
+            'slide-up': 'slideUp 0.5s ease-out',
+            'scale-in': 'scaleIn 0.3s ease-out',
+            'shimmer': 'shimmer 2s linear infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-20px)' }
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(50px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' }
+            },
+            scaleIn: {
+              '0%': { transform: 'scale(0.9)', opacity: '0' },
+              '100%': { transform: 'scale(1)', opacity: '1' }
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% 0' },
+              '100%': { backgroundPosition: '200% 0' }
+            },
+            glow: {
+              '0%': { boxShadow: '0 0 20px rgba(102, 126, 234, 0.3)' },
+              '100%': { boxShadow: '0 0 30px rgba(102, 126, 234, 0.6)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .glass-morphism {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(40px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .floating-orb {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      opacity: 0.1;
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .orb-1 { width: 400px; height: 400px; top: 10%; left: -10%; animation-delay: 0s; }
+    .orb-2 { width: 300px; height: 300px; top: 60%; right: -10%; animation-delay: 2s; }
+    .orb-3 { width: 200px; height: 200px; bottom: 10%; left: 50%; animation-delay: 4s; }
+    
+    .input-glow:focus {
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1), 0 0 20px rgba(102, 126, 234, 0.1);
+    }
+    
+    .shimmer-button {
+      background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+      background-size: 200% 100%;
+      animation: shimmer 2s linear infinite;
+    }
+    
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 20px;
+      background: #667eea;
+      color: white;
+      padding: 12px 16px;
+      text-decoration: none;
+      border-radius: 8px;
+      z-index: 100;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .skip-link:focus {
+      top: 20px;
+      transform: scale(1.05);
+    }
+    
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(102, 126, 234, 0.6);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    
+    .test-credentials {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-auth-bg min-h-screen font-sans relative overflow-x-hidden">
+  <!-- Floating Orbs Background -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="floating-orb orb-1"></div>
+    <div class="floating-orb orb-2"></div>
+    <div class="floating-orb orb-3"></div>
+    <div class="absolute inset-0 bg-gradient-mesh opacity-30"></div>
+  </div>
+
+  <a class="skip-link" href="#main">Skip to main content</a>
+  
+  <!-- Enhanced Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 glass-morphism">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a class="flex items-center space-x-3 group" href="./home_page.html">
+          <div class="relative">
+            <img alt="StartAI Logo" class="h-12 w-auto transition-transform group-hover:scale-110" onerror="this.onerror=null;this.src='https://picsum.photos/seed/startai-logo/160/40';" src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png"/>
+            <div class="absolute inset-0 bg-gradient-primary rounded-full opacity-20 blur-lg group-hover:opacity-40 transition-opacity"></div>
+          </div>
+          <span class="text-2xl font-bold text-white">StartAI</span>
+        </a>
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="./home_page.html" class="text-gray-300 hover:text-white transition-colors relative group">
+            Home
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-primary transition-all group-hover:w-full"></span>
+          </a>
+          <a aria-current="page" href="./login_page.html" class="text-white font-semibold relative">
+            Login
+            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-primary"></span>
+          </a>
+          <a href="./registration_page.html" class="text-gray-300 hover:text-white transition-colors relative group">
+            Register
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-primary transition-all group-hover:w-full"></span>
+          </a>
+          <a href="./learning_hub_page.html" class="text-gray-300 hover:text-white transition-colors relative group">
+            Learning Hub
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-primary transition-all group-hover:w-full"></span>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex items-center justify-center min-h-screen pt-20 pb-10 relative z-10" id="main">
+    <div class="w-full max-w-6xl mx-auto px-6 lg:px-8">
+      <div class="grid lg:grid-cols-5 gap-12 items-center">
+        
+        <!-- Welcome Section -->
+        <div class="lg:col-span-3 text-white animate-slide-up">
+          <div class="space-y-8">
+            <div class="inline-flex items-center bg-white/10 backdrop-blur-md rounded-full px-6 py-3 border border-white/20">
+              <i class="fas fa-shield-alt text-green-300 mr-3"></i>
+              <span class="font-semibold">Secure Login Portal</span>
+            </div>
+            
+            <h1 class="text-6xl lg:text-7xl font-bold leading-tight">
+              <span class="text-white">Welcome</span><br/>
+              <span class="gradient-text">Back to StartAI</span>
+            </h1>
+            
+            <p class="text-xl lg:text-2xl text-gray-300 leading-relaxed max-w-2xl">
+              Access your personalized dashboard, connect with your network, and continue building the future of your startup.
+            </p>
+            
+            <!-- Feature highlights -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div class="glass-morphism rounded-2xl p-6 group hover:bg-white/15 transition-all">
+                <div class="w-12 h-12 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <i class="fas fa-dashboard text-white"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2">Personal Dashboard</h3>
+                <p class="text-gray-300 text-sm">Track your progress and manage your startup journey</p>
+              </div>
+              
+              <div class="glass-morphism rounded-2xl p-6 group hover:bg-white/15 transition-all">
+                <div class="w-12 h-12 bg-gradient-to-r from-purple-400 to-purple-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <i class="fas fa-network-wired text-white"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2">Network Access</h3>
+                <p class="text-gray-300 text-sm">Connect with mentors, investors, and fellow founders</p>
+              </div>
+              
+              <div class="glass-morphism rounded-2xl p-6 group hover:bg-white/15 transition-all">
+                <div class="w-12 h-12 bg-gradient-to-r from-green-400 to-green-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <i class="fas fa-brain text-white"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2">AI Insights</h3>
+                <p class="text-gray-300 text-sm">Get personalized recommendations and market analysis</p>
+              </div>
+              
+              <div class="glass-morphism rounded-2xl p-6 group hover:bg-white/15 transition-all">
+                <div class="w-12 h-12 bg-gradient-to-r from-orange-400 to-red-400 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <i class="fas fa-rocket text-white"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2">Growth Tools</h3>
+                <p class="text-gray-300 text-sm">Access resources to scale your business effectively</p>
+              </div>
+            </div>
+            
+            <!-- Stats -->
+            <div class="glass-morphism rounded-2xl p-6 border border-white/20">
+              <div class="flex items-center justify-between text-center">
+                <div>
+                  <div class="text-3xl font-bold text-blue-300">24/7</div>
+                  <div class="text-sm text-gray-300">Support</div>
+                </div>
+                <div>
+                  <div class="text-3xl font-bold text-green-300">99.9%</div>
+                  <div class="text-sm text-gray-300">Uptime</div>
+                </div>
+                <div>
+                  <div class="text-3xl font-bold text-purple-300">256-bit</div>
+                  <div class="text-sm text-gray-300">Encryption</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Login Form -->
+        <div class="lg:col-span-2 w-full animate-scale-in">
+          <div class="glass-card rounded-3xl p-8 lg:p-10 shadow-2xl">
+            <!-- Header -->
+            <div class="text-center mb-8">
+              <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-primary rounded-2xl mb-4 animate-glow">
+                <i class="fas fa-lock text-white text-2xl"></i>
+              </div>
+              <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome back</h2>
+              <p class="text-gray-600">Sign in to access your dashboard</p>
+            </div>
+
+            <!-- Error Display -->
+            <div aria-live="assertive" class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 hidden animate-scale-in" id="formAlert" role="alert">
+              <div class="flex items-center">
+                <i class="fa-solid fa-circle-exclamation text-red-500 mr-3"></i>
+                <div class="text-red-700" id="formAlertMsg">
+                  Invalid credentials. Please check your email and password.
+                </div>
+              </div>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" novalidate="" class="space-y-6">
+              <!-- Email -->
+              <div class="group">
+                <label class="block text-sm font-semibold text-gray-900 mb-2" for="email">
+                  Email Address <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <input autocomplete="email" class="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-0 outline-none transition-all input-glow bg-white/90" id="email" name="email" placeholder="you@example.com" required="" type="email"/>
+                  <div class="absolute inset-y-0 right-0 flex items-center pr-4">
+                    <i class="fas fa-envelope text-gray-400 group-focus-within:text-blue-500 transition-colors"></i>
+                  </div>
+                </div>
+                <div class="text-red-500 text-sm mt-2 hidden flex items-center" id="emailError">
+                  <i class="fas fa-exclamation-circle mr-2"></i>
+                  <span>Please enter a valid email address.</span>
+                </div>
+              </div>
+
+              <!-- Password -->
+              <div class="group">
+                <label class="block text-sm font-semibold text-gray-900 mb-2" for="password">
+                  Password <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <input autocomplete="current-password" class="w-full px-4 py-4 pr-12 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-0 outline-none transition-all input-glow bg-white/90" id="password" name="password" placeholder="Your password" required="" type="password"/>
+                  <button aria-label="Show password" aria-pressed="false" class="absolute right-0 top-0 h-full px-4 text-gray-400 hover:text-gray-600 transition-colors" id="togglePassword" type="button">
+                    <i class="fa-regular fa-eye" id="toggleIcon"></i>
+                  </button>
+                </div>
+                <div class="text-red-500 text-sm mt-2 hidden flex items-center" id="passwordError">
+                  <i class="fas fa-exclamation-circle mr-2"></i>
+                  <span>Password is required.</span>
+                </div>
+              </div>
+
+              <!-- Remember Me & Forgot Password -->
+              <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                  <input class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" id="rememberMe" type="checkbox" value="1"/>
+                  <label class="ml-2 text-sm text-gray-700" for="rememberMe">Remember Me</label>
+                </div>
+                <a class="text-sm text-blue-600 hover:text-blue-800 underline font-medium" href="./email_verification_page.html">
+                  Forgot Password?
+                </a>
+              </div>
+
+              <!-- Submit Button -->
+              <button class="w-full shimmer-button text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center group" id="signInBtn" type="submit">
+                <span class="btn-label flex items-center">
+                  <i class="fas fa-sign-in-alt mr-3 group-hover:translate-x-1 transition-transform"></i>
+                  Sign In
+                </span>
+                <span aria-hidden="true" class="ml-3 hidden" id="submitSpinner">
+                  <i class="fa-solid fa-spinner animate-spin"></i>
+                </span>
+              </button>
+
+              <!-- Sign Up Link -->
+              <div class="text-center pt-4 border-t border-gray-200">
+                <p class="text-gray-600">
+                  Don't have an account? 
+                  <a class="text-blue-600 hover:text-blue-800 font-semibold underline decoration-2 underline-offset-2" href="./registration_page.html">
+                    Sign Up
+                  </a>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Test Credentials Section -->
+      <div class="mt-12 max-w-4xl mx-auto">
+        <div class="test-credentials rounded-3xl p-8 animate-slide-up">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-xl flex items-center justify-center mr-4">
+              <i class="fa-solid fa-key text-white text-xl"></i>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-white mb-1">Test Login Accounts</h3>
+              <p class="text-gray-300">Use these credentials to explore role-based dashboards</p>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="bg-white/10 rounded-xl p-4 border border-white/20 hover:bg-white/15 transition-all cursor-pointer" onclick="fillCredentials('founder@example.com', 'Password123')">
+              <div class="flex items-center mb-3">
+                <i class="fas fa-rocket text-blue-300 mr-3"></i>
+                <span class="font-semibold text-white">Founder</span>
+              </div>
+              <div class="text-sm space-y-1">
+                <div class="text-gray-300">Email: <span class="text-blue-300 font-mono">founder@example.com</span></div>
+                <div class="text-gray-300">Password: <span class="text-blue-300 font-mono">Password123</span></div>
+                <div class="text-gray-400">→ Founder Dashboard</div>
+              </div>
+            </div>
+            
+            <div class="bg-white/10 rounded-xl p-4 border border-white/20 hover:bg-white/15 transition-all cursor-pointer" onclick="fillCredentials('mentor@example.com', 'Password123')">
+              <div class="flex items-center mb-3">
+                <i class="fas fa-user-tie text-green-300 mr-3"></i>
+                <span class="font-semibold text-white">Mentor</span>
+              </div>
+              <div class="text-sm space-y-1">
+                <div class="text-gray-300">Email: <span class="text-green-300 font-mono">mentor@example.com</span></div>
+                <div class="text-gray-300">Password: <span class="text-green-300 font-mono">Password123</span></div>
+                <div class="text-gray-400">→ Mentor Dashboard</div>
+              </div>
+            </div>
+            
+            <div class="bg-white/10 rounded-xl p-4 border border-white/20 hover:bg-white/15 transition-all cursor-pointer" onclick="fillCredentials('investor@example.com', 'Password123')">
+              <div class="flex items-center mb-3">
+                <i class="fas fa-coins text-purple-300 mr-3"></i>
+                <span class="font-semibold text-white">Investor</span>
+              </div>
+              <div class="text-sm space-y-1">
+                <div class="text-gray-300">Email: <span class="text-purple-300 font-mono">investor@example.com</span></div>
+                <div class="text-gray-300">Password: <span class="text-purple-300 font-mono">Password123</span></div>
+                <div class="text-gray-400">→ Investor Dashboard</div>
+              </div>
+            </div>
+            
+            <div class="bg-white/10 rounded-xl p-4 border border-white/20 hover:bg-white/15 transition-all cursor-pointer" onclick="fillCredentials('alice.founder@startai.dev', 'Build2025!')">
+              <div class="flex items-center mb-3">
+                <i class="fas fa-star text-yellow-300 mr-3"></i>
+                <span class="font-semibold text-white">Premium Founder</span>
+              </div>
+              <div class="text-sm space-y-1">
+                <div class="text-gray-300">Email: <span class="text-yellow-300 font-mono text-xs">alice.founder@startai.dev</span></div>
+                <div class="text-gray-300">Password: <span class="text-yellow-300 font-mono">Build2025!</span></div>
+                <div class="text-gray-400">→ Enhanced Dashboard</div>
+              </div>
+            </div>
+            
+            <div class="bg-white/10 rounded-xl p-4 border border-white/20 hover:bg-white/15 transition-all cursor-pointer" onclick="fillCredentials('admin@example.com', 'AdminSecure#1')">
+              <div class="flex items-center mb-3">
+                <i class="fas fa-shield-alt text-red-300 mr-3"></i>
+                <span class="font-semibold text-white">Admin</span>
+              </div>
+              <div class="text-sm space-y-1">
+                <div class="text-gray-300">Email: <span class="text-red-300 font-mono">admin@example.com</span></div>
+                <div class="text-gray-300">Password: <span class="text-red-300 font-mono">AdminSecure#1</span></div>
+                <div class="text-gray-400">→ Admin Dashboard</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-6 p-4 bg-blue-500/10 border border-blue-400/20 rounded-xl">
+            <div class="flex items-start">
+              <i class="fas fa-info-circle text-blue-300 mr-3 mt-0.5"></i>
+              <div class="text-sm">
+                <p class="text-blue-200 font-medium mb-1">Quick Start Tip</p>
+                <p class="text-blue-100">Click any credential card above to auto-fill the login form, or type them manually. All passwords are case sensitive.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Enhanced Footer -->
+  <footer class="glass-morphism border-t border-white/10 py-8 mt-20 relative z-10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+      <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+        <p class="text-white">
+          © <span id="year"></span> StartAI. All rights reserved.
+        </p>
+        <div class="flex items-center space-x-6">
+          <a class="text-gray-300 hover:text-white transition-colors flex items-center space-x-1" href="./home_page.html">
+            <i class="fas fa-home text-sm"></i>
+            <span>Home</span>
+          </a>
+          <a class="text-gray-300 hover:text-white transition-colors flex items-center space-x-1" href="./account_settings_page.html">
+            <i class="fas fa-cog text-sm"></i>
+            <span>Settings</span>
+          </a>
+          <a class="text-gray-300 hover:text-white transition-colors flex items-center space-x-1" href="./learning_hub_page.html">
+            <i class="fas fa-graduation-cap text-sm"></i>
+            <span>Resources</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast container -->
+  <div aria-atomic="true" aria-live="polite" class="fixed top-24 right-6 z-50 max-w-sm" id="systemToast"></div>
+
+  <script>
+    (function() {
+      const form = document.getElementById('loginForm');
+      const emailEl = document.getElementById('email');
+      const passwordEl = document.getElementById('password');
+      const rememberEl = document.getElementById('rememberMe');
+      const signInBtn = document.getElementById('signInBtn');
+      const spinner = document.getElementById('submitSpinner');
+      const alertBox = document.getElementById('formAlert');
+      const alertMsg = document.getElementById('formAlertMsg');
+      const toggleBtn = document.getElementById('togglePassword');
+      const toggleIcon = document.getElementById('toggleIcon');
+      const yearEl = document.getElementById('year');
+      const emailError = document.getElementById('emailError');
+      const passwordError = document.getElementById('passwordError');
+      
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // Mock users for role-based redirect
+      const users = [
+        { email: 'founder@example.com', password: 'Password123', role: 'Founder', redirect: './founder_dashboard.html' },
+        { email: 'alice.founder@startai.dev', password: 'Build2025!', role: 'Founder', redirect: './founder_dashboard.html' },
+        { email: 'mentor@example.com', password: 'Password123', role: 'Mentor', redirect: './mentor_dashboard.html' },
+        { email: 'investor@example.com', password: 'Password123', role: 'Investor', redirect: './investor_dashboard.html' },
+        { email: 'admin@example.com', password: 'AdminSecure#1', role: 'Admin', redirect: './admin_dashboard.html' }
+      ];
+
+      // Prefill from localStorage
+      const remembered = localStorage.getItem('startai_remember') === '1';
+      const rememberedEmail = localStorage.getItem('startai_email');
+      if (remembered && rememberedEmail) {
+        emailEl.value = rememberedEmail;
+        rememberEl.checked = true;
+      }
+
+      // Enhanced validation with visual feedback
+      function addFieldFeedback(field, isValid) {
+        field.classList.remove('border-green-400', 'border-red-400');
+        if (field.value.length > 0) {
+          field.classList.add(isValid ? 'border-green-400' : 'border-red-400');
+        }
+      }
+
+      // Email validation
+      emailEl.addEventListener('blur', () => {
+        const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim());
+        emailError.classList.toggle('hidden', valid);
+        addFieldFeedback(emailEl, valid);
+      });
+
+      emailEl.addEventListener('input', () => {
+        emailError.classList.add('hidden');
+        emailEl.classList.remove('border-red-400');
+      });
+
+      // Password validation
+      passwordEl.addEventListener('blur', () => {
+        const valid = passwordEl.value.trim().length > 0;
+        passwordError.classList.toggle('hidden', valid);
+        addFieldFeedback(passwordEl, valid);
+      });
+
+      passwordEl.addEventListener('input', () => {
+        passwordError.classList.add('hidden');
+        passwordEl.classList.remove('border-red-400');
+      });
+
+      // Enhanced password toggle with animation
+      toggleBtn.addEventListener('click', () => {
+        const isText = passwordEl.type === 'text';
+        passwordEl.type = isText ? 'password' : 'text';
+        toggleBtn.setAttribute('aria-pressed', String(!isText));
+        toggleBtn.setAttribute('aria-label', isText ? 'Show password' : 'Hide password');
+        
+        // Smooth icon transition
+        toggleIcon.style.transform = 'scale(0.8)';
+        setTimeout(() => {
+          toggleIcon.classList.toggle('fa-eye');
+          toggleIcon.classList.toggle('fa-eye-slash');
+          toggleIcon.style.transform = 'scale(1)';
+        }, 100);
+      });
+
+      // Enhanced loading states
+      function setLoading(state) {
+        signInBtn.disabled = state;
+        spinner.classList.toggle('hidden', !state);
+        
+        if (state) {
+          signInBtn.classList.add('opacity-75', 'cursor-wait');
+          document.querySelector('.btn-label').innerHTML = '<i class="fas fa-cog animate-spin mr-3"></i>Signing you in...';
+        } else {
+          signInBtn.classList.remove('opacity-75', 'cursor-wait');
+          document.querySelector('.btn-label').innerHTML = '<i class="fas fa-sign-in-alt mr-3"></i>Sign In';
+        }
+      }
+
+      function showError(message) {
+        alertMsg.textContent = message || 'Invalid credentials. Please try again.';
+        alertBox.classList.remove('hidden');
+        
+        Swal.fire({
+          icon: 'error',
+          title: 'Sign in failed',
+          text: alertMsg.textContent,
+          confirmButtonText: 'Try again',
+          customClass: {
+            confirmButton: 'bg-gradient-primary text-white px-6 py-3 rounded-lg font-semibold'
+          }
+        });
+      }
+
+      function showSuccess(role) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Welcome back!',
+          html: `
+            <div class="text-center">
+              <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-400 to-blue-500 rounded-full mb-4 animate-bounce">
+                <i class="fas fa-check text-white text-2xl"></i>
+              </div>
+              <p class="text-gray-600 mb-2">You are signed in as <strong>${role}</strong></p>
+              <p class="text-sm text-gray-500">Redirecting to your dashboard...</p>
+            </div>
+          `,
+          timer: 2000,
+          showConfirmButton: false,
+          customClass: {
+            popup: 'animate__animated animate__fadeInUp animate__faster'
+          }
+        });
+      }
+
+      // Particle effects for successful login
+      function createParticles() {
+        const colors = ['#3b82f6', '#10b981', '#8b5cf6', '#f59e0b'];
+        for (let i = 0; i < 12; i++) {
+          const particle = document.createElement('div');
+          particle.style.position = 'fixed';
+          particle.style.width = '6px';
+          particle.style.height = '6px';
+          particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          particle.style.borderRadius = '50%';
+          particle.style.pointerEvents = 'none';
+          particle.style.zIndex = '9999';
+          
+          const rect = signInBtn.getBoundingClientRect();
+          particle.style.left = rect.left + rect.width / 2 + 'px';
+          particle.style.top = rect.top + rect.height / 2 + 'px';
+          
+          document.body.appendChild(particle);
+          
+          const angle = (360 / 12) * i;
+          const distance = 100 + Math.random() * 50;
+          const duration = 1000 + Math.random() * 500;
+          
+          particle.animate([
+            { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+            { transform: `translate(${Math.cos(angle * Math.PI / 180) * distance}px, ${Math.sin(angle * Math.PI / 180) * distance}px) scale(0)`, opacity: 0 }
+          ], {
+            duration: duration,
+            easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+          }).onfinish = () => particle.remove();
+        }
+      }
+
+      // Global function to fill credentials (called from credential cards)
+      window.fillCredentials = function(email, password) {
+        emailEl.value = email;
+        passwordEl.value = password;
+        
+        // Add visual feedback
+        emailEl.focus();
+        setTimeout(() => passwordEl.focus(), 100);
+        setTimeout(() => emailEl.blur(), 200);
+        setTimeout(() => passwordEl.blur(), 300);
+        
+        // Show toast notification
+        showToast('Credentials filled! Click "Sign In" to continue.', 'info');
+      };
+
+      // Enhanced form submit
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alertBox.classList.add('hidden');
+
+        // Enhanced validation
+        const email = emailEl.value.trim();
+        const password = passwordEl.value.trim();
+        const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        const pwdValid = password.length > 0;
+        
+        emailError.classList.toggle('hidden', emailValid);
+        passwordError.classList.toggle('hidden', pwdValid);
+        addFieldFeedback(emailEl, emailValid);
+        addFieldFeedback(passwordEl, pwdValid);
+        
+        if (!emailValid || !pwdValid) {
+          showError('Please enter a valid email and password.');
+          return;
+        }
+
+        setLoading(true);
+        
+        // Simulate API latency with enhanced feedback
+        setTimeout(() => {
+          const user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
+          if (user) {
+            // Remember Me behavior
+            if (rememberEl.checked) {
+              localStorage.setItem('startai_remember', '1');
+              localStorage.setItem('startai_email', email);
+            } else {
+              localStorage.removeItem('startai_remember');
+              localStorage.removeItem('startai_email');
+            }
+
+            createParticles();
+            showSuccess(user.role);
+            
+            setTimeout(() => {
+              window.location.href = user.redirect;
+            }, 1500);
+          } else {
+            showError('Email or password is incorrect.');
+            setLoading(false);
+          }
+        }, 1200);
+      });
+
+      // Enhanced toast utility
+      function showToast(message, type = 'info', duration = 4000) {
+        const toastContainer = document.getElementById('systemToast');
+        const toast = document.createElement('div');
+        toast.className = 'glass-morphism rounded-xl p-4 mb-3 shadow-lg border border-white/20 animate-slide-up';
+        
+        const icons = {
+          success: { icon: '✅', color: 'text-green-400' },
+          error: { icon: '⚠️', color: 'text-red-400' },
+          info: { icon: 'ℹ️', color: 'text-blue-400' }
+        };
+        
+        const config = icons[type] || icons.info;
+        
+        toast.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <span class="text-xl">${config.icon}</span>
+              <span class="text-white font-medium">${message}</span>
+            </div>
+            <button class="ml-4 text-gray-300 hover:text-white transition-colors">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        `;
+        
+        toastContainer.appendChild(toast);
+        const closeBtn = toast.querySelector('button');
+        closeBtn.addEventListener('click', () => {
+          toast.style.animation = 'slideUp 0.3s ease-in reverse';
+          setTimeout(() => toast.remove(), 300);
+        });
+        
+        setTimeout(() => {
+          if (toast.parentNode) {
+            toast.style.animation = 'slideUp 0.3s ease-in reverse';
+            setTimeout(() => toast.remove(), 300);
+          }
+        }, duration);
+      }
+
+      // Add focus effects to form fields
+      [emailEl, passwordEl].forEach(el => {
+        el.addEventListener('focus', () => {
+          el.parentElement.classList.add('scale-[1.02]');
+        });
+        
+        el.addEventListener('blur', () => {
+          el.parentElement.classList.remove('scale-[1.02]');
+        });
+      });
+
+      // Welcome toast
+      setTimeout(() => {
+        showToast('💡 Tip: Click any test credential card to auto-fill the form!', 'info', 6000);
+      }, 1000);
+
+    })();
+  </script>
+</body>
+</html>
