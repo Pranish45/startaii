@@ -20,7 +20,7 @@ if qdrant.collection_exists("personas"):
 
 qdrant.create_collection(
     collection_name="personas",
-    vectors_config=rest.VectorParams(size=768, distance=rest.Distance.COSINE),
+    vectors_config=rest.VectorParams(size<=768, distance=rest.Distance.COSINE),
 )
 
 # inside your ingestion loop
