@@ -12,14 +12,39 @@ from langchain.memory.buffer import ConversationBufferMemory
 # Load environment variables
 load_dotenv()
 
+print("🚀 Starting StartAI Advisory Chatbot...")
+
 # -------------------- CONFIGURATION -------------------- #
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 QDRANT_URL = os.getenv("QDRANT_URL")
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 
-# Initialize Qdrant and embeddings
-qdrant = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
-emb = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+# Validate required environment variables
+if not OPENROUTER_API_KEY:
+    raise ValueError("❌ OPENROUTER_API_KEY environment variable is required")
+if not QDRANT_URL:
+    raise ValueError("❌ QDRANT_URL environment variable is required")
+if not QDRANT_API_KEY:
+    raise ValueError("❌ QDRANT_API_KEY environment variable is required")
+
+print("✅ Environment variables loaded")
+
+# Initialize Qdrant with error handling
+try:
+    qdrant = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
+    qdrant.get_collections()  # Test connection
+    print("✅ Qdrant client initialized and connected")
+except Exception as e:
+    print(f"❌ Failed to connect to Qdrant: {e}")
+    raise
+
+# Initialize embeddings with error handling
+try:
+    emb = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    print("✅ HuggingFace embeddings model loaded")
+except Exception as e:
+    print(f"❌ Failed to load embeddings model: {e}")
+    raise
 
 # FastAPI App
 app = FastAPI(title="StartAI Advisory Chatbot")
@@ -27,11 +52,13 @@ app = FastAPI(title="StartAI Advisory Chatbot")
 # CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://startaii.netlify.app"],
+    allow_origins=["https://startaii.netlify.app", "http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-)  # ← Fixed: Added closing parenthesis
+)
+
+print("✅ CORS middleware configured")
 
 # Session memory
 user_sessions = {}
@@ -76,7 +103,6 @@ def retrieve_context(query):
         results = qdrant.search(collection_name="personas", query_vector=vector, limit=3)
         context = "\n\n".join([r.payload.get("content", "") for r in results])
 
-        # If context is too short, supplement with DeepSeek (via OpenRouter)
         if len(context.strip()) < 200:
             print("Context short — fetching supplemental info from DeepSeek...")
             supplemental = openrouter_chat("deepseek/deepseek-chat-v3.1:free", query)
@@ -101,7 +127,6 @@ def generate_reply(persona, query, session_id):
         [f"{m.type}: {m.content}" for m in memory.chat_memory.messages[-6:]]
     )
 
-    # Persona styles
     persona_styles = {
         "Elon Musk": "You are Elon Musk. Think from first principles, challenge assumptions, focus on engineering and long-term impact. Be bold and analytical.",
         "Steve Jobs": "You are Steve Jobs. Focus on simplicity, perfection, and design excellence. Be visionary and passionate about innovation.",
@@ -125,11 +150,8 @@ Respond as {persona} would — authentic, insightful, and focused.
 
     try:
         reply = openrouter_chat("google/gemma-3n-e2b-it:free", prompt)
-
-        # Save in memory
         memory.chat_memory.add_user_message(query)
         memory.chat_memory.add_ai_message(reply)
-
         return reply if reply else "I could not generate a full response at this time."
 
     except Exception as e:
@@ -151,8 +173,19 @@ def health():
 
 @app.get("/")
 def read_root():
-    return FileResponse("ai_advisory_page.html")
+    try:
+        return FileResponse("ai_advisory_page.html")
+    except Exception as e:
+        return {"error": f"HTML file not found: {e}"}
 
 
-# ← Removed the if __name__ == "__main__" block entirely
-# Render will run: uvicorn app:app --host 0.0.0.0 --port $PORT
+# Startup event for logging
+@app.on_event("startup")
+async def startup_event():
+    print("=" * 50)
+    print("✅ FastAPI app started successfully!")
+    print(f"✅ Listening on port {os.environ.get('PORT', 'unknown')}")
+    print("=" * 50)
+
+
+print("✅ App initialization complete. Ready to start server.")
