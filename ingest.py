@@ -3,17 +3,23 @@ import markdown
 from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 from qdrant_client.http import models as rest
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from qdrant_client.http import models as rest
+
+# Use open-source embedding model (no Google key required)
 
 load_dotenv()
 
 qdrant = QdrantClient(url=os.getenv("QDRANT_URL"), api_key=os.getenv("QDRANT_API_KEY"))
 collection = "personas"
-emb = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+emb = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
-qdrant.recreate_collection(
-    collection_name=collection,
-    vectors_config={"size": 768, "distance": "Cosine"}
+if qdrant.collection_exists("personas"):
+    qdrant.delete_collection("personas")
+
+qdrant.create_collection(
+    collection_name="personas",
+    vectors_config=rest.VectorParams(size=768, distance=rest.Distance.COSINE),
 )
 
 for file in os.listdir("data"):
