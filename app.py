@@ -19,32 +19,35 @@ OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 QDRANT_URL = os.getenv("QDRANT_URL")
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 
-# Validate required environment variables
+# Validate environment variables
 if not OPENROUTER_API_KEY:
-    raise ValueError("❌ OPENROUTER_API_KEY environment variable is required")
+    raise ValueError("❌ OPENROUTER_API_KEY is required")
 if not QDRANT_URL:
-    raise ValueError("❌ QDRANT_URL environment variable is required")
+    raise ValueError("❌ QDRANT_URL is required")
 if not QDRANT_API_KEY:
-    raise ValueError("❌ QDRANT_API_KEY environment variable is required")
+    raise ValueError("❌ QDRANT_API_KEY is required")
 
 print("✅ Environment variables loaded")
 
-# Initialize Qdrant with error handling
+# Initialize Qdrant
 try:
     qdrant = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
-    qdrant.get_collections()  # Test connection
-    print("✅ Qdrant client initialized and connected")
+    print("✅ Qdrant client initialized")
 except Exception as e:
-    print(f"❌ Failed to connect to Qdrant: {e}")
+    print(f"❌ Qdrant connection failed: {e}")
     raise
 
-# Initialize embeddings with error handling
-try:
-    emb = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-    print("✅ HuggingFace embeddings model loaded")
-except Exception as e:
-    print(f"❌ Failed to load embeddings model: {e}")
-    raise
+# LAZY LOAD EMBEDDINGS: Don't load here, load on first use
+_emb_model = None
+
+def get_embeddings():
+    """Lazy load embeddings model on first use."""
+    global _emb_model
+    if _emb_model is None:
+        print("📥 Loading HuggingFace embeddings model (first time only)...")
+        _emb_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+        print("✅ Embeddings model loaded")
+    return _emb_model
 
 # FastAPI App
 app = FastAPI(title="StartAI Advisory Chatbot")
@@ -58,7 +61,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-print("✅ CORS middleware configured")
+print("✅ FastAPI app initialized")
 
 # Session memory
 user_sessions = {}
@@ -99,6 +102,7 @@ def openrouter_chat(model: str, prompt: str):
 def retrieve_context(query):
     """Retrieve relevant context from Qdrant and supplement with DeepSeek."""
     try:
+        emb = get_embeddings()  # Lazy load here
         vector = emb.embed_query(query)
         results = qdrant.search(collection_name="personas", query_vector=vector, limit=3)
         context = "\n\n".join([r.payload.get("content", "") for r in results])
@@ -179,13 +183,13 @@ def read_root():
         return {"error": f"HTML file not found: {e}"}
 
 
-# Startup event for logging
+# Startup event
 @app.on_event("startup")
 async def startup_event():
     print("=" * 50)
-    print("✅ FastAPI app started successfully!")
-    print(f"✅ Listening on port {os.environ.get('PORT', 'unknown')}")
+    print("✅ FastAPI server started successfully!")
+    print(f"✅ Listening on port {os.environ.get('PORT', '10000')}")
     print("=" * 50)
 
 
-print("✅ App initialization complete. Ready to start server.")
+print("✅ App initialization complete. Ready to start uvicorn.")
