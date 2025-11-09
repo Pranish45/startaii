@@ -1,4 +1,5 @@
 import os
+import requests
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -8,24 +9,28 @@ from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain.memory.buffer import ConversationBufferMemory
-import google.generativeai as genai
 from perplexityai import Perplexity
 
 # Load environment variables
 load_dotenv()
 
-# -------------------- API CONFIGURATION -------------------- #
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-perplexity = Perplexity(api_key=os.getenv("PERPLEXITY_API_KEY"))
-qdrant = QdrantClient(url=os.getenv("QDRANT_URL"), api_key=os.getenv("QDRANT_API_KEY"))
+# -------------------- CONFIGURATION -------------------- #
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+QDRANT_URL = os.getenv("QDRANT_URL")
+QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
+PERPLEXITY_API_KEY = os.getenv("PERPLEXITY_API_KEY")
 
-# ✅ Use Open-Source SentenceTransformer instead of Google Embeddings
+# Initialize clients
+perplexity = Perplexity(api_key=PERPLEXITY_API_KEY)
+qdrant = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
+
+# ✅ Free, open-source embeddings
 emb = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
-# ----------------------------------------------------------- #
+# FastAPI App
 app = FastAPI(title="StartAI Advisory Chatbot")
 
-# CORS Configuration
+# CORS configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://startaii.netlify.app/ai_advisory_page"],
@@ -37,8 +42,11 @@ app.add_middleware(
 # Serve static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+# Session memory
 user_sessions = {}
 
+
+# -------------------- MODELS -------------------- #
 class QueryIn(BaseModel):
     persona: str
     query: str
@@ -53,7 +61,7 @@ def retrieve_context(query):
         results = qdrant.search(collection_name="personas", query_vector=vector, limit=3)
         context = "\n\n".join([r.payload.get("content", "") for r in results])
 
-        # If context is too short, supplement with Perplexity
+        # Supplement with Perplexity if context is too short
         if len(context.strip()) < 200:
             try:
                 resp = perplexity.chat.completions.create(
@@ -71,11 +79,9 @@ def retrieve_context(query):
 
 
 def generate_reply(persona, query, session_id):
-    """Generate AI response using RAG + Gemini Pro"""
-    # Retrieve relevant context from knowledge base
+    """Generate AI response using RAG + OpenRouter (Gemma model)"""
     context = retrieve_context(query)
 
-    # Initialize or get conversation memory
     if session_id not in user_sessions:
         user_sessions[session_id] = ConversationBufferMemory(memory_key="history", return_messages=True)
 
@@ -84,11 +90,11 @@ def generate_reply(persona, query, session_id):
         [f"{m.type}: {m.content}" for m in memory.chat_memory.messages[-6:]]
     )
 
-    # Persona-specific system prompts
+    # Persona styles
     persona_styles = {
-        "Elon Musk": "You are Elon Musk. Think from first principles, challenge assumptions, focus on physics and engineering. Be ambitious and direct. Use phrases like 'first principles thinking', 'physics-based approach', and 'make life multiplanetary'.",
-        "Steve Jobs": "You are Steve Jobs. Focus on simplicity, design excellence, and creating insanely great products. Be passionate about user experience. Use phrases like 'insanely great', 'think different', and 'stay hungry, stay foolish'.",
-        "Ratan Tata": "You are Ratan Tata. Emphasize ethical business practices, social responsibility, compassion, and long-term value creation. Be humble yet visionary. Focus on nation-building and creating value for society."
+        "Elon Musk": "You are Elon Musk. Think from first principles, challenge assumptions, focus on engineering and long-term impact. Be bold and analytical.",
+        "Steve Jobs": "You are Steve Jobs. Focus on simplicity, perfection, and design excellence. Be visionary and passionate about innovation.",
+        "Ratan Tata": "You are Ratan Tata. Emphasize ethics, compassion, and national development. Stay calm, humble, and purpose-driven."
     }
 
     system_prompt = persona_styles.get(persona, f"You are {persona}, an influential entrepreneur.")
@@ -103,42 +109,55 @@ Relevant knowledge from your life and work:
 
 User question: {query}
 
-Respond as {persona} would, using insights from the context above. Be authentic to your persona's style and philosophy. Keep responses focused, actionable, and inspirational.
-
-{persona}:"""
+Respond as {persona} would, using insights from the context above. Be authentic, inspirational, and realistic.
+"""
 
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
-        response = model.generate_content(prompt)
-        reply_text = response.text
+        response = requests.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": "google/gemma-3n-e2b-it:free",
+                "messages": [
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": prompt}
+                ],
+                "temperature": 0.8,
+                "max_tokens": 500
+            }
+        )
 
-        # Store in conversation memory
+        data = response.json()
+        reply_text = data["choices"][0]["message"]["content"]
+
+        # Save in memory
         memory.chat_memory.add_user_message(query)
         memory.chat_memory.add_ai_message(reply_text)
 
         return reply_text
+
     except Exception as e:
-        print(f"Generation error: {e}")
-        return "I apologize, but I'm having trouble processing your request right now. Please try again."
+        print(f"OpenRouter generation error: {e}")
+        return "I am experiencing temporary issues. Please try again shortly."
 
 
 # -------------------- ROUTES -------------------- #
 @app.post("/chat")
 def chat(payload: QueryIn):
-    """Main chat endpoint"""
     reply = generate_reply(payload.persona, payload.query, payload.session_id)
     return {"persona": payload.persona, "response": reply}
 
 
 @app.get("/health")
 def health():
-    """Health check endpoint"""
     return {"status": "ok", "message": "StartAI Advisory is running"}
 
 
 @app.get("/")
 def read_root():
-    """Serve the main HTML page"""
     return FileResponse("ai_advisory_page.html")
 
 
