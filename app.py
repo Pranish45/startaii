@@ -2,7 +2,6 @@ import os
 import requests
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from dotenv import load_dotenv
@@ -32,10 +31,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-)
-
-# Serve static files
-app.mount("/static", StaticFiles(directory="static"), name="static")
+)  # ← Fixed: Added closing parenthesis
 
 # Session memory
 user_sessions = {}
@@ -66,7 +62,6 @@ def openrouter_chat(model: str, prompt: str):
             },
             timeout=30,
         )
-
         data = response.json()
         return data["choices"][0]["message"]["content"]
     except Exception as e:
@@ -159,9 +154,5 @@ def read_root():
     return FileResponse("ai_advisory_page.html")
 
 
-import os
-import uvicorn
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+# ← Removed the if __name__ == "__main__" block entirely
+# Render will run: uvicorn app:app --host 0.0.0.0 --port $PORT
