@@ -18,9 +18,9 @@ emb = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 if qdrant.collection_exists("personas"):
     qdrant.delete_collection("personas")
 
-qdrant.create_collection(
+qdrant.recreate_collection(
     collection_name="personas",
-    vectors_config=rest.VectorParams(size<=768, distance=rest.Distance.COSINE),
+    vectors_config={"size": 384, "distance": "Cosine"},
 )
 
 # inside your ingestion loop
