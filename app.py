@@ -101,7 +101,7 @@ Respond as {persona} would, using insights from the context above. Be authentic 
 {persona}:"""
 
     try:
-        model = genai.GenerativeModel('Gemini 2.5 Flash')
+        model = genai.GenerativeModel('Gemini 1.5 Flash')
         response = model.generate_content(prompt)
         reply_text = response.text
 
