@@ -6,19 +6,23 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from qdrant_client import QdrantClient
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain.memory.buffer import ConversationBufferMemory
 import google.generativeai as genai
 from perplexityai import Perplexity
 
+# Load environment variables
 load_dotenv()
 
-# Configure APIs
+# -------------------- API CONFIGURATION -------------------- #
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 perplexity = Perplexity(api_key=os.getenv("PERPLEXITY_API_KEY"))
 qdrant = QdrantClient(url=os.getenv("QDRANT_URL"), api_key=os.getenv("QDRANT_API_KEY"))
-emb = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 
+# ✅ Use Open-Source SentenceTransformer instead of Google Embeddings
+emb = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+
+# ----------------------------------------------------------- #
 app = FastAPI(title="StartAI Advisory Chatbot")
 
 # CORS Configuration
@@ -40,6 +44,8 @@ class QueryIn(BaseModel):
     query: str
     session_id: str
 
+
+# -------------------- HELPER FUNCTIONS -------------------- #
 def retrieve_context(query):
     """Retrieve relevant context from Qdrant vector database"""
     try:
@@ -47,7 +53,7 @@ def retrieve_context(query):
         results = qdrant.search(collection_name="personas", query_vector=vector, limit=3)
         context = "\n\n".join([r.payload.get("content", "") for r in results])
 
-        # If context is too short, supplement with Perplexity web search
+        # If context is too short, supplement with Perplexity
         if len(context.strip()) < 200:
             try:
                 resp = perplexity.chat.completions.create(
@@ -62,6 +68,7 @@ def retrieve_context(query):
     except Exception as e:
         print(f"Context retrieval error: {e}")
         return ""
+
 
 def generate_reply(persona, query, session_id):
     """Generate AI response using RAG + Gemini Pro"""
@@ -101,7 +108,7 @@ Respond as {persona} would, using insights from the context above. Be authentic 
 {persona}:"""
 
     try:
-        model = genai.GenerativeModel('Gemini 1.5 Flash')
+        model = genai.GenerativeModel('gemini-1.5-flash')
         response = model.generate_content(prompt)
         reply_text = response.text
 
@@ -112,23 +119,28 @@ Respond as {persona} would, using insights from the context above. Be authentic 
         return reply_text
     except Exception as e:
         print(f"Generation error: {e}")
-        return f"I apologize, but I'm having trouble processing your request right now. Please try again."
+        return "I apologize, but I'm having trouble processing your request right now. Please try again."
 
+
+# -------------------- ROUTES -------------------- #
 @app.post("/chat")
 def chat(payload: QueryIn):
     """Main chat endpoint"""
     reply = generate_reply(payload.persona, payload.query, payload.session_id)
     return {"persona": payload.persona, "response": reply}
 
+
 @app.get("/health")
 def health():
     """Health check endpoint"""
     return {"status": "ok", "message": "StartAI Advisory is running"}
 
+
 @app.get("/")
 def read_root():
     """Serve the main HTML page"""
     return FileResponse("ai_advisory_page.html")
+
 
 if __name__ == "__main__":
     import uvicorn
