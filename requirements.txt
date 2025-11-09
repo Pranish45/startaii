@@ -8,5 +8,4 @@ google-generativeai
 perplexityai
 python-dotenv
 pydantic==2.4.0
-pydantic-core==2.4.0
 markdown
