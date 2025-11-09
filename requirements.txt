@@ -1,9 +1,11 @@
 fastapi
-uvicorn
-langchain
-langchain-google-genai
+uvicorn[standard]
+langchain==0.1.16
+langchain-core==0.1.43
+langchain-google-genai==0.0.9
 qdrant-client
 google-generativeai
 perplexityai
 python-dotenv
+pydantic==2.5.3
 markdown
