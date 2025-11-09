@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+langchain
+qdrant-client
+google-generativeai
+perplexityai
+python-dotenv
+markdown
