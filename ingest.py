@@ -5,6 +5,7 @@ from qdrant_client import QdrantClient
 from qdrant_client.http import models as rest
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from qdrant_client.http import models as rest
+import uuid
 
 # Use open-source embedding model (no Google key required)
 
@@ -22,17 +23,22 @@ qdrant.create_collection(
     vectors_config=rest.VectorParams(size=768, distance=rest.Distance.COSINE),
 )
 
+# inside your ingestion loop
 for file in os.listdir("data"):
     if file.endswith(".md"):
         with open(f"data/{file}", "r", encoding="utf-8") as f:
             md_text = f.read()
             html_content = markdown.markdown(md_text)
             vector = emb.embed_query(html_content)
+            
+            # Instead of using filename as ID, generate a UUID
+            point_id = str(uuid.uuid4())
+            
             qdrant.upsert(
                 collection_name=collection,
                 points=[
                     rest.PointStruct(
-                        id=file,
+                        id=point_id,
                         vector=vector,
                         payload={
                             "name": file.replace(".md", ""),
