@@ -9,7 +9,6 @@ from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain.memory.buffer import ConversationBufferMemory
-from perplexityai import Perplexity
 
 # Load environment variables
 load_dotenv()
@@ -18,13 +17,9 @@ load_dotenv()
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 QDRANT_URL = os.getenv("QDRANT_URL")
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
-PERPLEXITY_API_KEY = os.getenv("PERPLEXITY_API_KEY")
 
-# Initialize clients
-perplexity = Perplexity(api_key=PERPLEXITY_API_KEY)
+# Initialize Qdrant and embeddings
 qdrant = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
-
-# ✅ Free, open-source embeddings
 emb = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
 # FastAPI App
@@ -54,32 +49,53 @@ class QueryIn(BaseModel):
 
 
 # -------------------- HELPER FUNCTIONS -------------------- #
+def openrouter_chat(model: str, prompt: str):
+    """Generic OpenRouter API call."""
+    try:
+        response = requests.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": model,
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": 0.7,
+                "max_tokens": 500,
+            },
+            timeout=30,
+        )
+
+        data = response.json()
+        return data["choices"][0]["message"]["content"]
+    except Exception as e:
+        print(f"OpenRouter API error ({model}): {e}")
+        return ""
+
+
 def retrieve_context(query):
-    """Retrieve relevant context from Qdrant vector database"""
+    """Retrieve relevant context from Qdrant and supplement with DeepSeek."""
     try:
         vector = emb.embed_query(query)
         results = qdrant.search(collection_name="personas", query_vector=vector, limit=3)
         context = "\n\n".join([r.payload.get("content", "") for r in results])
 
-        # Supplement with Perplexity if context is too short
+        # If context is too short, supplement with DeepSeek (via OpenRouter)
         if len(context.strip()) < 200:
-            try:
-                resp = perplexity.chat.completions.create(
-                    model="sonar",
-                    messages=[{"role": "user", "content": query}]
-                )
-                context += "\n\nRecent Information:\n" + resp.choices[0].message.content
-            except Exception as e:
-                print(f"Perplexity error: {e}")
+            print("Context short — fetching supplemental info from DeepSeek...")
+            supplemental = openrouter_chat("deepseek/deepseek-chat-v3.1:free", query)
+            context += "\n\nRecent Insights (via DeepSeek):\n" + supplemental
 
         return context
+
     except Exception as e:
         print(f"Context retrieval error: {e}")
         return ""
 
 
 def generate_reply(persona, query, session_id):
-    """Generate AI response using RAG + OpenRouter (Gemma model)"""
+    """Generate persona-based AI response using Gemma through OpenRouter."""
     context = retrieve_context(query)
 
     if session_id not in user_sessions:
@@ -104,44 +120,26 @@ def generate_reply(persona, query, session_id):
 Previous conversation:
 {previous_conversation}
 
-Relevant knowledge from your life and work:
+Relevant knowledge and context:
 {context}
 
 User question: {query}
 
-Respond as {persona} would, using insights from the context above. Be authentic, inspirational, and realistic.
+Respond as {persona} would — authentic, insightful, and focused.
 """
 
     try:
-        response = requests.post(
-            "https://openrouter.ai/api/v1/chat/completions",
-            headers={
-                "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-                "Content-Type": "application/json",
-            },
-            json={
-                "model": "google/gemma-3n-e2b-it:free",
-                "messages": [
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": prompt}
-                ],
-                "temperature": 0.8,
-                "max_tokens": 500
-            }
-        )
-
-        data = response.json()
-        reply_text = data["choices"][0]["message"]["content"]
+        reply = openrouter_chat("google/gemma-3n-e2b-it:free", prompt)
 
         # Save in memory
         memory.chat_memory.add_user_message(query)
-        memory.chat_memory.add_ai_message(reply_text)
+        memory.chat_memory.add_ai_message(reply)
 
-        return reply_text
+        return reply if reply else "I could not generate a full response at this time."
 
     except Exception as e:
-        print(f"OpenRouter generation error: {e}")
-        return "I am experiencing temporary issues. Please try again shortly."
+        print(f"Gemma generation error: {e}")
+        return "I am temporarily unavailable. Please try again later."
 
 
 # -------------------- ROUTES -------------------- #
