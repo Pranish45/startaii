@@ -1,11 +1,28 @@
+# FastAPI and Server
 fastapi
 uvicorn[standard]
+
+# LangChain Core
 langchain==0.1.16
 langchain-core==0.1.43
-langchain-google-genai==0.0.9
+langchain-community==0.0.24   # needed for HuggingFaceEmbeddings
+
+# Vector Database
 qdrant-client
+
+# Google Gemini (for generative model only)
 google-generativeai
+langchain-google-genai==0.0.9
+
+# Open-Source Embedding Model
+sentence-transformers
+transformers
+torch
+
+# External APIs
 perplexityai
+
+# Utilities
 python-dotenv
 pydantic==2.4.0
 markdown
