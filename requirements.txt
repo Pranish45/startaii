@@ -1,6 +1,7 @@
 fastapi
 uvicorn
 langchain
+langchain-google-genai
 qdrant-client
 google-generativeai
 perplexityai
