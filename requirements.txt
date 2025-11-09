@@ -22,9 +22,6 @@ torch
 # OpenRouter and HTTP
 requests
 
-# External APIs
-perplexityai
-
 # Utilities
 python-dotenv
 pydantic==2.4.0
