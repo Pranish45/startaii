@@ -24,7 +24,7 @@ app = FastAPI(title="StartAI Advisory Chatbot")
 # CORS Configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://startaii.netlify.app/ai_advisory_page"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
