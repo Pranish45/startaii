@@ -19,6 +19,9 @@ sentence-transformers
 transformers
 torch
 
+# OpenRouter and HTTP
+requests
+
 # External APIs
 perplexityai
 
