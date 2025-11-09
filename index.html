@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>StartAI - AI Advisory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --bg-dark: #0a0e27;
+            --bg-darker: #060918;
+            --bg-card: rgba(15, 23, 42, 0.8);
+            --bg-card-hover: rgba(30, 41, 59, 0.9);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: rgba(148, 163, 184, 0.1);
+            --border-hover: rgba(148, 163, 184, 0.2);
+            --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.4);
+            --glow-primary: 0 0 20px rgba(102, 126, 234, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-darker);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(240, 147, 251, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            padding: 4rem 2rem 3rem;
+        }
+
+        .header h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .advisory-notice {
+            background: linear-gradient(135deg, rgba(255, 167, 38, 0.1) 0%, rgba(251, 140, 0, 0.1) 100%);
+            border: 1px solid rgba(255, 167, 38, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            max-width: 900px;
+            display: flex;
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .section-header {
+            text-align: center;
+            margin: 3rem 0 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .personas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .persona-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .persona-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .persona-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .persona-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-xl), var(--glow-primary);
+        }
+
+        .persona-card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .persona-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--glow-primary);
+        }
+
+        .persona-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .persona-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .persona-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .expertise-tag {
+            background: rgba(102, 126, 234, 0.2);
+            color: #a5b4fc;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin: 0.25rem;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #43e97b;
+            display: inline-block;
+            margin-right: 0.5rem;
+            box-shadow: 0 0 10px rgba(67, 233, 123, 0.6);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .chat-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-darker);
+            z-index: 2000;
+            flex-direction: column;
+        }
+
+        .chat-container.active {
+            display: flex;
+        }
+
+        .chat-header {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-btn {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+            box-shadow: var(--glow-primary);
+        }
+
+        .chat-persona-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .message {
+            display: flex;
+            gap: 1rem;
+            max-width: 80%;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            margin-left: auto;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: var(--secondary-gradient);
+        }
+
+        .message-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1rem 1.5rem;
+            line-height: 1.6;
+        }
+
+        .message.user .message-content {
+            background: var(--primary-gradient);
+            border: none;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-card);
+            border-radius: 16px;
+            width: fit-content;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-secondary);
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .chat-input-container {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem 2rem;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input-wrapper:focus-within {
+            border-color: #667eea;
+            box-shadow: var(--glow-primary);
+        }
+
+        .chat-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+        }
+
+        .chat-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .send-btn {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+            box-shadow: var(--glow-primary);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header {
+                padding: 2rem 1rem;
+            }
+
+            .personas-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🚀 AI Advisory</h1>
+            <p>Choose an AI advisor to begin your session. Get strategic insights from legendary business personas.</p>
+        </header>
+
+        <div class="advisory-notice">
+            <i class="fa-solid fa-info-circle" style="color: #ffa726; font-size: 1.5rem;"></i>
+            <div>
+                <h4 style="color: #ffa726; font-weight: 600; margin-bottom: 0.5rem;">Advisory Notice</h4>
+                <p style="color: var(--text-secondary); font-size: 0.95rem;">AI responses are for guidance only and should be validated with human experts. Click on any persona below to start your chat session.</p>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2>Select an AI Persona</h2>
+            <p style="color: var(--text-secondary); font-size: 1.1rem;">Choose an AI advisor to begin your conversation.</p>
+        </div>
+
+        <div class="personas-grid">
+            <div class="persona-card" onclick="startChat('Elon Musk', '🚀')">
+                <div class="persona-card-content">
+                    <div class="persona-icon">🚀</div>
+                    <h3>Elon Musk</h3>
+                    <p class="persona-subtitle">First Principles Innovator</p>
+                    <p class="persona-description">Learn about first principles thinking, scaling rapidly, and tackling impossible challenges.</p>
+                    <div style="margin-bottom: 1rem;">
+                        <span class="expertise-tag">First Principles</span>
+                        <span class="expertise-tag">Scaling</span>
+                        <span class="expertise-tag">Engineering</span>
+                        <span class="expertise-tag">Ambitious Goals</span>
+                    </div>
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">
+                        <span class="status-indicator"></span>
+                        <span>Available Now</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="persona-card" onclick="startChat('Steve Jobs', '🍎')">
+                <div class="persona-card-content">
+                    <div class="persona-icon">🍎</div>
+                    <h3>Steve Jobs</h3>
+                    <p class="persona-subtitle">Visionary Product Leader</p>
+                    <p class="persona-description">Get insights on product vision, design thinking, and building revolutionary products that customers love.</p>
+                    <div style="margin-bottom: 1rem;">
+                        <span class="expertise-tag">Product Vision</span>
+                        <span class="expertise-tag">Design</span>
+                        <span class="expertise-tag">Innovation</span>
+                        <span class="expertise-tag">Brand Building</span>
+                    </div>
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">
+                        <span class="status-indicator"></span>
+                        <span>Available Now</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="persona-card" onclick="startChat('Ratan Tata', '🏛️')">
+                <div class="persona-card-content">
+                    <div class="persona-icon">🏛️</div>
+                    <h3>Ratan Tata</h3>
+                    <p class="persona-subtitle">Ethical Business Pioneer</p>
+                    <p class="persona-description">Discover strategies for building sustainable businesses with strong ethics, social responsibility, and long-term vision.</p>
+                    <div style="margin-bottom: 1rem;">
+                        <span class="expertise-tag">Business Ethics</span>
+                        <span class="expertise-tag">Social Impact</span>
+                        <span class="expertise-tag">Leadership</span>
+                        <span class="expertise-tag">Nation Building</span>
+                    </div>
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">
+                        <span class="status-indicator"></span>
+                        <span>Available Now</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <button class="back-btn" onclick="closeChat()">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <div class="chat-persona-icon" id="chatPersonaIcon"></div>
+            <div>
+                <h3 id="chatPersonaName" style="margin: 0; font-size: 1.25rem;"></h3>
+                <p id="chatPersonaTitle" style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;"></p>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages"></div>
+
+        <div class="chat-input-container">
+            <div class="chat-input-wrapper">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+                <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize AOS animations
+        AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 100 });
+
+        // ==================== BACKEND CONFIGURATION ====================
+        const API_URL = "https://startaii-ai-advisory.onrender.com";
+        let currentPersona = null;
+        let currentIcon = null;
+        let sessionId = 'user_' + Math.random().toString(36).substring(2, 15);
+        let conversationHistory = [];
+
+        console.log('✅ StartAI Advisory initialized');
+        console.log('🔗 Backend API:', API_URL);
+        console.log('🆔 Session ID:', sessionId);
+
+        // ==================== BACKEND HEALTH CHECK ====================
+        async function checkBackendHealth() {
+            try {
+                console.log('🔍 Checking backend health...');
+                const response = await fetch(`${API_URL}/health`, { 
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('✅ Backend is healthy:', data);
+                    showNotification('Backend connected successfully!', 'success');
+                    return true;
+                }
+            } catch (error) {
+                console.warn('⚠️ Backend health check failed:', error);
+                showNotification('Backend may be starting up. First request will take longer.', 'warning');
+                return false;
+            }
+        }
+
+        // Run health check when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            checkBackendHealth();
+        });
+
+        // ==================== SEND MESSAGE TO BACKEND ====================
+        async function sendMessageToBackend(persona, message) {
+            const TIMEOUT_MS = 180000; // 3 minutes for cold start
+
+            try {
+                console.log(`📤 Sending message to ${persona}:`, message);
+
+                // Create abort controller for timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
+
+                const response = await fetch(`${API_URL}/chat`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        persona: persona,
+                        query: message,
+                        session_id: sessionId
+                    }),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('❌ Backend error:', response.status, errorText);
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('✅ Response received:', data);
+
+                return data.response;
+
+            } catch (error) {
+                console.error('❌ Error calling backend:', error);
+
+                if (error.name === 'AbortError') {
+                    return 'The request timed out after 3 minutes. The server may be experiencing high load. Please try again in a moment.';
+                }
+
+                if (error.message.includes('Failed to fetch')) {
+                    return 'I apologize, but I cannot connect to the backend server. The server may be starting up (this can take 60-90 seconds on first request). Please try again in a moment.';
+                }
+
+                return `I encountered an error: ${error.message}. Please try again or contact support if the issue persists.`;
+            }
+        }
+
+        // ==================== UI HELPER FUNCTIONS ====================
+        function showNotification(message, type = 'info') {
+            // You can enhance this with a toast notification library
+            console.log(`[${type.toUpperCase()}]`, message);
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            if (!chatMessages) return;
+
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typing-indicator';
+            typingDiv.className = 'flex items-start gap-3 mb-4 animate-fade-in';
+            typingDiv.innerHTML = `
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
+                    <i class="${currentIcon || 'fas fa-robot'} text-white"></i>
+                </div>
+                <div class="bg-gray-700/50 backdrop-blur-sm rounded-2xl px-4 py-3 max-w-[80%]">
+                    <div class="flex gap-1">
+                        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0s"></div>
+                        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+                    </div>
+                </div>
+            `;
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        // ==================== PERSONA SELECTION ====================
+        document.querySelectorAll('.persona-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.persona-card').forEach(c => c.classList.remove('ring-2', 'ring-purple-500'));
+                this.classList.add('ring-2', 'ring-purple-500');
+
+                currentPersona = this.dataset.persona;
+                currentIcon = this.dataset.icon;
+
+                console.log('✅ Selected persona:', currentPersona);
+
+                const chatInterface = document.getElementById('chatInterface');
+                if (chatInterface) {
+                    chatInterface.classList.remove('hidden');
+                    chatInterface.scrollIntoView({ behavior: 'smooth' });
+                }
+
+                // Clear chat and add welcome message
+                const chatMessages = document.getElementById('chatMessages');
+                if (chatMessages) {
+                    chatMessages.innerHTML = '';
+                    addMessage('ai', `Hello! I'm ${currentPersona}. How can I help you today?`);
+                }
+            });
+        });
+
+        // ==================== SEND MESSAGE ====================
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            if (!input) return;
+
+            const message = input.value.trim();
+            if (!message || !currentPersona) return;
+
+            // Add user message to chat
+            addMessage('user', message);
+            input.value = '';
+            input.disabled = true;
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            try {
+                // Call backend API
+                const response = await sendMessageToBackend(currentPersona, message);
+
+                // Remove typing indicator
+                removeTypingIndicator();
+
+                // Add AI response to chat
+                addMessage('ai', response);
+
+            } catch (error) {
+                console.error('Error in sendMessage:', error);
+                removeTypingIndicator();
+                addMessage('ai', 'I apologize, but something went wrong. Please try again.');
+            } finally {
+                input.disabled = false;
+                input.focus();
+            }
+        }
+
+        // ==================== ADD MESSAGE TO CHAT ====================
+        function addMessage(type, content) {
+            const chatMessages = document.getElementById('chatMessages');
+            if (!chatMessages) return;
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex ${type === 'user' ? 'justify-end' : 'items-start gap-3'} mb-4 animate-fade-in`;
+
+            if (type === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl px-4 py-3 max-w-[80%]">
+                        <p class="text-white text-sm leading-relaxed">${content}</p>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
+                        <i class="${currentIcon || 'fas fa-robot'} text-white"></i>
+                    </div>
+                    <div class="bg-gray-700/50 backdrop-blur-sm rounded-2xl px-4 py-3 max-w-[80%]">
+                        <p class="text-gray-100 text-sm leading-relaxed">${content}</p>
+                    </div>
+                `;
+            }
+
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // ==================== EVENT LISTENERS ====================
+        document.getElementById('userInput')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        document.getElementById('sendBtn')?.addEventListener('click', sendMessage);
+
+        console.log('✅ All event listeners attached');
+    </script>
+</body>
+</html>
