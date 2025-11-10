@@ -78,15 +78,9 @@ app = FastAPI(
 )
 
 # -------------------- CORS CONFIGURATION -------------------- #
-# Restrict CORS to only trusted origins
-ALLOWED_ORIGINS = [
-    "https://startaii.netlify.app",  # Production frontend
-    "http://localhost:5173",         # Local development
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,  # Strict origin control
+    allow_origins=['https://startaii.netlify.app'],  # Strict origin control
     allow_credentials=True,
     allow_methods=["GET", "POST"],  # Only allow necessary methods
     allow_headers=["Content-Type", "Authorization"],  # Restrict headers
