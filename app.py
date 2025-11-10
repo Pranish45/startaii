@@ -381,7 +381,7 @@ async def startup_event():
     """Log startup information."""
     logger.info("=" * 50)
     logger.info("StartAI Advisory API Started Successfully")
-    logger.info(f"Allowed CORS Origins: {ALLOWED_ORIGINS}")
+    logger.info(f"Allowed CORS Origins: 'https://startaii.netlify.app'")
     logger.info(f"Rate Limit: {MAX_REQUESTS_PER_MINUTE} requests per {RATE_LIMIT_WINDOW} seconds")
     logger.info("=" * 50)
 
