@@ -1,3 +1,8 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+torchvision
+torchaudio
+
 # FastAPI and Server
 fastapi
 uvicorn[standard]
@@ -17,7 +22,6 @@ langchain-google-genai==0.0.9
 # Open-Source Embedding Model
 sentence-transformers
 transformers
-torch
 
 # OpenRouter and HTTP
 requests
